@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Gwint</string>
+    <string name="title_activity_write">WriteActivity</string>
+    <string name="title_activity_read">ReadActivity</string>
 </resources>
