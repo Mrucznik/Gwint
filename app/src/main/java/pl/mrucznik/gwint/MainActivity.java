@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         final Button readButton = (Button) findViewById(R.id.readButton);
-        writeButton.setOnClickListener(new View.OnClickListener() {
+        readButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 startActivityForResult(new Intent( view.getContext(), ReadActivity.class), 0);
             }
