@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import pl.mrucznik.gwint.cards.GwentCard;
+
 public class WriteActivity extends AppCompatActivity {
 
     private NfcAdapter mNfcAdapter;
@@ -78,7 +80,7 @@ public class WriteActivity extends AppCompatActivity {
         String externalType = "application/vnd.mrucznik";
         GwentCard card = new GwentCard(1, "Czyste Niebo", 0, 0, false, 1);
         NdefRecord extRecord = new NdefRecord(NdefRecord.TNF_MIME_MEDIA, externalType.getBytes(), new byte[0], card.toString().getBytes());
-        NdefMessage newMessage = new NdefMessage(new NdefRecord[] { extRecord});
+        NdefMessage newMessage = new NdefMessage(new NdefRecord[] { extRecord });
         writeNdefMessageToTag(newMessage, tag);
 
     }

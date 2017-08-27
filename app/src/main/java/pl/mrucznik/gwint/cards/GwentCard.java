@@ -1,4 +1,4 @@
-package pl.mrucznik.gwint;
+package pl.mrucznik.gwint.cards;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * Created by Mrucznik on 17.04.2017.
@@ -43,7 +44,7 @@ public class GwentCard {
 
     @Override
     public String toString() {
-        return String.format("%d#%s#%d#%d#%b#%d", id, new String(name), strength, attackRow, golden, specialActionId);
+        return String.format(Locale.getDefault(), "%d#%s#%d#%d#%b#%d", id, new String(name), strength, attackRow, golden, specialActionId);
     }
 
     //W razie, jakby potrzebne było większe upakowanie danych - zamiast zapisywać karty na
