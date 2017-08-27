@@ -6,13 +6,15 @@ package pl.mrucznik.gwint;
 
 public class Game {
     private Player[] player;
+    private GameField[] gameArea;
 
-    public Game() {
-        player = new Player[2];
-        for (int i=0; i<player.length; ++i) {
-            player[i] = new Player();
-        }
+    public Game(Player playerOne, Player playerTwo) {
+        player[0] = playerOne;
+        player[1] = playerTwo;
+    }
 
+    public void start()
+    {
 
     }
 }

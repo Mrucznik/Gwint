@@ -21,6 +21,8 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import pl.mrucznik.gwint.R;
+import pl.mrucznik.gwint.cards.AttackRow;
+import pl.mrucznik.gwint.cards.CardBehaviour;
 import pl.mrucznik.gwint.cards.GwentCard;
 
 public class WriteActivity extends AppCompatActivity {
@@ -79,7 +81,7 @@ public class WriteActivity extends AppCompatActivity {
         Log.i("Foreground dispatch", "Discovered tag with intent: " + intent);
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         String externalType = "application/vnd.mrucznik";
-        GwentCard card = new GwentCard(1, "Czyste Niebo", 0, 0, false, 1);
+        GwentCard card = new GwentCard(1, "Czyste Niebo", 0, AttackRow.All, false, CardBehaviour.CzysteNiebo);
         NdefRecord extRecord = new NdefRecord(NdefRecord.TNF_MIME_MEDIA, externalType.getBytes(), new byte[0], card.toString().getBytes());
         NdefMessage newMessage = new NdefMessage(new NdefRecord[] { extRecord });
         writeNdefMessageToTag(newMessage, tag);

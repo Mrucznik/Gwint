@@ -28,7 +28,7 @@
         android:layout_marginStart="8dp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/Player1Points"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -39,13 +39,13 @@
         android:layout_marginStart="74dp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/Player2Points"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        app:layout_constraintLeft_toRightOf="@+id/textView2"
+        app:layout_constraintLeft_toRightOf="@+id/Player1Points"
         android:layout_marginLeft="50dp"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/Player1Points"
         android:layout_marginStart="50dp" />
 
     <Button
