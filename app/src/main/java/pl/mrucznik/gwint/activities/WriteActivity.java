@@ -1,4 +1,4 @@
-package pl.mrucznik.gwint;
+package pl.mrucznik.gwint.activities;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import pl.mrucznik.gwint.R;
 import pl.mrucznik.gwint.cards.GwentCard;
 
 public class WriteActivity extends AppCompatActivity {

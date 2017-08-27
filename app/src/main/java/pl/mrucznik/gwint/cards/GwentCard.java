@@ -1,13 +1,5 @@
 package pl.mrucznik.gwint.cards;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -20,15 +12,24 @@ public class GwentCard {
     private byte strength;
     private byte attackRow;
     private boolean golden;
-    private byte specialActionId;
+    private byte cardBehaviour;
 
-    public GwentCard(int id, String name, int strength, int attackRow, boolean golden, int specialActionId) {
+    public GwentCard(int id, String name, int strength, int attackRow, boolean golden, int cardBehaviour) {
         this.id = (short)id;
         this.name = name.toCharArray();
         this.strength = (byte)strength;
         this.attackRow = (byte)attackRow;
         this.golden = golden;
-        this.specialActionId = (byte)specialActionId;
+        this.cardBehaviour = (byte) cardBehaviour;
+    }
+
+    public GwentCard(int id, String name, int strength, AttackRow attackRow, boolean golden, CardBehaviour cardBehaviour) {
+        this.id = (short)id;
+        this.name = name.toCharArray();
+        this.strength = (byte)strength;
+        this.attackRow = (byte)attackRow.ordinal();
+        this.golden = golden;
+        this.cardBehaviour = (byte) cardBehaviour.ordinal();
     }
 
     public GwentCard(String text)
@@ -39,12 +40,19 @@ public class GwentCard {
         strength = Byte.parseByte(tokens[2]);
         attackRow = Byte.parseByte(tokens[3]);
         golden = Boolean.parseBoolean(tokens[4]);
-        specialActionId = Byte.parseByte(tokens[5]);
+        cardBehaviour = Byte.parseByte(tokens[5]);
     }
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "%d#%s#%d#%d#%b#%d", id, new String(name), strength, attackRow, golden, specialActionId);
+        return String.format(Locale.getDefault(), "%d#%s#%d#%d#%b#%d", id, new String(name), strength, attackRow, golden, cardBehaviour);
+    }
+
+    public String toHumanString() {
+        return String.format(Locale.getDefault(),
+                "ID: %d, Name: %s, Strength: %d, Attack Row: %s, Golden: %b, Card Behaviour: %s",
+                id, new String(name), strength, AttackRow.values()[attackRow].name(), golden, CardBehaviour.values()[cardBehaviour].name()
+        );
     }
 
     //W razie, jakby potrzebne było większe upakowanie danych - zamiast zapisywać karty na
@@ -60,7 +68,7 @@ public class GwentCard {
             this.strength = o.strength;
             this.attackRow = o.attackRow;
             this.golden = o.golden;
-            this.specialActionId = o.specialActionId;
+            this.cardBehaviour = o.cardBehaviour;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

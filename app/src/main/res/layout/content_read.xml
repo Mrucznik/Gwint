@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="pl.mrucznik.gwint.ReadActivity"
+    tools:context="pl.mrucznik.gwint.activities.ReadActivity"
     tools:showIn="@layout/activity_read">
 
 </android.support.constraint.ConstraintLayout>

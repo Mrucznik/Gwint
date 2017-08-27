@@ -1,4 +1,4 @@
-package pl.mrucznik.gwint;
+package pl.mrucznik.gwint.activities;
 
 import android.content.Intent;
 import android.nfc.NdefMessage;
@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import pl.mrucznik.gwint.R;
 import pl.mrucznik.gwint.cards.GwentCard;
 
 public class ReadActivity extends AppCompatActivity {
