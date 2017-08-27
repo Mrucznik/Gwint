@@ -10,7 +10,6 @@ import pl.mrucznik.gwint.cards.GwentCard;
 
 public class Player {
     private String name;
-    private ArrayList<GwentCard> cards;
 
     public Player(String name)
     {

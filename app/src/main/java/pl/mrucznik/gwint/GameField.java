@@ -7,7 +7,22 @@ import pl.mrucznik.gwint.cards.GwentCard;
  */
 
 public class GameField {
-    Graveyard graveyard;
-    CardArea cardArea;
+    private Graveyard graveyard;
+    private CardArea cardArea;
 
+    public GameField()
+    {
+        graveyard = new Graveyard();
+        cardArea = new CardArea();
+    }
+
+    public void putCard(GwentCard card)
+    {
+        cardArea.putCard(card);
+    }
+
+    public int getPoints()
+    {
+        return cardArea.getPoints();
+    }
 }

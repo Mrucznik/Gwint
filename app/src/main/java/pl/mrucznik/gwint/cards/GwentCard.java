@@ -34,6 +34,15 @@ public class GwentCard {
         cardBehaviour = CardBehaviour.values()[Byte.parseByte(tokens[5])];
     }
 
+    public GwentCard(GwentCard card) {
+        this.id = card.id;
+        this.name = card.name.clone();
+        this.strength = card.strength;
+        this.attackRow = card.attackRow;
+        this.golden = card.golden;
+        this.cardBehaviour = card.cardBehaviour;
+    }
+
     @Override
     public String toString() {
         return String.format(Locale.getDefault(), "%d#%s#%d#%s#%b#%s", id, new String(name), strength, attackRow.name(), golden, cardBehaviour.name());

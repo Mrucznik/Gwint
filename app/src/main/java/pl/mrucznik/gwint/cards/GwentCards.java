@@ -4,6 +4,10 @@ package pl.mrucznik.gwint.cards;
  * Created by Mrucznik on 27.08.2017.
  */
 
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Stack;
+
 /**
  * Singleton class, contains gwent cards
  */
@@ -101,6 +105,13 @@ public final class GwentCards {
         cards[i] = new GwentCard(i, "Krowa", 0, AttackRow.LongRange, false, CardBehaviour.Krowa);
     }
 
+    private static void checkInstance()
+    {
+        if(instance == null) {
+            instance = new GwentCards();
+        }
+    }
+
     public static GwentCards getInstance() {
         if(instance == null) {
             instance = new GwentCards();
@@ -110,9 +121,21 @@ public final class GwentCards {
 
     public static GwentCard getCard(int id)
     {
-        if(instance == null) {
-            instance = new GwentCards();
-        }
+        checkInstance();
         return cards[id];
+    }
+
+    public static Stack<GwentCard> generateCards(int number)
+    {
+        checkInstance();
+
+        Stack<GwentCard> gwentCards = new Stack<>();
+        Random randomGenerator  = new Random();
+        for(int i=0; i<number; i++)
+        {
+            gwentCards.push(new GwentCard(cards[randomGenerator.nextInt(cards.length)]));
+        }
+
+        return gwentCards;
     }
 }
