@@ -2,10 +2,6 @@ package pl.mrucznik.gwint;
 
 import pl.mrucznik.gwint.cards.GwentCard;
 
-/**
- * Created by Mrucznik on 27.08.2017.
- */
-
 public class GameField {
     private Graveyard graveyard;
     private CardArea cardArea;
@@ -16,9 +12,14 @@ public class GameField {
         cardArea = new CardArea();
     }
 
-    public void putCard(GwentCard card)
-    {
+    public void putCard(GwentCard card) throws InvaildCardException {
         cardArea.putCard(card);
+    }
+
+    public void clearCardArea()
+    {
+        graveyard.addCarts(cardArea.getAllCards());
+        cardArea = new CardArea();
     }
 
     public int getPoints()

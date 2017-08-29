@@ -2,10 +2,6 @@ package pl.mrucznik.gwint;
 
 import pl.mrucznik.gwint.cards.GwentCard;
 
-/**
- * Created by Mrucznik on 27.08.2017.
- */
-
 public class TestGame extends Game {
     public TestGame(TestPlayer playerOne, TestPlayer playerTwo) {
         super(playerOne, playerTwo);
@@ -23,7 +19,11 @@ public class TestGame extends Game {
             GwentCard thrownCard = ((TestPlayer)activePlayer).throwCard();
             if(thrownCard != null)
             {
-                gameFields.get(activePlayer).putCard(thrownCard);
+                try {
+                    gameFields.get(activePlayer).putCard(thrownCard);
+                } catch (InvaildCardException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("Gracz " + activePlayer.toString() + " rzucił kartę " + thrownCard.toString());
             }
             else

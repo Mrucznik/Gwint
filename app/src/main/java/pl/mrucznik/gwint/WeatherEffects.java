@@ -1,18 +1,15 @@
 package pl.mrucznik.gwint;
 
-import java.util.ArrayList;
-
 import pl.mrucznik.gwint.cards.GwentCard;
 import pl.mrucznik.gwint.cards.WeatherEffect;
 
-/**
- * Created by Mrucznik on 27.08.2017.
- */
-
 public class WeatherEffects extends RowEffect<WeatherEffect> {
     @Override
-    public boolean effectsAffectedOnCard(GwentCard card)
+    public boolean areEffectsAffectedOnCard(GwentCard card)
     {
+        if(card.isGolden())
+            return false;
+
         switch(card.getAttackRow())
         {
             case None:

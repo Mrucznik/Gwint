@@ -3,13 +3,12 @@ package pl.mrucznik.gwint;
 import pl.mrucznik.gwint.cards.AttackRow;
 import pl.mrucznik.gwint.cards.GwentCard;
 
-/**
- * Created by Mrucznik on 27.08.2017.
- */
-
 public class HornEffects extends RowEffect<AttackRow> {
     @Override
-    public boolean effectsAffectedOnCard(GwentCard card) {
+    public boolean areEffectsAffectedOnCard(GwentCard card) {
+        if(card.isGolden())
+            return false;
+
         switch(card.getAttackRow())
         {
             case None:

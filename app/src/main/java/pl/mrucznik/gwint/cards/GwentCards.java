@@ -1,10 +1,5 @@
 package pl.mrucznik.gwint.cards;
 
-/**
- * Created by Mrucznik on 27.08.2017.
- */
-
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 

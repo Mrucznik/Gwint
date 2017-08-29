@@ -2,10 +2,6 @@ package pl.mrucznik.gwint.cards;
 
 import java.util.Locale;
 
-/**
- * Created by Mrucznik on 17.04.2017.
- */
-
 public class GwentCard {
     private short id;
     private char[] name;
@@ -22,6 +18,7 @@ public class GwentCard {
         this.golden = golden;
         this.cardBehaviour = cardBehaviour;
     }
+
 
     public GwentCard(String text)
     {
@@ -63,6 +60,10 @@ public class GwentCard {
 
     public AttackRow getAttackRow() {
         return attackRow;
+    }
+
+    public CardBehaviour getCardBehaviour() {
+        return cardBehaviour;
     }
 
     public boolean isGolden() {

@@ -4,11 +4,6 @@ import org.junit.Test;
 
 import pl.mrucznik.gwint.cards.GwentCards;
 
-import static org.junit.Assert.*;
-/**
- * Created by Mrucznik on 27.08.2017.
- */
-
 public class GameTests {
     Game game;
 

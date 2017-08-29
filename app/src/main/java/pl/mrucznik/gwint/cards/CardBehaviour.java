@@ -1,9 +1,5 @@
 package pl.mrucznik.gwint.cards;
 
-/**
- * Created by Mrucznik on 20.08.2017.
- */
-
 public enum CardBehaviour {
     //TODO: przetłumaczyć na angielski
     None,

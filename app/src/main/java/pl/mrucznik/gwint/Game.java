@@ -2,10 +2,6 @@ package pl.mrucznik.gwint;
 
 import java.util.HashMap;
 
-/**
- * Created by Mrucznik on 27.08.2017.
- */
-
 public class Game {
     protected Player playerOne;
     protected Player playerTwo;

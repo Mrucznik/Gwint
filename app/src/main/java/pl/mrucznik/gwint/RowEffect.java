@@ -4,10 +4,6 @@ import java.util.ArrayList;
 
 import pl.mrucznik.gwint.cards.GwentCard;
 
-/**
- * Created by Mrucznik on 27.08.2017.
- */
-
 public abstract class RowEffect<T> {
     protected ArrayList<T> effectList;
 
@@ -24,5 +20,11 @@ public abstract class RowEffect<T> {
         effectList.add(weatherEffect);
     }
 
-    abstract public boolean effectsAffectedOnCard(GwentCard card);
+    public void removeEffect(T weatherEffect) {
+        effectList.remove(weatherEffect);
+    }
+
+    public void clearEffects() { effectList.clear(); }
+
+    abstract public boolean areEffectsAffectedOnCard(GwentCard card);
 }
