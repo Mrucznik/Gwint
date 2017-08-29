@@ -73,9 +73,9 @@ public class Game implements IGameControler {
         gameFields.forEach((k,v) -> System.out.println(v.getPoints()));
     }
 
-    public ArrayList getActiveEffects(Player player)
+    public ArrayList<Enum> getActiveEffects(Player player)
     {
-        ArrayList arrayList = new ArrayList();
+        ArrayList<Enum> arrayList = new ArrayList<>();
         gameFields.get(player).getActiveEffects().forEach((effect) -> {
             arrayList.addAll(effect.getEffects());
         });
