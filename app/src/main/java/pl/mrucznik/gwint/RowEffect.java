@@ -1,18 +1,19 @@
 package pl.mrucznik.gwint;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import pl.mrucznik.gwint.cards.GwentCard;
 
 public abstract class RowEffect<T> {
-    protected ArrayList<T> effectList;
+    protected HashSet<T> effectList;
 
     public RowEffect()
     {
-        effectList = new ArrayList<>();
+        effectList = new HashSet<>();
     }
 
-    public ArrayList<T> getEffects() {
+    public HashSet<T> getEffects() {
         return effectList;
     }
 

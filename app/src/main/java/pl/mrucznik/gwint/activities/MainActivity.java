@@ -8,22 +8,14 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import pl.mrucznik.gwint.Game;
-import pl.mrucznik.gwint.Player;
 import pl.mrucznik.gwint.R;
 import pl.mrucznik.gwint.cards.GwentCards;
 
 public class MainActivity extends AppCompatActivity {
-    Game game;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        game = new Game(new Player("Szymon"), new Player("Seba"));
-        game.start();
 
         //inicjalizacja przycisków
         final Button writeButton = (Button) findViewById(R.id.writeButton);

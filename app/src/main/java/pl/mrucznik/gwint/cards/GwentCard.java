@@ -66,6 +66,10 @@ public class GwentCard {
         return cardBehaviour;
     }
 
+    public String getName() {
+        return new String(name);
+    }
+
     public boolean isGolden() {
         return golden;
     }

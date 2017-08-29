@@ -1,16 +1,12 @@
 package pl.mrucznik.gwint;
 
+import android.inputmethodservice.Keyboard;
+
 import java.util.ArrayList;
 
 import pl.mrucznik.gwint.cards.AttackRow;
 import pl.mrucznik.gwint.cards.GwentCard;
 import pl.mrucznik.gwint.cards.WeatherEffect;
-
-class InvaildCardException extends Exception {
-    InvaildCardException(String msg){
-        super(msg);
-    }
-}
 
 public class CardArea {
     private GwentCard king;
@@ -25,7 +21,7 @@ public class CardArea {
         cards = new ArrayList<>();
     }
 
-    public void putCard(GwentCard card) throws InvaildCardException {
+    public void putCard(IGameControler gameControler, GwentCard card) throws InvaildCardException {
         if(card.getAttackRow() == AttackRow.King)
         {
             if(king == null)
@@ -38,6 +34,8 @@ public class CardArea {
             }
         }
 
+        activateCardBehaviour(card);
+        gameControler.nextPlayer();
         cards.add(card);
     }
 
@@ -114,7 +112,7 @@ public class CardArea {
                 //Obejrzyj trzy losowe karty z ręki przeciwnika
                 break;
             case Krowa:
-                //po usunięciu stwórz jednostkę siły bydlęce
+                //po usunięciu stwórz jednostkę siły bydlęce - pytanie jak to obsłużyć
                 break;
         }
     }
@@ -142,5 +140,19 @@ public class CardArea {
     public ArrayList<GwentCard> getAllCards()
     {
         return cards;
+    }
+
+    public void clear()
+    {
+        weatherEffects.clearEffects();
+        hornEffects.clearEffects();
+        cards.clear();
+    }
+
+    public ArrayList<RowEffect> getActiveEffects() {
+        ArrayList<RowEffect> array = new ArrayList<>();
+        array.add(weatherEffects);
+        array.add(hornEffects);
+        return array;
     }
 }

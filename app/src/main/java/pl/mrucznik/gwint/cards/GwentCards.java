@@ -133,4 +133,11 @@ public final class GwentCards {
 
         return gwentCards;
     }
+
+    public static GwentCard generateRandomCard() {
+        checkInstance();
+
+        Random randomGenerator  = new Random();
+        return new GwentCard(cards[randomGenerator.nextInt(cards.length)]);
+    }
 }

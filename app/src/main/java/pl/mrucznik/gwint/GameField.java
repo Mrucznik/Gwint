@@ -1,5 +1,7 @@
 package pl.mrucznik.gwint;
 
+import java.util.ArrayList;
+
 import pl.mrucznik.gwint.cards.GwentCard;
 
 public class GameField {
@@ -12,18 +14,19 @@ public class GameField {
         cardArea = new CardArea();
     }
 
-    public void putCard(GwentCard card) throws InvaildCardException {
-        cardArea.putCard(card);
+    public void putCard(IGameControler gameControler, GwentCard card) throws InvaildCardException {
+        cardArea.putCard(gameControler, card);
     }
 
     public void clearCardArea()
     {
         graveyard.addCarts(cardArea.getAllCards());
-        cardArea = new CardArea();
+        cardArea.clear();
     }
 
     public int getPoints()
     {
         return cardArea.getPoints();
     }
+    public ArrayList<RowEffect> getActiveEffects() { return cardArea.getActiveEffects(); }
 }
