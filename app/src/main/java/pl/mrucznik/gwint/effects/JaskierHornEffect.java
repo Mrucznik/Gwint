@@ -5,10 +5,6 @@ import android.support.annotation.NonNull;
 import pl.mrucznik.gwint.cards.AttackRow;
 import pl.mrucznik.gwint.cards.GwentCard;
 
-/**
- * Created by Mrucznik on 03.09.2017.
- */
-
 public class JaskierHornEffect extends HornEffect {
     private GwentCard jaskier;
 

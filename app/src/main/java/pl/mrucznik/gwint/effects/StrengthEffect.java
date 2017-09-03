@@ -4,10 +4,6 @@ import android.support.annotation.NonNull;
 
 import pl.mrucznik.gwint.cards.GwentCard;
 
-/**
- * Created by Mrucznik on 03.09.2017.
- */
-
 abstract public class StrengthEffect implements Comparable {
     protected StrengthEffectsPriority piority = StrengthEffectsPriority.None;
 
