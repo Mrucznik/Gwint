@@ -25,24 +25,28 @@ public class GameTests {
         Player playerOne = new Player("Szymon");
         Player playerTwo = new Player("Seba");
 
-        Game game = new Game(playerOne, playerTwo);
+        GameController gameController = new GameController(playerOne, playerTwo);
 
         int turn = 1;
-        while(game.isGameOn())
+        while(gameController.isGameOn())
         {
             System.out.println("\nKolejka numer " + turn);
             System.out.println("Aktywne efekty: ");
             System.out.print(playerOne + ": ");
-            game.getActiveEffects(playerOne).forEach((v) -> System.out.print(v.toString() + " "));
+            gameController.getActiveEffects(playerOne).forEach((v) -> System.out.print(v.toString() + " "));
             System.out.print("\n" + playerTwo + ": ");
-            game.getActiveEffects(playerTwo).forEach((v) -> System.out.print(v.toString() + " "));
+            gameController.getActiveEffects(playerTwo).forEach((v) -> System.out.print(v.toString() + " "));
 
 
-            int[] oldPoints = game.getPoints();
+            int[] oldPoints = gameController.getPoints();
             GwentCard gwentCard = GwentCards.generateRandomCard();
-            System.out.println("\n" + game.getActivePlayer().toString() + " rzuca kartę " + gwentCard.getName() + " siła: " + gwentCard.getStrength());
-            game.processCard(gwentCard);
-            int[] points = game.getPoints();
+            System.out.println("\n" + gameController.getActivePlayer().toString() + " rzuca kartę " + gwentCard.getName() + " siła: " + gwentCard.getStrength());
+            try {
+                gameController.processCard(gwentCard);
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
+            int[] points = gameController.getPoints();
             System.out.println("Punkty " + playerOne.toString() + ": " + points[0] + " (" + (points[0] - oldPoints[0]) + ")");
             System.out.println("Punkty " + playerTwo.toString() + ": " + points[1] + " (" + (points[1] - oldPoints[1]) + ")");
             if(turn++ == 150)
@@ -50,6 +54,6 @@ public class GameTests {
         }
 
         System.out.println("Wynik końcowy ");
-        game.printPoints();
+        gameController.printPoints();
     }
 }
