@@ -5,8 +5,11 @@ import android.support.annotation.RequiresApi;
 
 import org.junit.Test;
 
+import pl.mrucznik.gwint.controller.GameController;
 import pl.mrucznik.gwint.model.Game;
 import pl.mrucznik.gwint.model.Player;
+import pl.mrucznik.gwint.model.cards.AttackRow;
+import pl.mrucznik.gwint.model.cards.CardBehaviour;
 import pl.mrucznik.gwint.model.cards.GwentCard;
 import pl.mrucznik.gwint.model.cards.GwentCards;
 
@@ -27,7 +30,7 @@ public class GameTests {
         Player playerOne = new Player("Szymon");
         Player playerTwo = new Player("Seba");
 
-        Game game = new Game(playerOne, playerTwo);
+        Game game = new Game(new GameController(), playerOne, playerTwo);
 
         int turn = 1;
         while(game.isGameOn())
@@ -57,5 +60,18 @@ public class GameTests {
 
         System.out.println("Wynik końcowy ");
         game.printPoints();
+    }
+
+    @Test
+    public void lambdaTest() throws Exception
+    {
+        Player playerOne = new Player("Szymon");
+        Player playerTwo = new Player("Seba");
+
+        Game game = new Game(new GameController(), playerOne, playerTwo);
+
+        game.processCard(new GwentCard(5, "Brygada Impera", 3, AttackRow.CloseCombat, false, CardBehaviour.Wiez));
+        game.processCard(new GwentCard(1, "Róg dowódcy", 0, AttackRow.All, false, CardBehaviour.RogDowodcy));
+
     }
 }

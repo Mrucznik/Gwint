@@ -59,10 +59,19 @@ public class GwentCard {
         strength = baseStrength;
     }
 
+    public boolean isFightingCard()
+    {
+        return baseStrength > 0;
+    }
+
     // ---- Setters -----
     public void setStrength(int strength)
     {
         this.strength = strength;
+    }
+    public void setAttackRow(AttackRow attackRow)
+    {
+        this.attackRow = attackRow;
     }
 
     // ---- Getters -----

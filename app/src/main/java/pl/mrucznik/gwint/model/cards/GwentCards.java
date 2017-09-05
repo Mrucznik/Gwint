@@ -84,20 +84,20 @@ public final class GwentCards {
         cards[i] = new GwentCard(i++, "Yennefer z Vengerbergu", 7, AttackRow.LongRange, true, CardBehaviour.Medyk);
         cards[i] = new GwentCard(i++, "Triss Merigold", 7, AttackRow.CloseCombat, true, CardBehaviour.None);
         cards[i] = new GwentCard(i++, "Avallac'h", 0, AttackRow.CloseCombat, true, CardBehaviour.Szpieg);
-        cards[i] = new GwentCard(i++, "Bydlęce Siły Zbrojne", 8, AttackRow.All, false, CardBehaviour.None);
+        cards[i] = new GwentCard(i++, "Bydlęce Siły Zbrojne", 8, AttackRow.CloseCombat, false, CardBehaviour.None);
         cards[i] = new GwentCard(i++, "Villentretenmerth", 7, AttackRow.CloseCombat, false, CardBehaviour.PozogaSmoka);
         cards[i] = new GwentCard(i++, "Vesemir", 6, AttackRow.CloseCombat, false, CardBehaviour.None);
         cards[i] = new GwentCard(i++, "Emiel Regis Rohellec Terzieff", 5, AttackRow.CloseCombat, false, CardBehaviour.None);
         cards[i] = new GwentCard(i++, "Zoltan Chivay", 5, AttackRow.CloseCombat, false, CardBehaviour.None);
         cards[i] = new GwentCard(i++, "Jaskier", 2, AttackRow.CloseCombat, false, CardBehaviour.RogJaskra);
-        cards[i] = new GwentCard(i++, "Manekin do ćwiczeń", 0, AttackRow.All, false, CardBehaviour.Manekin);
+        cards[i] = new GwentCard(i++, "Manekin do ćwiczeń", 0, AttackRow.None, false, CardBehaviour.Manekin);
         cards[i] = new GwentCard(i++, "Róg dowódcy", 0, AttackRow.All, false, CardBehaviour.RogDowodcy);
-        cards[i] = new GwentCard(i++, "Pożoga", 0, AttackRow.All, false, CardBehaviour.Pozoga);
+        cards[i] = new GwentCard(i++, "Pożoga", 0, AttackRow.None, false, CardBehaviour.Pozoga);
         cards[i] = new GwentCard(i++, "Trzaskający mróz", 0, AttackRow.CloseCombat, false, CardBehaviour.Mroz);
         cards[i] = new GwentCard(i++, "Gęsta mgła", 0, AttackRow.LongRange, false, CardBehaviour.Mgla);
         cards[i] = new GwentCard(i++, "Ulewny deszcz", 0, AttackRow.Siege, false, CardBehaviour.Deszcz);
-        cards[i] = new GwentCard(i++, "Czyste niebo", 0, AttackRow.All, false, CardBehaviour.CzysteNiebo);
-        cards[i] = new GwentCard(i, "Krowa", 0, AttackRow.LongRange, false, CardBehaviour.Krowa);
+        cards[i] = new GwentCard(i++, "Czyste niebo", 0, AttackRow.None, false, CardBehaviour.CzysteNiebo);
+        cards[i] = new GwentCard(i, "Krowa", 0, AttackRow.CloseCombat, false, CardBehaviour.Krowa);
     }
 
     private static void checkInstance()
