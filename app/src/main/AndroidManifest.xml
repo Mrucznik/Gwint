@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".controller.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,22 +23,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.WriteActivity"
+            android:name=".controller.activities.WriteActivity"
             android:label="@string/title_activity_write"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".controller.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.mrucznik.gwint.activities.MainActivity" />
+                android:value=".controller.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.ReadActivity"
+            android:name=".controller.activities.ReadActivity"
             android:label="@string/title_activity_read"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".controller.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.mrucznik.gwint.activities.MainActivity" />
+                android:value=".controller.activities.MainActivity" />
 
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
@@ -48,7 +48,7 @@
                 <data android:mimeType="application/vnd.mrucznik" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.GameActivity"></activity>
+        <activity android:name=".controller.activities.GameActivity"></activity>
     </application>
 
 </manifest>

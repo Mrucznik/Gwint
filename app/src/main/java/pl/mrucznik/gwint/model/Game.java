@@ -1,22 +1,19 @@
-package pl.mrucznik.gwint;
+package pl.mrucznik.gwint.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import pl.mrucznik.gwint.cards.AttackRow;
-import pl.mrucznik.gwint.cards.GwentCard;
-import pl.mrucznik.gwint.effects.EffectControler;
-import pl.mrucznik.gwint.effects.StrengthEffect;
+import pl.mrucznik.gwint.model.cards.GwentCard;
+import pl.mrucznik.gwint.model.effects.StrengthEffect;
 
-public class GameController {
+public class Game {
     private Player playerOne;
     private Player playerTwo;
     private Player activePlayer;
     private HashMap<Player, GameField> gameFields;
     private int round = 0;
 
-    public GameController(Player playerOne, Player playerTwo) {
+    public Game(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
         activePlayer = playerOne;

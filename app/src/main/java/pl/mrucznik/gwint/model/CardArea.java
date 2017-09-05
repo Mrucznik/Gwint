@@ -1,10 +1,9 @@
-package pl.mrucznik.gwint;
+package pl.mrucznik.gwint.model;
 
 import java.util.ArrayList;
 
-import pl.mrucznik.gwint.cards.AttackRow;
-import pl.mrucznik.gwint.cards.GwentCard;
-import pl.mrucznik.gwint.effects.EffectControler;
+import pl.mrucznik.gwint.model.cards.AttackRow;
+import pl.mrucznik.gwint.model.cards.GwentCard;
 
 public class CardArea {
     private GwentCard king;

@@ -1,4 +1,4 @@
-package pl.mrucznik.gwint.activities;
+package pl.mrucznik.gwint.controller.activities;
 
 import android.app.PendingIntent;
 import android.content.Intent;

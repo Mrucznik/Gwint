@@ -1,8 +1,8 @@
-package pl.mrucznik.gwint.effects;
+package pl.mrucznik.gwint.model.effects;
 
 import android.support.annotation.NonNull;
 
-import pl.mrucznik.gwint.cards.GwentCard;
+import pl.mrucznik.gwint.model.cards.GwentCard;
 
 abstract public class StrengthEffect implements Comparable {
     protected StrengthEffectsPriority piority = StrengthEffectsPriority.None;

@@ -1,8 +1,8 @@
-package pl.mrucznik.gwint;
+package pl.mrucznik.gwint.model;
 
 import java.util.ArrayList;
 
-import pl.mrucznik.gwint.cards.GwentCard;
+import pl.mrucznik.gwint.model.cards.GwentCard;
 
 public class Graveyard {
     private ArrayList<GwentCard> cards;

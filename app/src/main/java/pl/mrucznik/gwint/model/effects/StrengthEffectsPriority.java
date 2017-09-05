@@ -1,4 +1,4 @@
-package pl.mrucznik.gwint.effects;
+package pl.mrucznik.gwint.model.effects;
 
 public enum StrengthEffectsPriority {
 

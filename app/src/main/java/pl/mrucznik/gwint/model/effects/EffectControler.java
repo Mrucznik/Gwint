@@ -1,9 +1,9 @@
-package pl.mrucznik.gwint.effects;
+package pl.mrucznik.gwint.model.effects;
 import java.util.Collection;
 import java.util.TreeSet;
 
-import pl.mrucznik.gwint.cards.AttackRow;
-import pl.mrucznik.gwint.cards.GwentCard;
+import pl.mrucznik.gwint.model.cards.AttackRow;
+import pl.mrucznik.gwint.model.cards.GwentCard;
 
 public class EffectControler {
     private TreeSet<StrengthEffect> effects;

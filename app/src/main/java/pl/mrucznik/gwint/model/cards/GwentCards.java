@@ -1,4 +1,4 @@
-package pl.mrucznik.gwint.cards;
+package pl.mrucznik.gwint.model.cards;
 
 import java.util.Random;
 import java.util.Stack;

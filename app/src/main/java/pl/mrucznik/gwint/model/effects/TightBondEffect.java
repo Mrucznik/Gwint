@@ -1,10 +1,10 @@
-package pl.mrucznik.gwint.effects;
+package pl.mrucznik.gwint.model.effects;
 
 import android.support.annotation.NonNull;
 
 import java.util.Objects;
 
-import pl.mrucznik.gwint.cards.GwentCard;
+import pl.mrucznik.gwint.model.cards.GwentCard;
 
 //Więź
 public class TightBondEffect extends StrengthEffect {

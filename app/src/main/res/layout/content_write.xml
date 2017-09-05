@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="pl.mrucznik.gwint.activities.WriteActivity"
+    tools:context=".controller.activities.WriteActivity"
     tools:showIn="@layout/activity_write">
 
 </android.support.constraint.ConstraintLayout>

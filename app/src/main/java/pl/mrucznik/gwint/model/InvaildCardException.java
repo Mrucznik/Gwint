@@ -1,4 +1,4 @@
-package pl.mrucznik.gwint;
+package pl.mrucznik.gwint.model;
 
 public class InvaildCardException extends Exception {
     InvaildCardException(String msg){

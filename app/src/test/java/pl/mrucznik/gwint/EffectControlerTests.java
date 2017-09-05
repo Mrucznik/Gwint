@@ -1,10 +1,10 @@
 package pl.mrucznik.gwint;
 import org.junit.Test;
 
-import pl.mrucznik.gwint.cards.AttackRow;
-import pl.mrucznik.gwint.cards.CardBehaviour;
-import pl.mrucznik.gwint.cards.GwentCard;
-import pl.mrucznik.gwint.effects.EffectControler;
+import pl.mrucznik.gwint.model.cards.AttackRow;
+import pl.mrucznik.gwint.model.cards.CardBehaviour;
+import pl.mrucznik.gwint.model.cards.GwentCard;
+import pl.mrucznik.gwint.model.effects.EffectControler;
 
 import static org.junit.Assert.*;
 

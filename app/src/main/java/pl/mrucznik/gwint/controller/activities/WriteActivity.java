@@ -1,4 +1,4 @@
-package pl.mrucznik.gwint.activities;
+package pl.mrucznik.gwint.controller.activities;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -21,9 +21,9 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import pl.mrucznik.gwint.R;
-import pl.mrucznik.gwint.cards.AttackRow;
-import pl.mrucznik.gwint.cards.CardBehaviour;
-import pl.mrucznik.gwint.cards.GwentCard;
+import pl.mrucznik.gwint.model.cards.AttackRow;
+import pl.mrucznik.gwint.model.cards.CardBehaviour;
+import pl.mrucznik.gwint.model.cards.GwentCard;
 
 public class WriteActivity extends AppCompatActivity {
 

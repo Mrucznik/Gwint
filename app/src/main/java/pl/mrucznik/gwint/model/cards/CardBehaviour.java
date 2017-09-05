@@ -1,4 +1,4 @@
-package pl.mrucznik.gwint.cards;
+package pl.mrucznik.gwint.model.cards;
 
 public enum CardBehaviour {
     //TODO: przetłumaczyć na angielski

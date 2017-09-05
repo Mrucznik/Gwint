@@ -1,4 +1,4 @@
-package pl.mrucznik.gwint.activities;
+package pl.mrucznik.gwint.controller.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import pl.mrucznik.gwint.R;
-import pl.mrucznik.gwint.cards.GwentCards;
+import pl.mrucznik.gwint.model.cards.GwentCards;
 
 public class MainActivity extends AppCompatActivity {
     @Override
