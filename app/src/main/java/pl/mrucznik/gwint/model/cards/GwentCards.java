@@ -13,7 +13,7 @@ public final class GwentCards {
     private GwentCards()
     {
         int i = 0;
-        cards = new GwentCard[84];
+        cards = new GwentCard[85];
         cards[i] = new GwentCard(i++, "Pusta karta", 0, AttackRow.None, false, CardBehaviour.None);
         cards[i] = new GwentCard(i++, "Emhyr van Emreis - Najeźdźca Północy", 0, AttackRow.King, false, CardBehaviour.EmhyrNajezdzca);
         cards[i] = new GwentCard(i++, "Emhyr var Emreis - Biały Płomień Tańczący Na Kurhanach Wrogów", 0, AttackRow.King, false, CardBehaviour.EmhyrPlomien);
@@ -97,7 +97,8 @@ public final class GwentCards {
         cards[i] = new GwentCard(i++, "Gęsta mgła", 0, AttackRow.LongRange, false, CardBehaviour.Mgla);
         cards[i] = new GwentCard(i++, "Ulewny deszcz", 0, AttackRow.Siege, false, CardBehaviour.Deszcz);
         cards[i] = new GwentCard(i++, "Czyste niebo", 0, AttackRow.None, false, CardBehaviour.CzysteNiebo);
-        cards[i] = new GwentCard(i, "Krowa", 0, AttackRow.CloseCombat, false, CardBehaviour.Krowa);
+        cards[i] = new GwentCard(i++, "Krowa", 0, AttackRow.CloseCombat, false, CardBehaviour.Krowa);
+        cards[i] = new GwentCard(i, "Pass", 0, AttackRow.None, false, CardBehaviour.Pass);
     }
 
     private static void checkInstance()

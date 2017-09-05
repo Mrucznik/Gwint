@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import pl.mrucznik.gwint.controller.GameController;
 import pl.mrucznik.gwint.model.cards.AttackRow;
-import pl.mrucznik.gwint.model.cards.CardBehaviour;
 import pl.mrucznik.gwint.model.cards.GwentCard;
 import pl.mrucznik.gwint.model.effects.StrengthEffect;
 
@@ -15,7 +14,6 @@ public class Game {
     private Player activePlayer;
     private HashMap<Player, GameField> gameFields;
     private GameController gameController;
-    private int round = 0;
     private GwentCard waitForNextCard;
 
     public Game(GameController gameController, Player playerOne, Player playerTwo) {
@@ -145,6 +143,14 @@ public class Game {
             case Krowa:
                 //TODO: po usunięciu stwórz jednostkę siły bydlęce - pytanie jak to obsłużyć
                 break;
+            case Pass:
+                activePlayer.jamOut();
+                if(!playerOne.isActive() && !playerTwo.isActive())
+                {
+                    nextRound();
+                    gameController.sendMessage("Następna runda!.");
+                }
+                return;
         }
 
         gameFields.get(activePlayer).putCard(card);
@@ -158,20 +164,39 @@ public class Game {
 
     private Player getNextPlayer()
     {
+        if(!playerOne.isActive()) return playerTwo;
+        if(!playerTwo.isActive()) return playerOne;
         return(activePlayer == playerTwo) ? playerOne : playerTwo;
     }
 
     private void nextRound()
     {
+        //get winner
+        int playerOnePoints = gameFields.get(playerOne).getPoints();
+        int playerTwoPoints = gameFields.get(playerTwo).getPoints();
+
+        if(playerOnePoints == playerTwoPoints) {
+            playerOne.addWin();
+            playerTwo.addWin();
+        } else if(playerOnePoints > playerTwoPoints) {
+            playerOne.addWin();
+        } else {
+            playerTwo.addWin();
+        }
+
+        if(playerOne.getWins() >= 2 || playerTwo.getWins() >= 2)
+        {
+            endGame();
+        }
+
         gameFields.forEach(
                 (k,v) -> v.clearCardArea()
         );
-        round++;
     }
 
-    public boolean isGameOn()
+    private void endGame()
     {
-        return round <= 2;
+
     }
 
     public int[] getPoints()
