@@ -12,10 +12,18 @@ import pl.mrucznik.gwint.R;
 import pl.mrucznik.gwint.model.cards.GwentCards;
 
 public class MainActivity extends AppCompatActivity {
+
+    public void openStartActivity(View view)
+    {
+        Intent intent = new Intent(this, StartActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //inicjalizacja przycisków
         final Button writeButton = (Button) findViewById(R.id.writeButton);
@@ -57,5 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 }

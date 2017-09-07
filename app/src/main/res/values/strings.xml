@@ -2,4 +2,10 @@
     <string name="app_name">Gwint</string>
     <string name="title_activity_write">WriteActivity</string>
     <string name="title_activity_read">ReadActivity</string>
+
+    <string name="title_activity_start">StartActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="loading">Loading</string>
+    <string name="loading2">Loading...</string>
 </resources>
