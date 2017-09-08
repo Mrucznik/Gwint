@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +14,7 @@
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:weightSum="1"
         android:background="#000000">
@@ -27,154 +28,165 @@
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
-            <LinearLayout
-                android:id="@+id/upPlayerContainer"
+            <FrameLayout
+                android:id="@+id/upPlayerFrame"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginTop="35dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="33dp"
                 android:gravity="top"
-                android:orientation="vertical"
-                android:visibility="visible"
-                android:background="#3e0000"
-                android:layout_marginLeft="26dp"
-                android:layout_marginRight="26dp">
+                android:orientation="vertical">
+                <!--android:background="#aaff0000" -->
 
                 <LinearLayout
-                    android:id="@+id/upPlayerTowerContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/tower_up"
-                    android:alpha=".50">
-
-                    <TextView
-                        android:id="@+id/upPlayerTowerScoreForDown"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:text="36"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/upPlayerTowerScoreForUp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:rotation="180"
-                        android:text="36"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/upPlayer1Stick"
-                    android:layout_width="match_parent"
+                    android:id="@+id/upPlayerContainer"
+                    android:layout_width="fill_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/wood_stick_up"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#590000"
                     android:orientation="vertical">
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/upPlayerTowerContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:alpha="0.8"
+                        android:background="@drawable/tower_up"
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/upPlayerBowContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/bow_up"
-                    android:alpha=".50">
+                        <TextView
+                            android:id="@+id/upPlayerTowerScoreForDown"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:text="36"
+                            android:textColor="#ffffff"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/upPlayerBowScoreForDown"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/upPlayerTowerScoreForUp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:rotation="180"
+                            android:text="36"
+                            android:textColor="#ffffff"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/upPlayer1Stick"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:text="42"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
+                        android:layout_gravity="center"
+                        android:background="@drawable/wood_stick_up"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/upPlayerBowScoreForUp"
-                        android:layout_width="wrap_content"
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/upPlayerBowContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:alpha="0.8"
+                        android:background="@drawable/bow_up"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/upPlayerBowScoreForDown"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:text="42"
+                            android:textColor="#ffffff"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/upPlayerBowScoreForUp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:rotation="180"
+                            android:text="42"
+                            android:textColor="#ffffff"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/upPlayer2Stick"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:rotation="180"
-                        android:text="42"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
+                        android:layout_gravity="center"
+                        android:background="@drawable/wood_stick_up"
+                        android:orientation="vertical">
 
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/upPlayer2Stick"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/wood_stick_up"
-                    android:orientation="vertical">
+                    </LinearLayout>
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/upPlayerSwordContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:alpha="0.8"
+                        android:background="@drawable/sword_up"
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/upPlayerSwordContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/sword_up"
-                    android:alpha=".50">
+                        <TextView
+                            android:id="@+id/upPlayerSwordScoreForDown"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:text="17"
+                            android:textColor="#ffffff"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/upPlayerSwordScoreForDown"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/upPlayerSwordScoreForUp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:rotation="180"
+                            android:text="17"
+                            android:textColor="#ffffff"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/upPlayer3Stick"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:text="17"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
+                        android:layout_gravity="center"
+                        android:background="@drawable/wood_stick_up"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/upPlayerSwordScoreForUp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:rotation="180"
-                        android:text="17"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-
+                    </LinearLayout>
                 </LinearLayout>
-
-
-
-                <LinearLayout
-                    android:id="@+id/upPlayer3Stick"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/wood_stick_up"
-                    android:orientation="vertical">
-
-                </LinearLayout>
-            </LinearLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/centerContainer"
@@ -183,7 +195,8 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
-                android:alpha=".75"
+                android:alpha=".8"
+                android:background="@drawable/wood"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -212,7 +225,7 @@
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
                         android:rotation="180"
-                        android:text="17"
+                        android:text="95"
                         android:textColor="#ffffff"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -223,7 +236,70 @@
                     android:id="@+id/heartContainer"
                     android:layout_width="match_parent"
                     android:layout_height="84dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".2"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/downPlayer1Heart"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/heart_on" />
+
+                        <ImageView
+                            android:id="@+id/downPlayer2Heart"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/heart_on" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".2"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/coin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/coin_right_blue" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".2"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/upPlayer2Heart"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/heart_on" />
+
+                        <ImageView
+                            android:id="@+id/upPlayer1Heart"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/heart_off" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -231,153 +307,193 @@
                     android:id="@+id/downPlayerCenterContainer"
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/downPlayerCenterCountForDown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:text="65"
+                        android:textColor="#ffffff"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/downPlayerCenterCountForUp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:rotation="180"
+                        android:text="65"
+                        android:textColor="#ffffff"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
 
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/downPlayerContainer"
+            <FrameLayout
+                android:id="@+id/downPlayerFrame"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:orientation="vertical"
-                android:layout_marginLeft="26dp"
-                android:layout_marginRight="26dp"
-                android:background="#001d38">
-
+                android:layout_gravity="center"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="33dp"
+                android:background="#aa0048ff"
+                android:gravity="top"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/downPlayer1Stick"
-                    android:layout_width="match_parent"
+                    android:id="@+id/downPlayerContainer"
+                    android:layout_width="fill_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/wood_stick_down"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#012b53"
                     android:orientation="vertical">
 
-                </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/downPlayerSwordContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/sword_down"
-                    android:alpha=".50">
-
-                    <TextView
-                        android:id="@+id/downPlayerSwordScoreForUp"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/downPlayer1Stick"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:text="11"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
+                        android:background="@drawable/wood_stick_down"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/downPlayerSwordScoreForDown"
-                        android:layout_width="wrap_content"
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/downPlayerSwordContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:alpha=".75"
+                        android:background="@drawable/sword_down"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/downPlayerSwordScoreForUp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:text="11"
+                            android:textColor="#ffffff"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/downPlayerSwordScoreForDown"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:rotation="180"
+                            android:text="11"
+                            android:textColor="#ffffff"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/downPlayer2Stick"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:rotation="180"
-                        android:text="18"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        android:layout_gravity="center"
+                        android:background="@drawable/wood_stick_down"
+                        android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/downPlayer2Stick"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/wood_stick_down"
-                    android:orientation="vertical"
-                    >
+                    </LinearLayout>
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/downPlayerBowContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:alpha=".75"
+                        android:background="@drawable/bow_down"
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/downPlayerBowContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/bow_down"
-                    android:alpha=".50">
+                        <TextView
+                            android:id="@+id/downPlayerBowScoreForUp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:text="23"
+                            android:textColor="#ffffff"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/downPlayerBowScoreForUp"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/downPlayerBowScoreForDown"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:rotation="180"
+                            android:text="23"
+                            android:textColor="#ffffff"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/downPlayer3Stick"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:text="23"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
+                        android:layout_gravity="center"
+                        android:background="@drawable/wood_stick_down"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/downPlayerBowScoreForDown"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:rotation="180"
-                        android:text="53"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/downPlayerTowerContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:alpha=".75"
+                        android:background="@drawable/tower_down"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/downPlayerTowerScoreForUp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:text="31"
+                            android:textColor="#ffffff"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/downPlayerTowerScoreForDown"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:rotation="180"
+                            android:text="31"
+                            android:textColor="#ffffff"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/downPlayer3Stick"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/wood_stick_down"
-                    android:orientation="vertical">
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/downPlayerTowerContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/tower_down"
-                    android:alpha=".50">
-                    <TextView
-                        android:id="@+id/downPlayerTowerScoreForUp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:text="31"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/downPlayerTowerScoreForDown"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:rotation="180"
-                        android:text="72"
-                        android:textColor="#ffffff"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
+            </FrameLayout>
 
         </LinearLayout>
 
