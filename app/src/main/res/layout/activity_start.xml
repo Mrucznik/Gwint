@@ -181,7 +181,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="168dp"
                 android:layout_gravity="center"
-                android:background="@drawable/wood"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:alpha=".75"
