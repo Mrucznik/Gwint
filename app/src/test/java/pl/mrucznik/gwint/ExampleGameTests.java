@@ -16,7 +16,7 @@ import pl.mrucznik.gwint.model.cards.GwentCards;
 import static org.junit.Assert.*;
 
 
-public class GameTests {
+public class ExampleGameTests {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
@@ -33,7 +33,7 @@ public class GameTests {
         Game game = new Game(new GameController(), playerOne, playerTwo);
 
         int turn = 1;
-        while(game.isGameOn())
+        while(true)
         {
             System.out.println("\nKolejka numer " + turn);
             System.out.println("Aktywne efekty: ");
@@ -59,7 +59,8 @@ public class GameTests {
         }
 
         System.out.println("Wynik końcowy ");
-        game.printPoints();
+        int[] points = game.getPoints();
+        System.out.println(playerOne.toString() + ": " + points[0] + " " + playerTwo.toString() + ": " + points[1]);
     }
 
     @Test

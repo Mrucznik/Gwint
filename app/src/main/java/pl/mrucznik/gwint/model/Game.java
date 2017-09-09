@@ -1,11 +1,13 @@
 package pl.mrucznik.gwint.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
 import pl.mrucznik.gwint.controller.GameController;
 import pl.mrucznik.gwint.model.cards.AttackRow;
 import pl.mrucznik.gwint.model.cards.GwentCard;
+import pl.mrucznik.gwint.model.effects.BehaviourEffects;
 import pl.mrucznik.gwint.model.effects.StrengthEffect;
 
 public class Game {
@@ -16,17 +18,20 @@ public class Game {
     private GameController gameController;
     private GwentCard waitForNextCard;
 
+
     public Game(GameController gameController, Player playerOne, Player playerTwo) {
         this.gameController = gameController;
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        activePlayer = playerOne;
 
         gameFields = new HashMap<>();
         gameFields.put(playerOne, new GameField());
         gameFields.put(playerTwo, new GameField());
+    }
 
-        //cardController = new CardController(gameFields.values(), effectControler);
+    public void start()
+    {
+        activePlayer = playerOne;
     }
 
     public void processCard(GwentCard card) {
@@ -41,6 +46,7 @@ public class Game {
         }
     }
 
+    //TODO: Rozbić na mniejsze metody/klasy
     private void processCardBehaviour(GwentCard card) {
 
         //Braterstwo
@@ -166,23 +172,13 @@ public class Game {
     {
         if(!playerOne.isActive()) return playerTwo;
         if(!playerTwo.isActive()) return playerOne;
-        return(activePlayer == playerTwo) ? playerOne : playerTwo;
+        return (activePlayer == playerTwo) ? playerOne : playerTwo;
     }
 
     private void nextRound()
     {
-        //get winner
-        int playerOnePoints = gameFields.get(playerOne).getPoints();
-        int playerTwoPoints = gameFields.get(playerTwo).getPoints();
-
-        if(playerOnePoints == playerTwoPoints) {
-            playerOne.addWin();
-            playerTwo.addWin();
-        } else if(playerOnePoints > playerTwoPoints) {
-            playerOne.addWin();
-        } else {
-            playerTwo.addWin();
-        }
+        //process winners
+        getWinners().forEach(Player::addWin);
 
         if(playerOne.getWins() >= 2 || playerTwo.getWins() >= 2)
         {
@@ -190,8 +186,24 @@ public class Game {
         }
 
         gameFields.forEach(
-                (k,v) -> v.clearCardArea()
+            (k,v) -> v.clearCardArea()
         );
+
+        //TODO: set appropriate active player
+    }
+
+    private ArrayList<Player> getWinners()
+    {
+        ArrayList<Player> winners = new ArrayList<>();
+        int playerOnePoints = gameFields.get(playerOne).getPoints();
+        int playerTwoPoints = gameFields.get(playerTwo).getPoints();
+
+        if(playerOnePoints >= playerTwoPoints) {
+            winners.add(playerOne);
+        } else if(playerOnePoints <= playerTwoPoints) {
+            winners.add(playerTwo);
+        }
+        return winners;
     }
 
     private void endGame()
@@ -206,13 +218,9 @@ public class Game {
         pointsArray[1] = gameFields.get(playerTwo).getPoints();
         return pointsArray;
     }
+
     public Player getActivePlayer() {
         return activePlayer;
-    }
-
-    public void printPoints()
-    {
-        gameFields.forEach((k,v) -> System.out.println(v.getPoints()));
     }
 
     public Collection<StrengthEffect> getActiveEffects(Player player) {

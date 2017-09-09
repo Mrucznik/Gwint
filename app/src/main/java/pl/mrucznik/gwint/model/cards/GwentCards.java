@@ -3,6 +3,7 @@ package pl.mrucznik.gwint.model.cards;
 import java.util.Random;
 import java.util.Stack;
 
+//TODO: Move to tests
 /**
  * Singleton class, contains gwent cards
  */
