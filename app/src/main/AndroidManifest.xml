@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".controller.activities.StartActivity"
+            android:name=".controller.activities.GameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_start"
             android:theme="@style/FullscreenTheme" />
