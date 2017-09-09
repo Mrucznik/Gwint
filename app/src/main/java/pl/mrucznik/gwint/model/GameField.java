@@ -86,7 +86,8 @@ public class GameField {
         points.put(AttackRow.Siege, 0);
 
         for (GwentCard card : cards) {
-            points.put(card.getAttackRow(), points.getOrDefault(card.getAttackRow(), 0) + effectControler.getCardStrengthAfterEffectsAffected(card));
+            int point = points.get(card.getAttackRow());
+            points.put(card.getAttackRow(), point + effectControler.getCardStrengthAfterEffectsAffected(card));
         }
         return points;
     }
