@@ -9,12 +9,7 @@ import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +19,6 @@ import pl.mrucznik.gwint.model.cards.GwentCard;
 public class ReadActivity extends Activity {
 
     public static final String MIME_TYPE = "application/vnd.mrucznik";
-    public static final String TAG = "NfcDemo";
 
     private TextView info;
     private NfcAdapter mNfcAdapter;
