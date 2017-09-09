@@ -1,6 +1,7 @@
 package pl.mrucznik.gwint.controller.activities;
 
 import android.annotation.SuppressLint;
+import android.media.Image;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +11,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.util.Random;
 
 import pl.mrucznik.gwint.R;
 
@@ -92,6 +97,29 @@ public class StartActivity extends AppCompatActivity {
         }
     };
 
+    TextView downPlayerCountFD;
+    TextView downPlayerCountFU;
+    TextView upPlayerCountFD;
+    TextView upPlayerCountFU;
+
+    private TextView downPlayerSwordPoint;
+    private TextView downPlayerBowPoint;
+    private TextView downPlayerTowerPoint;
+
+    private TextView upPlayerSwordPoint;
+    private TextView upPlayerBowPoint;
+    private TextView upPlayerTowerPoint;
+
+    TextView downPlayerSwordClone;
+    TextView downPlayerBowClone;
+    TextView downPlayerTowerClone;
+
+    TextView upPlayerSwordClone;
+    TextView upPlayerBowClone;
+    TextView upPlayerTowerClone;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,13 +134,79 @@ public class StartActivity extends AppCompatActivity {
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
-        TextView downPlayerCountFD = (TextView)findViewById(R.id.downPlayerCenterCountForDown);
-        TextView downPlayerSwordPoint = (TextView)findViewById(R.id.downPlayerSwordScoreForDown);
-        TextView downPlayerBowPoint = (TextView)findViewById(R.id.downPlayerBowScoreForDown);
-        TextView downPlayerTowerPoint = (TextView)findViewById(R.id.downPlayerTowerScoreForDown);
-        int Count = Integer.parseInt(downPlayerSwordPoint.getText().toString()) + Integer.parseInt(downPlayerBowPoint.getText().toString()) + Integer.parseInt(downPlayerTowerPoint.getText().toString());
-        downPlayerCountFD.setText(""+Count);
+
+        downPlayerCountFD = (TextView)findViewById(R.id.downPlayerCenterCountForDown);
+        downPlayerCountFU = (TextView)findViewById(R.id.downPlayerCenterCountForUp);
+        upPlayerCountFU = (TextView)findViewById(R.id.upPlayerCenterCountForUp);
+        upPlayerCountFD = (TextView)findViewById(R.id.upPlayerCenterCountForDown);
+
+
+        downPlayerSwordPoint = (TextView)findViewById(R.id.downPlayerSwordScoreForDown);
+        downPlayerBowPoint = (TextView)findViewById(R.id.downPlayerBowScoreForDown);
+        downPlayerTowerPoint = (TextView)findViewById(R.id.downPlayerTowerScoreForDown);
+
+
+        upPlayerSwordPoint = (TextView)findViewById(R.id.upPlayerSwordScoreForUp);
+        upPlayerBowPoint = (TextView)findViewById(R.id.upPlayerBowScoreForUp);
+        upPlayerTowerPoint = (TextView)findViewById(R.id.upPlayerTowerScoreForUp);
+
+        downPlayerSwordClone = (TextView)findViewById(R.id.downPlayerSwordScoreForUp);
+        downPlayerBowClone = (TextView)findViewById(R.id.downPlayerBowScoreForUp);
+        downPlayerTowerClone = (TextView)findViewById(R.id.downPlayerTowerScoreForUp);
+
+
+        upPlayerSwordClone = (TextView)findViewById(R.id.upPlayerSwordScoreForDown);
+        upPlayerBowClone = (TextView)findViewById(R.id.upPlayerBowScoreForDown);
+        upPlayerTowerClone = (TextView)findViewById(R.id.upPlayerTowerScoreForDown);
+
+
+        refreshCount(downPlayerSwordPoint, downPlayerSwordClone);
+        refreshCount(downPlayerBowPoint, downPlayerBowClone);
+        refreshCount(downPlayerTowerPoint, downPlayerTowerClone);
+
+        refreshCount(upPlayerSwordPoint, upPlayerSwordClone);
+        refreshCount(upPlayerBowPoint, upPlayerBowClone);
+        refreshCount(upPlayerTowerPoint, upPlayerTowerClone);
+
+
     }
+
+    public void refreshCount(TextView textView, TextView textClone)
+    {
+        textView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int CountPlayerDown = Integer.parseInt(downPlayerSwordPoint.getText().toString()) + Integer.parseInt(downPlayerBowPoint.getText().toString()) + Integer.parseInt(downPlayerTowerPoint.getText().toString());
+                int CountPlayerUp = Integer.parseInt(upPlayerSwordPoint.getText().toString()) + Integer.parseInt(upPlayerBowPoint.getText().toString()) + Integer.parseInt(upPlayerTowerPoint.getText().toString());
+                downPlayerCountFD.setText(""+CountPlayerDown);
+                downPlayerCountFU.setText(""+CountPlayerDown);
+                upPlayerCountFD.setText(""+CountPlayerUp);
+                upPlayerCountFU.setText(""+CountPlayerUp);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                textClone.setText(""+textView.getText().toString());
+            }
+        });
+    }
+
+    //monetak randomuje wartosci i zmienia kolej rundy[test]
+    public void imageView(View v)
+    {
+        Random rand = new Random();
+        int n = rand.nextInt(40);
+        downPlayerBowPoint.setText(""+n);
+        upPlayerTowerPoint.setText(""+n);
+    }
+
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
