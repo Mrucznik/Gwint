@@ -45,7 +45,6 @@
                 <data android:mimeType="application/vnd.mrucznik" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.activities.GameActivity" />
         <activity
             android:name=".controller.activities.StartActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

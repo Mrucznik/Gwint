@@ -3,11 +3,11 @@ package pl.mrucznik.gwint.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 import pl.mrucznik.gwint.controller.GameController;
 import pl.mrucznik.gwint.model.cards.AttackRow;
 import pl.mrucznik.gwint.model.cards.GwentCard;
-import pl.mrucznik.gwint.model.effects.BehaviourEffects;
 import pl.mrucznik.gwint.model.effects.StrengthEffect;
 
 public class Game {
@@ -44,6 +44,16 @@ public class Game {
         } else {
             processCardBehaviour(card);
         }
+
+        updatePoints();
+    }
+
+    private void updatePoints()
+    {
+        HashMap<Player, Map<AttackRow, Integer>> points = new HashMap<>();
+        points.put(playerOne, gameFields.get(playerOne).getRowsPoints());
+        points.put(playerOne, gameFields.get(playerTwo).getRowsPoints());
+        gameController.updatePoints(points);
     }
 
     //TODO: Rozbić na mniejsze metody/klasy
@@ -54,7 +64,8 @@ public class Game {
             switch(waitForNextCard.getCardBehaviour())
             {
                 case Braterstwo:
-                    if(waitForNextCard != null && !waitForNextCard.getName().equals(card.getName())) {
+                    //next player if card other than brotherhood card threw
+                    if(!waitForNextCard.getName().equals(card.getName())) {
                         nextPlayer();
                         waitForNextCard = null;
                     }
@@ -63,8 +74,9 @@ public class Game {
                     if(gameFields.get(activePlayer).cardExists(card)) {
                         gameFields.get(activePlayer).removeCard(card);
                         waitForNextCard = null;
+                        nextPlayer();
                     } else {
-                        gameController.sendMessage("Ta karta nie istnieje na polu rozgrywk.");
+                        gameController.sendMessage("Ta karta nie istnieje na polu rozgrywki.");
                     }
                     return;
                 case PozogaSmoka:

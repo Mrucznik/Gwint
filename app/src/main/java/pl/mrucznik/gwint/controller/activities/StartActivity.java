@@ -101,9 +101,6 @@ public class StartActivity extends AppCompatActivity {
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
-
-
-
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
@@ -126,8 +123,6 @@ public class StartActivity extends AppCompatActivity {
         // are available.
         delayedHide(100);
     }
-
-
 
     private void hide() {
         // Hide UI first
@@ -160,7 +155,4 @@ public class StartActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
-
-
-
 }
