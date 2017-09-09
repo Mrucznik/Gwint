@@ -266,7 +266,6 @@ public class GameActivity extends AppCompatActivity implements IGameController {
         game.processCard(new GwentCard(0, "Letho z Gulety", 10, AttackRow.CloseCombat, true, CardBehaviour.None));
         game.processCard(new GwentCard(1, "Sheldon Skaggs", 4, AttackRow.LongRange, false, CardBehaviour.None));
         game.processCard(new GwentCard(2, "Wsparcie Łuczników", 1, AttackRow.LongRange, false, CardBehaviour.Mgla));
-        game.processCard(new GwentCard(2, "Wsparcie Łuczników", 1, AttackRow.LongRange, false, CardBehaviour.Mgla));
     }
 
 

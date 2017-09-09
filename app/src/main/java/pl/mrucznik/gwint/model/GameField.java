@@ -12,6 +12,7 @@ import pl.mrucznik.gwint.model.cards.CardBehaviour;
 import pl.mrucznik.gwint.model.cards.GwentCard;
 import pl.mrucznik.gwint.model.effects.EffectControler;
 import pl.mrucznik.gwint.model.effects.StrengthEffect;
+import pl.mrucznik.gwint.model.effects.WeatherEffect;
 
 public class GameField {
     private GwentCard king;
@@ -111,6 +112,10 @@ public class GameField {
     public Collection<StrengthEffect> getEffects()
     {
         return effectControler.getAllEffects();
+    }
+    public void addEffect(GwentCard card)
+    {
+        effectControler.addEffectIfExists(card);
     }
 
     public void removeGraveyardCard(GwentCard card) {

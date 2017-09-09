@@ -96,12 +96,15 @@ public class Game {
         {
             //TODO: Przenieść implementacje, poprawić hermetyzacje
             case None:
+                break;
             case Mroz:
             case Mgla:
             case Deszcz:
-            case CzysteNiebo: //TightBond effect
-            case Wiez: //HighMorale effect
-            case WysokieMorale:
+            case CzysteNiebo:
+                gameFields.get(getNextPlayer()).addEffect(card);
+                break;
+            case Wiez: //TightBond effect
+            case WysokieMorale://HighMorale effect
             case RogDowodcy:
             case FoltestZdobywca: //Podwaja siłę wszystkich twoich jednostek oblężniczych (o ile w ich rzędzie nie ma już Rogu Dowódcy). - zwykły róg dowódcy
             case RogJaskra:

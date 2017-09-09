@@ -3,6 +3,7 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 import pl.mrucznik.gwint.model.cards.AttackRow;
+import pl.mrucznik.gwint.model.cards.CardBehaviour;
 import pl.mrucznik.gwint.model.cards.GwentCard;
 
 public class EffectControler {
@@ -11,11 +12,6 @@ public class EffectControler {
     public EffectControler()
     {
         effects = new TreeSet<>();
-    }
-
-    public void addEffectIfExists(StrengthEffect effect)
-    {
-        effects.add(effect);
     }
 
     public void addEffectIfExists(GwentCard effectCard)

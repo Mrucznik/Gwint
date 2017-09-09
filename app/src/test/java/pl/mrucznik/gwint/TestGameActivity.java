@@ -44,4 +44,9 @@ public class TestGameActivity implements IGameController{
     public void sendMessage(String message) {
 
     }
+
+    @Override
+    public void updatePlayer(Player player) {
+
+    }
 }
