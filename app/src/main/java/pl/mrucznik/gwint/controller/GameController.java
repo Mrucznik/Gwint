@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import pl.mrucznik.gwint.model.Game;
 import pl.mrucznik.gwint.model.cards.AttackRow;
 import pl.mrucznik.gwint.model.cards.GwentCard;
 
 public class GameController {
+    Game game;
+
     public void showRowMenu(Consumer<AttackRow> callback)
     {
         callback.accept(AttackRow.CloseCombat);
