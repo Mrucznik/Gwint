@@ -5,7 +5,6 @@ import android.support.annotation.RequiresApi;
 
 import org.junit.Test;
 
-import pl.mrucznik.gwint.controller.GameController;
 import pl.mrucznik.gwint.model.Game;
 import pl.mrucznik.gwint.model.Player;
 import pl.mrucznik.gwint.model.cards.AttackRow;
@@ -30,7 +29,8 @@ public class ExampleGameTests {
         Player playerOne = new Player("Szymon");
         Player playerTwo = new Player("Seba");
 
-        Game game = new Game(new GameController(), playerOne, playerTwo);
+        Game game = new Game(new TestGameActivity(), playerOne, playerTwo);
+        game.start();
 
         int turn = 1;
         while(true)
@@ -69,7 +69,8 @@ public class ExampleGameTests {
         Player playerOne = new Player("Szymon");
         Player playerTwo = new Player("Seba");
 
-        Game game = new Game(new GameController(), playerOne, playerTwo);
+        Game game = new Game(new TestGameActivity(), playerOne, playerTwo);
+        game.start();
 
         game.processCard(new GwentCard(5, "Brygada Impera", 3, AttackRow.CloseCombat, false, CardBehaviour.Wiez));
         game.processCard(new GwentCard(1, "Róg dowódcy", 0, AttackRow.All, false, CardBehaviour.RogDowodcy));

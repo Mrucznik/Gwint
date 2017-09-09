@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import pl.mrucznik.gwint.controller.GameController;
+import pl.mrucznik.gwint.controller.activities.IGameController;
 import pl.mrucznik.gwint.model.cards.AttackRow;
 import pl.mrucznik.gwint.model.cards.GwentCard;
 import pl.mrucznik.gwint.model.effects.StrengthEffect;
@@ -15,11 +15,11 @@ public class Game {
     private Player playerTwo;
     private Player activePlayer;
     private HashMap<Player, GameField> gameFields;
-    private GameController gameController;
+    private IGameController gameController;
     private GwentCard waitForNextCard;
 
 
-    public Game(GameController gameController, Player playerOne, Player playerTwo) {
+    public Game(IGameController gameController, Player playerOne, Player playerTwo) {
         this.gameController = gameController;
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
@@ -52,7 +52,7 @@ public class Game {
     {
         HashMap<Player, Map<AttackRow, Integer>> points = new HashMap<>();
         points.put(playerOne, gameFields.get(playerOne).getRowsPoints());
-        points.put(playerOne, gameFields.get(playerTwo).getRowsPoints());
+        points.put(playerTwo, gameFields.get(playerTwo).getRowsPoints());
         gameController.updatePoints(points);
     }
 
@@ -178,6 +178,7 @@ public class Game {
     private void nextPlayer()
     {
         activePlayer = getNextPlayer();
+        gameController.updatePlayer(activePlayer);
     }
 
     private Player getNextPlayer()

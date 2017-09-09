@@ -80,6 +80,10 @@ public class GameField {
     public Map<AttackRow, Integer> getRowsPoints()
     {
         Map<AttackRow, Integer> points = new HashMap<>();
+        points.put(AttackRow.CloseCombat, 0);
+        points.put(AttackRow.LongRange, 0);
+        points.put(AttackRow.Siege, 0);
+
         for (GwentCard card : cards) {
             points.put(card.getAttackRow(), points.getOrDefault(card.getAttackRow(), 0) + effectControler.getCardStrengthAfterEffectsAffected(card));
         }

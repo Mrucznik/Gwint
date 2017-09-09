@@ -1,6 +1,7 @@
 package pl.mrucznik.gwint.controller.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,17 +11,77 @@ import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import pl.mrucznik.gwint.R;
+import pl.mrucznik.gwint.model.Game;
+import pl.mrucznik.gwint.model.Player;
+import pl.mrucznik.gwint.model.cards.AttackRow;
+import pl.mrucznik.gwint.model.cards.CardBehaviour;
+import pl.mrucznik.gwint.model.cards.GwentCard;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements IGameController {
+    /*Game Controller*/
+    Game game;
+    Player playerOne, playerTwo;
+
+    public void startGame()
+    {
+        playerOne = new Player("Gracz dolny");
+        playerTwo = new Player("Gracz górny");
+        game = new Game(this, playerOne, playerTwo);
+        game.start();
+    }
+
+    public void showRowMenu(Consumer<AttackRow> callback)
+    {
+
+        callback.accept(AttackRow.CloseCombat);
+    }
+    public void sendButtonMessage(String message, String buttonMeesage)
+    {
+        //nie robić
+    }
+
+    public void updatePoints(Map<Player, Map<AttackRow, Integer>> points)
+    {
+        downPlayerSwordPoint.setText(points.get(playerOne).get(AttackRow.CloseCombat).toString());
+        downPlayerBowPoint.setText(points.get(playerOne).get(AttackRow.LongRange).toString());
+        downPlayerTowerPoint.setText(points.get(playerOne).get(AttackRow.Siege).toString());
+        upPlayerSwordPoint.setText(points.get(playerTwo).get(AttackRow.CloseCombat).toString());
+        upPlayerBowPoint.setText(points.get(playerTwo).get(AttackRow.LongRange).toString());
+        upPlayerTowerPoint.setText(points.get(playerTwo).get(AttackRow.Siege).toString());
+    }
+
+    public void chooseCard(Stream<GwentCard> cards, Consumer<GwentCard> callback)
+    {
+        sendMessage("Wybierz kartę");
+        callback.accept(cards.findAny().get()); //wybrana karta
+    }
+
+
+    public void sendMessage(String message)
+    {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void updatePlayer(Player player)
+    {
+
+    }
+
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -96,7 +157,7 @@ public class GameActivity extends AppCompatActivity {
     TextView upPlayerCountFD;
     TextView upPlayerCountFU;
 
-    private TextView downPlayerSwordPoint;
+    private TextView downPlayerSwordPoint; //macierzyste
     private TextView downPlayerBowPoint;
     private TextView downPlayerTowerPoint;
 
@@ -163,6 +224,7 @@ public class GameActivity extends AppCompatActivity {
         refreshCount(upPlayerTowerPoint, upPlayerTowerClone);
 
 
+        startGame();
     }
 
     public void refreshCount(TextView textView, TextView textClone)
@@ -196,10 +258,16 @@ public class GameActivity extends AppCompatActivity {
     {
         Random rand = new Random();
         int n = rand.nextInt(40);
-        downPlayerBowPoint.setText(""+n);
-        upPlayerTowerPoint.setText(""+n);
-    }
+        /*downPlayerBowPoint.setText(""+n);
+        upPlayerTowerPoint.setText(""+n);*/
 
+
+
+        game.processCard(new GwentCard(0, "Letho z Gulety", 10, AttackRow.CloseCombat, true, CardBehaviour.None));
+        game.processCard(new GwentCard(1, "Sheldon Skaggs", 4, AttackRow.LongRange, false, CardBehaviour.None));
+        game.processCard(new GwentCard(2, "Wsparcie Łuczników", 1, AttackRow.LongRange, false, CardBehaviour.Mgla));
+        game.processCard(new GwentCard(2, "Wsparcie Łuczników", 1, AttackRow.LongRange, false, CardBehaviour.Mgla));
+    }
 
 
     @Override
