@@ -171,6 +171,7 @@ public class Game {
                     nextRound();
                     gameController.sendMessage("Następna runda!.");
                 }
+                nextPlayer();
                 return;
         }
 
@@ -194,7 +195,7 @@ public class Game {
     private void nextRound()
     {
         //process winners
-        getWinners().forEach(Player::addWin);
+        getWinners().forEach((p) -> p.addWin());
 
         if(playerOne.getWins() >= 2 || playerTwo.getWins() >= 2)
         {
