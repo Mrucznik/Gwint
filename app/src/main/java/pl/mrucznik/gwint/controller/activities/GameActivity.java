@@ -272,20 +272,34 @@ public class GameActivity extends AppCompatActivity implements IGameController {
             }
         });
     }
-
-    //monetak randomuje wartosci i zmienia kolej rundy[test]
+int i = 0;
+    //symulacja gry na monetce
     public void imageView(View v)
     {
         Random rand = new Random();
         int n = rand.nextInt(40);
-        /*downPlayerBowPoint.setText(""+n);
+        /*downPlayerBowPoint.setText(""+n); // randomuje wartosci
         upPlayerTowerPoint.setText(""+n);*/
 
 
 
         //game.processCard(new GwentCard(0, "Letho z Gulety", 10, AttackRow.CloseCombat, true, CardBehaviour.None));
         //game.processCard(new GwentCard(1, "Sheldon Skaggs", 4, AttackRow.LongRange, false, CardBehaviour.None));
-        game.processCard(new GwentCard(2, "Wsparcie Łuczników", 1, AttackRow.LongRange, false, CardBehaviour.Mgla));
+
+        game.processCard(new GwentCard(i++, "Wsparcie Łuczników", 1, AttackRow.LongRange, false, CardBehaviour.Mgla));
+
+
+
+        v.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getApplicationContext(), game.getActivePlayer().toString() + " Spasowal!",Toast.LENGTH_SHORT).show();
+                game.processCard(new GwentCard(i++, "Pass", 0, AttackRow.None, false, CardBehaviour.Pass));
+                Toast.makeText(getApplicationContext(), "Idzie teraz " + game.getActivePlayer().toString(), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
     }
 
 
