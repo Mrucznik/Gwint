@@ -18,6 +18,10 @@ public class Player {
         active = false;
     }
 
+    public void setActive() {
+        active = true;
+    }
+
     public int getWins() {
         return wins;
     }

@@ -195,18 +195,20 @@ public class Game {
     private void nextRound()
     {
         //process winners
-        getWinners().forEach((p) -> p.addWin());
+        getWinners().forEach(Player::addWin);
 
-        if(playerOne.getWins() >= 2 || playerTwo.getWins() >= 2)
-        {
+        if(playerOne.getWins() >= 2 || playerTwo.getWins() >= 2) {
             endGame();
+        } else {
+            playerOne.setActive();
+            playerTwo.setActive();
+
+            gameFields.forEach(
+                    (k, v) -> v.clearCardArea()
+            );
+
+            //TODO: set appropriate active player
         }
-
-        gameFields.forEach(
-            (k,v) -> v.clearCardArea()
-        );
-
-        //TODO: set appropriate active player
     }
 
     private ArrayList<Player> getWinners()
