@@ -11,13 +11,6 @@
          TextureView, etc. -->
 
 
-    <TextView
-        android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="false" />
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,13 +39,20 @@
         </LinearLayout>
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:keepScreenOn="false" />
+
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="#000000"
         android:orientation="vertical"
-        android:weightSum="1"
-        android:background="#000000">
+        android:weightSum="1">
 
         <LinearLayout
             android:id="@+id/gameFrame"
@@ -71,9 +71,9 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginTop="33dp"
+                android:background="#00ff0000"
                 android:gravity="top"
-                android:orientation="vertical"
-                android:background="#00ff0000">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/upPlayerContainer"
@@ -309,8 +309,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            app:srcCompat="@drawable/coin_right_blue"
-                            android:onClick="imageView"/>
+                            android:onClick="coinHoldPass"
+                            app:srcCompat="@drawable/coin_right_blue" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -327,7 +327,7 @@
                             android:layout_gravity="center"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            app:srcCompat="@drawable/heart_off" />
+                            app:srcCompat="@drawable/heart_on" />
 
                         <ImageView
                             android:id="@+id/upPlayer2Heart"
@@ -380,9 +380,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:layout_marginBottom="33dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:layout_marginBottom="33dp"
                 android:background="#ae0048ff"
                 android:gravity="top"
                 android:orientation="vertical">
@@ -391,9 +391,9 @@
                     android:id="@+id/downPlayerContainer"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="2dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
-                    android:layout_marginBottom="2dp"
                     android:layout_marginTop="2dp"
                     android:background="#012b53"
                     android:orientation="vertical">
@@ -535,6 +535,86 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/upPlayerShadowPass"
+        android:layout_width="fill_parent"
+        android:layout_height="210dp"
+        android:layout_gravity="top"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="30dp"
+        android:background="#a2686363"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="Pass"
+            android:textColor="@color/redFrame"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/centerShadow"
+        android:layout_width="fill_parent"
+        android:layout_height="170dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="240dp"
+        android:background="#72baaf0f"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Wygrał!!!"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/winnerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="10dp"
+            android:text="gracz..."
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/downPlayerShadowPass"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="33dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="200dp"
+        android:background="#a2686363"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Pass"
+            android:textColor="@color/blueFrame"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </FrameLayout>
 
 
     <!-- This FrameLayout insets its children based on system windows using

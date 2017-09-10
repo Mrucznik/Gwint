@@ -13,7 +13,7 @@ import pl.mrucznik.gwint.model.cards.GwentCards;
 
 public class MainActivity extends AppCompatActivity {
 
-    public void openStartActivity(View view)
+    public void openGameActivity(View view)
     {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);

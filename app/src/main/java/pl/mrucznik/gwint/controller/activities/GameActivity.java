@@ -2,7 +2,9 @@ package pl.mrucznik.gwint.controller.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -97,15 +99,224 @@ public class GameActivity extends AppCompatActivity implements IGameController {
     @Override
     public void onNextRound() {
 
+        if(playerOne.getWins() == 1)
+        {
+            upPlayerHeart1.setImageResource(R.drawable.heart_off);
+        }
+        if(playerTwo.getWins() == 1)
+        {
+            downPlayerHeart1.setImageResource(R.drawable.heart_off);
+        }
+
+        downPlayerShadowPass.setVisibility(View.GONE);
+        upPlayerShadowPass.setVisibility(View.GONE);
     }
 
     @Override
     public void onGameEnds() {
 
+        centerShadow.setVisibility(View.VISIBLE);
+        if(playerOne.getWins() == 2)
+        {
+            upPlayerHeart2.setImageResource(R.drawable.heart_off);
+            winnerTextView.setText(playerOne.toString());
+
+        }
+        else
+        {
+            downPlayerHeart2.setImageResource(R.drawable.heart_off);
+            winnerTextView.setText(playerTwo.toString());
+        }
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable(){
+            @Override
+            public void run(){
+                Intent i = new Intent(GameActivity.this, MainActivity.class);
+                startActivity(i);
+                finish();
+            }
+        }, 3000);
     }
 
 
-    /**
+    TextView downPlayerCountFD;
+    TextView downPlayerCountFU;
+    TextView upPlayerCountFD;
+    TextView upPlayerCountFU;
+
+    private TextView downPlayerSwordPoint; //macierzyste
+    private TextView downPlayerBowPoint;
+    private TextView downPlayerTowerPoint;
+
+    private TextView upPlayerSwordPoint;
+    private TextView upPlayerBowPoint;
+    private TextView upPlayerTowerPoint;
+
+    TextView downPlayerSwordClone;
+    TextView downPlayerBowClone;
+    TextView downPlayerTowerClone;
+
+    TextView upPlayerSwordClone;
+    TextView upPlayerBowClone;
+    TextView upPlayerTowerClone;
+
+    FrameLayout downPlayerFrameL;
+    FrameLayout upPlayerFrameL;
+
+    FrameLayout downPlayerShadowPass;
+    FrameLayout upPlayerShadowPass;
+    FrameLayout centerShadow;
+
+
+    ImageView downPlayerHeart1;
+    ImageView downPlayerHeart2;
+    ImageView upPlayerHeart1;
+    ImageView upPlayerHeart2;
+    ImageView coinImg;
+
+    TextView winnerTextView;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_game);
+
+        mControlsView = findViewById(R.id.fullscreen_content_controls);
+        mContentView = findViewById(R.id.fullscreen_content);
+
+        // Upon interacting with UI controls, delay any scheduled hide()
+        // operations to prevent the jarring behavior of controls going away
+        // while interacting with the UI.
+        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+        //*******************************************************************************************************
+
+        coinImg = (ImageView)findViewById(R.id.coin);
+
+        downPlayerFrameL = (FrameLayout)findViewById(R.id.downPlayerFrame);
+        upPlayerFrameL = (FrameLayout)findViewById(R.id.upPlayerFrame);
+
+        downPlayerCountFD = (TextView)findViewById(R.id.downPlayerCenterCountForDown);
+        downPlayerCountFU = (TextView)findViewById(R.id.downPlayerCenterCountForUp);
+        upPlayerCountFU = (TextView)findViewById(R.id.upPlayerCenterCountForUp);
+        upPlayerCountFD = (TextView)findViewById(R.id.upPlayerCenterCountForDown);
+
+
+        downPlayerSwordPoint = (TextView)findViewById(R.id.downPlayerSwordScoreForDown);
+        downPlayerBowPoint = (TextView)findViewById(R.id.downPlayerBowScoreForDown);
+        downPlayerTowerPoint = (TextView)findViewById(R.id.downPlayerTowerScoreForDown);
+
+
+        upPlayerSwordPoint = (TextView)findViewById(R.id.upPlayerSwordScoreForUp);
+        upPlayerBowPoint = (TextView)findViewById(R.id.upPlayerBowScoreForUp);
+        upPlayerTowerPoint = (TextView)findViewById(R.id.upPlayerTowerScoreForUp);
+
+        downPlayerSwordClone = (TextView)findViewById(R.id.downPlayerSwordScoreForUp);
+        downPlayerBowClone = (TextView)findViewById(R.id.downPlayerBowScoreForUp);
+        downPlayerTowerClone = (TextView)findViewById(R.id.downPlayerTowerScoreForUp);
+
+
+        upPlayerSwordClone = (TextView)findViewById(R.id.upPlayerSwordScoreForDown);
+        upPlayerBowClone = (TextView)findViewById(R.id.upPlayerBowScoreForDown);
+        upPlayerTowerClone = (TextView)findViewById(R.id.upPlayerTowerScoreForDown);
+
+        downPlayerShadowPass = (FrameLayout)findViewById(R.id.downPlayerShadowPass);
+        upPlayerShadowPass = (FrameLayout)findViewById(R.id.upPlayerShadowPass);
+        centerShadow = (FrameLayout)findViewById(R.id.centerShadow);
+
+        downPlayerHeart1 = (ImageView)findViewById(R.id.downPlayer1Heart);
+        downPlayerHeart2 = (ImageView)findViewById(R.id.downPlayer2Heart);
+        upPlayerHeart1 = (ImageView)findViewById(R.id.upPlayer1Heart);
+        upPlayerHeart2 = (ImageView)findViewById(R.id.upPlayer2Heart);
+
+        winnerTextView = (TextView)findViewById(R.id.winnerTextView);
+
+        refreshCount(downPlayerSwordPoint, downPlayerSwordClone);
+        refreshCount(downPlayerBowPoint, downPlayerBowClone);
+        refreshCount(downPlayerTowerPoint, downPlayerTowerClone);
+
+        refreshCount(upPlayerSwordPoint, upPlayerSwordClone);
+        refreshCount(upPlayerBowPoint, upPlayerBowClone);
+        refreshCount(upPlayerTowerPoint, upPlayerTowerClone);
+
+
+        startGame();
+    }
+
+    public void refreshCount(TextView textView, TextView textClone)
+    {
+        textView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int CountPlayerDown = Integer.parseInt(downPlayerSwordPoint.getText().toString()) + Integer.parseInt(downPlayerBowPoint.getText().toString()) + Integer.parseInt(downPlayerTowerPoint.getText().toString());
+                int CountPlayerUp = Integer.parseInt(upPlayerSwordPoint.getText().toString()) + Integer.parseInt(upPlayerBowPoint.getText().toString()) + Integer.parseInt(upPlayerTowerPoint.getText().toString());
+                downPlayerCountFD.setText(""+CountPlayerDown);
+                downPlayerCountFU.setText(""+CountPlayerDown);
+                upPlayerCountFD.setText(""+CountPlayerUp);
+                upPlayerCountFU.setText(""+CountPlayerUp);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                textClone.setText(""+textView.getText().toString());
+            }
+        });
+    }
+
+int i = 0; // chwilowo
+    //symulacja gry na monetce
+    public void coinHoldPass(View v)
+    {
+        //game.processCard(new GwentCard(0, "Letho z Gulety", 10, AttackRow.CloseCombat, true, CardBehaviour.None));
+        //game.processCard(new GwentCard(1, "Sheldon Skaggs", 4, AttackRow.LongRange, false, CardBehaviour.None));
+
+        game.processCard(new GwentCard(i++, "Wsparcie Łuczników", 1, AttackRow.LongRange, false, CardBehaviour.Mgla));
+
+
+
+        v.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                onPass();
+
+                return true;
+            }
+        });
+
+    }
+
+    public void onPass()
+    {
+        Toast.makeText(getApplicationContext(), game.getActivePlayer().toString() + " Spasowal!",Toast.LENGTH_SHORT).show();
+
+        if(game.getActivePlayer() == playerOne)
+        {
+            downPlayerShadowPass.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            upPlayerShadowPass.setVisibility(View.VISIBLE);
+        }
+
+        game.processCard(new GwentCard(i++, "Pass", 0, AttackRow.None, false, CardBehaviour.Pass));
+
+
+
+    }
+
+
+    /*****************************************************************************************************************************
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
@@ -174,144 +385,6 @@ public class GameActivity extends AppCompatActivity implements IGameController {
             return false;
         }
     };
-
-    TextView downPlayerCountFD;
-    TextView downPlayerCountFU;
-    TextView upPlayerCountFD;
-    TextView upPlayerCountFU;
-
-    private TextView downPlayerSwordPoint; //macierzyste
-    private TextView downPlayerBowPoint;
-    private TextView downPlayerTowerPoint;
-
-    private TextView upPlayerSwordPoint;
-    private TextView upPlayerBowPoint;
-    private TextView upPlayerTowerPoint;
-
-    TextView downPlayerSwordClone;
-    TextView downPlayerBowClone;
-    TextView downPlayerTowerClone;
-
-    TextView upPlayerSwordClone;
-    TextView upPlayerBowClone;
-    TextView upPlayerTowerClone;
-
-    FrameLayout downPlayerFrameL;
-    FrameLayout upPlayerFrameL;
-
-    ImageView coinImg;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_game);
-
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
-
-        coinImg = (ImageView)findViewById(R.id.coin);
-
-        downPlayerFrameL = (FrameLayout)findViewById(R.id.downPlayerFrame);
-        upPlayerFrameL = (FrameLayout)findViewById(R.id.upPlayerFrame);
-
-        downPlayerCountFD = (TextView)findViewById(R.id.downPlayerCenterCountForDown);
-        downPlayerCountFU = (TextView)findViewById(R.id.downPlayerCenterCountForUp);
-        upPlayerCountFU = (TextView)findViewById(R.id.upPlayerCenterCountForUp);
-        upPlayerCountFD = (TextView)findViewById(R.id.upPlayerCenterCountForDown);
-
-
-        downPlayerSwordPoint = (TextView)findViewById(R.id.downPlayerSwordScoreForDown);
-        downPlayerBowPoint = (TextView)findViewById(R.id.downPlayerBowScoreForDown);
-        downPlayerTowerPoint = (TextView)findViewById(R.id.downPlayerTowerScoreForDown);
-
-
-        upPlayerSwordPoint = (TextView)findViewById(R.id.upPlayerSwordScoreForUp);
-        upPlayerBowPoint = (TextView)findViewById(R.id.upPlayerBowScoreForUp);
-        upPlayerTowerPoint = (TextView)findViewById(R.id.upPlayerTowerScoreForUp);
-
-        downPlayerSwordClone = (TextView)findViewById(R.id.downPlayerSwordScoreForUp);
-        downPlayerBowClone = (TextView)findViewById(R.id.downPlayerBowScoreForUp);
-        downPlayerTowerClone = (TextView)findViewById(R.id.downPlayerTowerScoreForUp);
-
-
-        upPlayerSwordClone = (TextView)findViewById(R.id.upPlayerSwordScoreForDown);
-        upPlayerBowClone = (TextView)findViewById(R.id.upPlayerBowScoreForDown);
-        upPlayerTowerClone = (TextView)findViewById(R.id.upPlayerTowerScoreForDown);
-
-
-        refreshCount(downPlayerSwordPoint, downPlayerSwordClone);
-        refreshCount(downPlayerBowPoint, downPlayerBowClone);
-        refreshCount(downPlayerTowerPoint, downPlayerTowerClone);
-
-        refreshCount(upPlayerSwordPoint, upPlayerSwordClone);
-        refreshCount(upPlayerBowPoint, upPlayerBowClone);
-        refreshCount(upPlayerTowerPoint, upPlayerTowerClone);
-
-
-        startGame();
-    }
-
-    public void refreshCount(TextView textView, TextView textClone)
-    {
-        textView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int CountPlayerDown = Integer.parseInt(downPlayerSwordPoint.getText().toString()) + Integer.parseInt(downPlayerBowPoint.getText().toString()) + Integer.parseInt(downPlayerTowerPoint.getText().toString());
-                int CountPlayerUp = Integer.parseInt(upPlayerSwordPoint.getText().toString()) + Integer.parseInt(upPlayerBowPoint.getText().toString()) + Integer.parseInt(upPlayerTowerPoint.getText().toString());
-                downPlayerCountFD.setText(""+CountPlayerDown);
-                downPlayerCountFU.setText(""+CountPlayerDown);
-                upPlayerCountFD.setText(""+CountPlayerUp);
-                upPlayerCountFU.setText(""+CountPlayerUp);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                textClone.setText(""+textView.getText().toString());
-            }
-        });
-    }
-int i = 0;
-    //symulacja gry na monetce
-    public void imageView(View v)
-    {
-        Random rand = new Random();
-        int n = rand.nextInt(40);
-        /*downPlayerBowPoint.setText(""+n); // randomuje wartosci
-        upPlayerTowerPoint.setText(""+n);*/
-
-
-
-        //game.processCard(new GwentCard(0, "Letho z Gulety", 10, AttackRow.CloseCombat, true, CardBehaviour.None));
-        //game.processCard(new GwentCard(1, "Sheldon Skaggs", 4, AttackRow.LongRange, false, CardBehaviour.None));
-
-        game.processCard(new GwentCard(i++, "Wsparcie Łuczników", 1, AttackRow.LongRange, false, CardBehaviour.Mgla));
-
-
-
-        v.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(getApplicationContext(), game.getActivePlayer().toString() + " Spasowal!",Toast.LENGTH_SHORT).show();
-                game.processCard(new GwentCard(i++, "Pass", 0, AttackRow.None, false, CardBehaviour.Pass));
-                Toast.makeText(getApplicationContext(), "Idzie teraz " + game.getActivePlayer().toString(), Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-
-    }
-
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
