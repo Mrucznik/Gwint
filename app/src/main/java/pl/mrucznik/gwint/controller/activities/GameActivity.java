@@ -2,6 +2,7 @@ package pl.mrucznik.gwint.controller.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,7 +66,6 @@ public class GameActivity extends AppCompatActivity implements IGameController {
         upPlayerBowPoint.setText(points.get(playerTwo).get(AttackRow.LongRange).toString());
         upPlayerTowerPoint.setText(points.get(playerTwo).get(AttackRow.Siege).toString());
     }
-
     public void chooseCard(Stream<GwentCard> cards, Consumer<GwentCard> callback)
     {
         sendMessage("Wybierz kartę");
@@ -78,7 +80,18 @@ public class GameActivity extends AppCompatActivity implements IGameController {
 
     public void updatePlayer(Player player)
     {
-
+        if(game.getActivePlayer() == playerOne)
+        {
+            upPlayerFrameL.setBackgroundColor(getResources().getColor(R.color.invisible));
+            downPlayerFrameL.setBackgroundColor(getResources().getColor(R.color.blueFrame));
+            coinImg.setImageResource(R.drawable.coin_right_blue);
+        }
+        else
+        {
+            upPlayerFrameL.setBackgroundColor(getResources().getColor(R.color.redFrame));
+            downPlayerFrameL.setBackgroundColor(getResources().getColor(R.color.invisible));
+            coinImg.setImageResource(R.drawable.coin_right_red);
+        }
     }
 
 
@@ -173,7 +186,10 @@ public class GameActivity extends AppCompatActivity implements IGameController {
     TextView upPlayerBowClone;
     TextView upPlayerTowerClone;
 
+    FrameLayout downPlayerFrameL;
+    FrameLayout upPlayerFrameL;
 
+    ImageView coinImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,6 +205,10 @@ public class GameActivity extends AppCompatActivity implements IGameController {
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
+        coinImg = (ImageView)findViewById(R.id.coin);
+
+        downPlayerFrameL = (FrameLayout)findViewById(R.id.downPlayerFrame);
+        upPlayerFrameL = (FrameLayout)findViewById(R.id.upPlayerFrame);
 
         downPlayerCountFD = (TextView)findViewById(R.id.downPlayerCenterCountForDown);
         downPlayerCountFU = (TextView)findViewById(R.id.downPlayerCenterCountForUp);
@@ -252,20 +272,34 @@ public class GameActivity extends AppCompatActivity implements IGameController {
             }
         });
     }
-
-    //monetak randomuje wartosci i zmienia kolej rundy[test]
+int i = 0;
+    //symulacja gry na monetce
     public void imageView(View v)
     {
         Random rand = new Random();
         int n = rand.nextInt(40);
-        /*downPlayerBowPoint.setText(""+n);
+        /*downPlayerBowPoint.setText(""+n); // randomuje wartosci
         upPlayerTowerPoint.setText(""+n);*/
 
 
 
-        game.processCard(new GwentCard(0, "Letho z Gulety", 10, AttackRow.CloseCombat, true, CardBehaviour.None));
-        game.processCard(new GwentCard(1, "Sheldon Skaggs", 4, AttackRow.LongRange, false, CardBehaviour.None));
-        game.processCard(new GwentCard(2, "Wsparcie Łuczników", 1, AttackRow.LongRange, false, CardBehaviour.Mgla));
+        //game.processCard(new GwentCard(0, "Letho z Gulety", 10, AttackRow.CloseCombat, true, CardBehaviour.None));
+        //game.processCard(new GwentCard(1, "Sheldon Skaggs", 4, AttackRow.LongRange, false, CardBehaviour.None));
+
+        game.processCard(new GwentCard(i++, "Wsparcie Łuczników", 1, AttackRow.LongRange, false, CardBehaviour.Mgla));
+
+
+
+        v.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getApplicationContext(), game.getActivePlayer().toString() + " Spasowal!",Toast.LENGTH_SHORT).show();
+                game.processCard(new GwentCard(i++, "Pass", 0, AttackRow.None, false, CardBehaviour.Pass));
+                Toast.makeText(getApplicationContext(), "Idzie teraz " + game.getActivePlayer().toString(), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
     }
 
 

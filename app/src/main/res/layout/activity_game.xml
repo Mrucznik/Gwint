@@ -72,8 +72,8 @@
                 android:layout_marginRight="24dp"
                 android:layout_marginTop="33dp"
                 android:gravity="top"
-                android:orientation="vertical">
-                <!--android:background="#aaff0000" -->
+                android:orientation="vertical"
+                android:background="#00ff0000">
 
                 <LinearLayout
                     android:id="@+id/upPlayerContainer"
@@ -383,7 +383,7 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="33dp"
-                android:background="#aa0048ff"
+                android:background="#ae0048ff"
                 android:gravity="top"
                 android:orientation="vertical">
 
