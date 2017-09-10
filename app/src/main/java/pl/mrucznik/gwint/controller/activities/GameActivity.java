@@ -94,6 +94,16 @@ public class GameActivity extends AppCompatActivity implements IGameController {
         }
     }
 
+    @Override
+    public void onNextRound() {
+
+    }
+
+    @Override
+    public void onGameEnds() {
+
+    }
+
 
     /**
      * Whether or not the system UI should be auto-hidden after

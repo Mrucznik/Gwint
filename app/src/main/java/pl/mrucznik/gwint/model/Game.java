@@ -209,6 +209,7 @@ public class Game {
 
             //TODO: set appropriate active player
         }
+        gameController.onNextRound();
     }
 
     private ArrayList<Player> getWinners()
@@ -227,7 +228,7 @@ public class Game {
 
     private void endGame()
     {
-
+        gameController.onGameEnds();
     }
 
     public int[] getPoints()

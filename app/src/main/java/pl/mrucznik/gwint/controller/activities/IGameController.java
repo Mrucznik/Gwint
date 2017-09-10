@@ -23,4 +23,6 @@ public interface IGameController {
     void chooseCard(Stream<GwentCard> cards, Consumer<GwentCard> callback);
     void sendMessage(String message);
     void updatePlayer(Player player);
+    void onNextRound();
+    void onGameEnds();
 }
