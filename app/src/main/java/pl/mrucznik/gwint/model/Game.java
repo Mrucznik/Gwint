@@ -212,7 +212,7 @@ public class Game {
         gameController.onNextRound();
     }
 
-    private ArrayList<Player> getWinners()
+    public ArrayList<Player> getWinners()
     {
         ArrayList<Player> winners = new ArrayList<>();
         int playerOnePoints = gameFields.get(playerOne).getPoints();
@@ -220,7 +220,8 @@ public class Game {
 
         if(playerOnePoints >= playerTwoPoints) {
             winners.add(playerOne);
-        } else if(playerOnePoints <= playerTwoPoints) {
+        }
+        if(playerOnePoints <= playerTwoPoints) {
             winners.add(playerTwo);
         }
         return winners;

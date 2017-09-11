@@ -16,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -24,6 +26,7 @@ import pl.mrucznik.gwint.R;
 import pl.mrucznik.gwint.model.cards.AttackRow;
 import pl.mrucznik.gwint.model.cards.CardBehaviour;
 import pl.mrucznik.gwint.model.cards.GwentCard;
+import pl.mrucznik.gwint.model.cards.GwentCards;
 
 public class WriteActivity extends AppCompatActivity {
 
@@ -36,6 +39,26 @@ public class WriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
+
+
+        final SeekBar cardSeekBar = (SeekBar) findViewById(R.id.cardsSeekBar);
+        final TextView cardText = (TextView) findViewById(R.id.cardText);
+        cardSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                cardText.setText(GwentCards.getCard(i).toHumanString());
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -100,7 +100,7 @@
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
-                            android:text="0"
+                            android:text="@string/_0"
                             android:textColor="#ffffff"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -113,7 +113,7 @@
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
                             android:rotation="180"
-                            android:text="0"
+                            android:text="@string/_0"
                             android:textColor="#ffffff"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -144,7 +144,7 @@
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
-                            android:text="0"
+                            android:text="@string/_0"
                             android:textColor="#ffffff"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -157,7 +157,7 @@
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
                             android:rotation="180"
-                            android:text="0"
+                            android:text="@string/_0"
                             android:textColor="#ffffff"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -189,7 +189,7 @@
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
-                            android:text="0"
+                            android:text="@string/_0"
                             android:textColor="#ffffff"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -202,7 +202,7 @@
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
                             android:rotation="180"
-                            android:text="0"
+                            android:text="@string/_0"
                             android:textColor="#ffffff"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -246,7 +246,7 @@
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textColor="#ffffff"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -259,7 +259,7 @@
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
                         android:rotation="180"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textColor="#ffffff"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -270,7 +270,8 @@
                     android:id="@+id/heartContainer"
                     android:layout_width="match_parent"
                     android:layout_height="84dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
 
 
                     <LinearLayout
@@ -305,7 +306,7 @@
 
                         <ImageView
                             android:id="@+id/coin"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:onClick="coinHoldPass"
@@ -334,7 +335,8 @@
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            app:srcCompat="@drawable/heart_on" />
+                            app:srcCompat="@drawable/heart_on"
+                            android:contentDescription="@string/heart" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -352,7 +354,7 @@
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textColor="#ffffff"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -365,7 +367,7 @@
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
                         android:rotation="180"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:textColor="#ffffff"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -422,7 +424,7 @@
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
-                            android:text="0"
+                            android:text="@string/_0"
                             android:textColor="#ffffff"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -435,7 +437,7 @@
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
                             android:rotation="180"
-                            android:text="0"
+                            android:text="@string/_0"
                             android:textColor="#ffffff"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -466,7 +468,7 @@
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
-                            android:text="0"
+                            android:text="@string/_0"
                             android:textColor="#ffffff"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -479,7 +481,7 @@
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
                             android:rotation="180"
-                            android:text="0"
+                            android:text="@string/_0"
                             android:textColor="#ffffff"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -510,7 +512,7 @@
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
-                            android:text="0"
+                            android:text="@string/_0"
                             android:textColor="#ffffff"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -523,7 +525,7 @@
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
                             android:rotation="180"
-                            android:text="0"
+                            android:text="@string/_0"
                             android:textColor="#ffffff"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -574,15 +576,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="5"
-            android:textSize="30sp" />
+            android:text="@string/_5"
+            android:textSize="30sp"
+            android:textColor="#ffffff"/>
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Wygrał!!!"
+            android:text="@string/wygra"
             android:textSize="30sp"
             android:textStyle="bold" />
 

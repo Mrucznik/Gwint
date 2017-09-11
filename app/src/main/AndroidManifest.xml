@@ -40,19 +40,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controller.activities.MainActivity" />
 
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="application/vnd.mrucznik" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".controller.activities.GameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_start"
             android:theme="@style/FullscreenTheme" />
+        <intent-filter>
+            <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeType="application/vnd.mrucznik" />
+        </intent-filter>
     </application>
 
 </manifest>

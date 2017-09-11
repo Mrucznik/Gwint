@@ -9,4 +9,9 @@
     <string name="loading">Loading</string>
     <string name="loading2">Loading...</string>
     <string name="pass">Pass</string>
+    <string name="_0">0</string>
+    <string name="coin">coin</string>
+    <string name="heart">Heart</string>
+    <string name="_5">5</string>
+    <string name="wygra">Wygrał!!!</string>
 </resources>

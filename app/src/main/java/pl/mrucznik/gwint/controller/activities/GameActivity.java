@@ -1,17 +1,21 @@
 package pl.mrucznik.gwint.controller.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
-import android.os.CountDownTimer;
+import android.content.IntentFilter;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -19,12 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -112,6 +111,8 @@ public class GameActivity extends AppCompatActivity implements IGameController {
             downPlayerHeart1.setImageResource(R.drawable.heart_off);
         }
 
+        Log.d("INFO", "Tost: " + playerOne.getWins() + " " + playerTwo.getWins());
+
         downPlayerShadowPass.setVisibility(View.GONE);
         upPlayerShadowPass.setVisibility(View.GONE);
     }
@@ -126,47 +127,138 @@ public class GameActivity extends AppCompatActivity implements IGameController {
             winnerTextView.setText(playerOne.toString());
 
         }
-        else
+        if(playerTwo.getWins() == 2)
         {
             downPlayerHeart2.setImageResource(R.drawable.heart_off);
             winnerTextView.setText(playerTwo.toString());
         }
 
 
-        final CounterClass timer = new CounterClass(5000, 1000);
+        final CounterClass timer = new CounterClass(this, 5000, 1000);
         timer.start();
 
     }
 
-public class CounterClass extends CountDownTimer{
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------< NFC >-------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    //region NFC
+    public static final String MIME_TYPE = "application/vnd.mrucznik";
+
+    private TextView info;
+    private NfcAdapter mNfcAdapter;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        /*
+         * It's important, that the activity is in the foreground (resumed). Otherwise
+         * an IllegalStateException is thrown.
+         */
+        setupForegroundDispatch(this, mNfcAdapter);
+    }
+
+    @Override
+    protected void onPause() {
+        /*
+         * Call this before onPause, otherwise an IllegalArgumentException is thrown as well.
+         */
+        stopForegroundDispatch(this, mNfcAdapter);
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        /*
+         * This method gets called, when a new Intent gets associated with the current activity instance.
+         * Instead of creating a new activity, onNewIntent will be called. For more information have a look
+         * at the documentation.
+         *
+         * In our case this method gets called, when the user attaches a Tag to the device.
+         */
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        // TODO: handle Intent
+
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+
+            NdefMessage[] messages = getNdefMessages(intent);
+            NdefRecord record = messages[0].getRecords()[0];
+            GwentCard card = new GwentCard(new String(record.getPayload()));
+            Toast.makeText(this, "Tost: " + card.toString(), Toast.LENGTH_SHORT).show();
+            game.processCard(card);
+        }
+    }
 
     /**
-     * @param millisInFuture    The number of millis in the future from the call
-     *                          to {@link #start()} until the countdown is done and {@link #onFinish()}
-     *                          is called.
-     * @param countDownInterval The interval along the way to receive
-     *                          {@link #onTick(long)} callbacks.
+     * @param activity The corresponding {@link Activity} requesting the foreground dispatch.
+     * @param adapter The {@link NfcAdapter} used for the foreground dispatch.
      */
-    public CounterClass(long millisInFuture, long countDownInterval) {
-        super(millisInFuture, countDownInterval);
+    public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
+
+        IntentFilter[] filters = new IntentFilter[1];
+        String[][] techList = new String[][]{};
+
+        // Notice that this is the same filter as in our manifest.
+        filters[0] = new IntentFilter();
+        filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        filters[0].addCategory(Intent.CATEGORY_DEFAULT);
+        try {
+            filters[0].addDataType(MIME_TYPE);
+        } catch (IntentFilter.MalformedMimeTypeException e) {
+            throw new RuntimeException("Check your mime type.");
+        }
+
+        adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
     }
 
-    @Override
-    public void onTick(long millisUntilFinished) {
-        long millis = millisUntilFinished;
-        String hms = String.format("%1d", TimeUnit.MILLISECONDS.toSeconds(millis));
-        System.out.println(hms);
-        countDown.setText(hms);
+    /**
+     * @param activity The corresponding {@link ReadActivity} requesting to stop the foreground dispatch.
+     * @param adapter The {@link NfcAdapter} used for the foreground dispatch.
+     */
+    public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        adapter.disableForegroundDispatch(activity);
     }
 
-    @Override
-    public void onFinish() {
+    NdefMessage[] getNdefMessages(Intent intent) {
 
-        Intent i = new Intent(GameActivity.this, MainActivity.class);
-        startActivity(i);
-        finish();
+        // Parse the intent
+        NdefMessage[] msgs = null;
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+            Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            if (rawMsgs != null) {
+                msgs = new NdefMessage[rawMsgs.length];
+                for (int i = 0; i < rawMsgs.length; i++) {
+                    msgs[i] = (NdefMessage) rawMsgs[i];
+                }
+            } else {
+                // Unknown tag type
+                byte[] empty = new byte[] {};
+                NdefRecord record = new NdefRecord(NdefRecord.TNF_UNKNOWN, empty, empty, empty);
+                NdefMessage msg = new NdefMessage(new NdefRecord[] {
+                        record
+                });
+                msgs = new NdefMessage[] {
+                        msg
+                };
+            }
+        }else {
+            Log.d("NFC Transportation", "Unknown intent.");
+            finish();
+        }
+
+        return msgs;
     }
-}
+    //endregion
+
     TextView downPlayerCountFD;
     TextView downPlayerCountFU;
     TextView upPlayerCountFD;
@@ -273,7 +365,27 @@ public class CounterClass extends CountDownTimer{
         refreshCount(upPlayerTowerPoint, upPlayerTowerClone);
 
 
+        coinImg.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                onPass();
+
+                return true;
+            }
+        });
+
         startGame();
+
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (mNfcAdapter == null) {
+            // Stop here, we definitely need NFC
+            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        //handleIntent(getIntent());
     }
 
     public void refreshCount(TextView textView, TextView textClone)
@@ -309,20 +421,7 @@ int i = 0; // chwilowo
         //game.processCard(new GwentCard(0, "Letho z Gulety", 10, AttackRow.CloseCombat, true, CardBehaviour.None));
         //game.processCard(new GwentCard(1, "Sheldon Skaggs", 4, AttackRow.LongRange, false, CardBehaviour.None));
 
-        game.processCard(new GwentCard(i++, "Wsparcie Łuczników", 1, AttackRow.LongRange, false, CardBehaviour.Mgla));
-
-
-
-        v.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                onPass();
-
-                return true;
-            }
-        });
-
+      // game.processCard(new GwentCard(i++, "Wsparcie Łuczników", 1, AttackRow.LongRange, false, CardBehaviour.Mgla));
     }
 
     public void onPass()
