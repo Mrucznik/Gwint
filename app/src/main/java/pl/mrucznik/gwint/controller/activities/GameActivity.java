@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,9 +19,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -128,18 +132,41 @@ public class GameActivity extends AppCompatActivity implements IGameController {
             winnerTextView.setText(playerTwo.toString());
         }
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable(){
-            @Override
-            public void run(){
-                Intent i = new Intent(GameActivity.this, MainActivity.class);
-                startActivity(i);
-                finish();
-            }
-        }, 3000);
+
+        final CounterClass timer = new CounterClass(5000, 1000);
+        timer.start();
+
     }
 
+public class CounterClass extends CountDownTimer{
 
+    /**
+     * @param millisInFuture    The number of millis in the future from the call
+     *                          to {@link #start()} until the countdown is done and {@link #onFinish()}
+     *                          is called.
+     * @param countDownInterval The interval along the way to receive
+     *                          {@link #onTick(long)} callbacks.
+     */
+    public CounterClass(long millisInFuture, long countDownInterval) {
+        super(millisInFuture, countDownInterval);
+    }
+
+    @Override
+    public void onTick(long millisUntilFinished) {
+        long millis = millisUntilFinished;
+        String hms = String.format("%1d", TimeUnit.MILLISECONDS.toSeconds(millis));
+        System.out.println(hms);
+        countDown.setText(hms);
+    }
+
+    @Override
+    public void onFinish() {
+
+        Intent i = new Intent(GameActivity.this, MainActivity.class);
+        startActivity(i);
+        finish();
+    }
+}
     TextView downPlayerCountFD;
     TextView downPlayerCountFU;
     TextView upPlayerCountFD;
@@ -176,6 +203,7 @@ public class GameActivity extends AppCompatActivity implements IGameController {
     ImageView coinImg;
 
     TextView winnerTextView;
+    TextView countDown;
 
 
 
@@ -234,6 +262,7 @@ public class GameActivity extends AppCompatActivity implements IGameController {
         upPlayerHeart2 = (ImageView)findViewById(R.id.upPlayer2Heart);
 
         winnerTextView = (TextView)findViewById(R.id.winnerTextView);
+        countDown = (TextView)findViewById(R.id.countDown);
 
         refreshCount(downPlayerSwordPoint, downPlayerSwordClone);
         refreshCount(downPlayerBowPoint, downPlayerBowClone);
