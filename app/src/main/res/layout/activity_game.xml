@@ -59,7 +59,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/wood_frame"
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
@@ -544,7 +543,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="30dp"
-        android:background="#a2686363"
+        android:background="@drawable/grad_red"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -554,8 +553,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:text="Pass"
-            android:textColor="@color/redFrame"
+            android:text="@string/pass"
             android:textSize="30sp"
             android:textStyle="bold" />
     </FrameLayout>
@@ -567,7 +565,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="240dp"
-        android:background="#72baaf0f"
+        android:background="@drawable/grad_red_blue"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -594,7 +592,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="10dp"
-            android:text="gracz..."
+            android:text=""
             android:textSize="20sp"
             android:textStyle="bold" />
     </FrameLayout>
@@ -608,7 +606,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="200dp"
-        android:background="#a2686363"
+        android:background="@drawable/grad_blue"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -618,10 +616,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Pass"
-            android:textColor="@color/blueFrame"
+            android:text="@string/pass"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/wood_frame">
+
     </FrameLayout>
 
 

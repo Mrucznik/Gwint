@@ -96,7 +96,7 @@ public class GameActivity extends AppCompatActivity implements IGameController {
         {
             upPlayerFrameL.setBackgroundColor(getResources().getColor(R.color.redFrame));
             downPlayerFrameL.setBackgroundColor(getResources().getColor(R.color.invisible));
-            coinImg.setImageResource(R.drawable.coin_right_red);
+            coinImg.setImageResource(R.drawable.coin_left_red);
         }
     }
 
@@ -343,6 +343,8 @@ int i = 0; // chwilowo
 
 
     }
+
+
 
 
     /*****************************************************************************************************************************
