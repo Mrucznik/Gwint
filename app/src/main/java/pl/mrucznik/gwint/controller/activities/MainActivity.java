@@ -39,33 +39,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(new Intent( view.getContext(), ReadActivity.class), 0);
             }
         });
-
-        final Button throwCardButton = (Button) findViewById(R.id.throwCardButton);
-        throwCardButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-
-            }
-        });
-
-        final SeekBar cardSeekBar = (SeekBar) findViewById(R.id.cardsSeekBar);
-        final TextView cardText = (TextView) findViewById(R.id.cardText);
-        cardSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                cardText.setText(GwentCards.getCard(i).toHumanString());
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-
     }
 }

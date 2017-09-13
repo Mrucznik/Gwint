@@ -27,16 +27,18 @@ public class GwentCard {
         String[] tokens = text.split("#");
         id = Short.parseShort(tokens[0]);
         name = tokens[1].toCharArray();
-        baseStrength = Byte.parseByte(tokens[2]);
-        attackRow = AttackRow.values()[Byte.parseByte(tokens[3])];
+        baseStrength = Integer.parseInt(tokens[2]);
+        strength = baseStrength;
+        attackRow = AttackRow.valueOf(tokens[3]);
         golden = Boolean.parseBoolean(tokens[4]);
-        cardBehaviour = CardBehaviour.values()[Byte.parseByte(tokens[5])];
+        cardBehaviour = CardBehaviour.valueOf(tokens[5]);
     }
 
     public GwentCard(GwentCard card) {
         this.id = card.id;
         this.name = card.name.clone();
         this.baseStrength = card.baseStrength;
+        strength = baseStrength;
         this.attackRow = card.attackRow;
         this.golden = card.golden;
         this.cardBehaviour = card.cardBehaviour;
