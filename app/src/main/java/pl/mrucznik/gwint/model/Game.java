@@ -192,7 +192,7 @@ public class Game {
 
     private void pozogaSmoka(GwentCard card, AttackRow attackRow)
     {
-        if(gameFields.get(getNextPlayer()).getRowsPoints().getOrDefault(attackRow, 0) >= 10) {
+        if(gameFields.get(getNextPlayer()).getRowsPoints().get(attackRow) >= 10) {
             for (GwentCard c : gameFields.get(getNextPlayer()).getStrongestNonGoldCards(attackRow)) {
                 gameFields.get(getNextPlayer()).moveToGraveyard(c);
             }
@@ -215,7 +215,7 @@ public class Game {
     private void nextRound()
     {
         //process winners
-        getWinners().forEach(Player::addWin);
+        getWinners().forEach(player -> player.addWin());
 
         if(playerOne.getWins() >= 2 || playerTwo.getWins() >= 2) {
             endGame();
