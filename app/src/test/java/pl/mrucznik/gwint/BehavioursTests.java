@@ -225,7 +225,10 @@ public class BehavioursTests {
     //endregion
 
     //region medyk tests
-    //TODO: Medyk tests
+    @Test
+    public void MedykTest() throws Exception {
+        //TODO
+    }
     //endregion
 
     //region szpieg tests
@@ -286,6 +289,53 @@ public class BehavioursTests {
     //endregion
 
     //region pass tests
-    //TODO: Pass tests
+    @Test
+    public void PassTest_ActivePlayerTest() throws Exception {
+        game.processCard(GwentCards.getCard("Ves")); //5 p0
+        game.processCard(GwentCards.getCard("Cynthia")); //4 p1
+        game.processCard(GwentCards.getCard("Pass")); //p0
+        game.processCard(GwentCards.getCard("Cynthia")); //4 p1
+        game.processCard(GwentCards.getCard("Cynthia")); //4 p1
+
+        assertEquals(5, game.getPoints(player[0]));
+        assertEquals(12, game.getPoints(player[1]));
+    }
+
+    @Test
+    public void PassTest_P1Win() throws Exception {
+        game.processCard(GwentCards.getCard("Ves")); //5 p0
+        game.processCard(GwentCards.getCard("Cynthia")); //4 p1
+        game.processCard(GwentCards.getCard("Pass")); //p0
+        game.processCard(GwentCards.getCard("Pass")); //p1
+
+        assertEquals(1, player[0].getWins());
+        assertEquals(0, player[1].getWins());
+    }
+
+
+    @Test
+    public void PassTest_P2Win() throws Exception {
+        game.processCard(GwentCards.getCard("Ves")); //5 p0
+        game.processCard(GwentCards.getCard("Cynthia")); //4 p1
+        game.processCard(GwentCards.getCard("Pass")); //p0
+        game.processCard(GwentCards.getCard("Ves")); //5 p1
+        game.processCard(GwentCards.getCard("Pass")); //p1
+
+        assertEquals(0, player[0].getWins());
+        assertEquals(1, player[1].getWins());
+    }
+
+
+    @Test
+    public void PassTest_BothPlayersWins() throws Exception {
+        game.processCard(GwentCards.getCard("Ves"));
+        game.processCard(GwentCards.getCard("Ves"));
+        game.processCard(GwentCards.getCard("Pass"));
+        game.processCard(GwentCards.getCard("Pass"));
+
+
+        assertEquals(1, player[0].getWins());
+        assertEquals(1, player[1].getWins());
+    }
     //endregion
 }
