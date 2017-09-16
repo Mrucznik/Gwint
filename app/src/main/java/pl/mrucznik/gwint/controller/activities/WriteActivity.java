@@ -10,12 +10,8 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +19,6 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import pl.mrucznik.gwint.R;
-import pl.mrucznik.gwint.model.cards.AttackRow;
-import pl.mrucznik.gwint.model.cards.CardBehaviour;
 import pl.mrucznik.gwint.model.cards.GwentCard;
 import pl.mrucznik.gwint.model.cards.GwentCards;
 
@@ -34,18 +28,26 @@ public class WriteActivity extends AppCompatActivity {
     private PendingIntent mPendingIntent;
     private IntentFilter[] mFilters;
     private String[][] mTechLists;
+    private GwentCard card;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
 
+
+
+
         final SeekBar cardSeekBar = (SeekBar) findViewById(R.id.seekBar);
         final TextView cardText = (TextView) findViewById(R.id.cardText);
         cardSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                cardText.setText(GwentCards.getCard(i).toHumanString());
+                card = GwentCards.getCard(i);
+                cardText.setText(card.toHumanString());
+
             }
 
             @Override
@@ -78,26 +80,24 @@ public class WriteActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (mNfcAdapter != null) {
-            mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters, mTechLists);
-        }
+        if (mNfcAdapter != null) mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters,
+                mTechLists);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (mNfcAdapter != null) {
-            mNfcAdapter.disableForegroundDispatch(this);
-        }
+        mNfcAdapter.disableForegroundDispatch(this);
     }
 
     @Override
     public void onNewIntent(Intent intent) {
-        //TODO:
+        if(card == null)
+            return;
+
         Log.i("Foreground dispatch", "Discovered tag with intent: " + intent);
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         String externalType = "application/vnd.mrucznik";
-        GwentCard card = new GwentCard(1, "Czyste Niebo", 0, AttackRow.All, false, CardBehaviour.CzysteNiebo);
         NdefRecord extRecord = new NdefRecord(NdefRecord.TNF_MIME_MEDIA, externalType.getBytes(), new byte[0], card.toString().getBytes());
         NdefMessage newMessage = new NdefMessage(new NdefRecord[] { extRecord });
         writeNdefMessageToTag(newMessage, tag);
@@ -132,7 +132,7 @@ public class WriteActivity extends AppCompatActivity {
                         ndefFormat.connect();
                         ndefFormat.format(message);
                         ndefFormat.close();
-                        Toast.makeText(this, "The data is written to the tag ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "The data is written to the tag: " + message , Toast.LENGTH_SHORT).show();
                         return true;
                     } catch (IOException e) {
                         Toast.makeText(this, "Failed to format tag", Toast.LENGTH_SHORT).show();
