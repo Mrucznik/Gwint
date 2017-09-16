@@ -54,7 +54,7 @@ public class BehavioursTests {
 
             @Override
             public void sendMessage(String message) {
-
+                System.out.println(message);
             }
 
             @Override
@@ -200,11 +200,28 @@ public class BehavioursTests {
     //endregion
 
     //region braterstwo tests
-    //TODO: Braterstwo tests
+    //TODO: Braterstwo tests - brak kart by sprawdzić
+    @Test
+    public void BraterstwoTest() throws Exception {
+
+    }
+
     //endregion
 
     //region manekin tests
-    //TODO: Manekin tests
+    @Test
+    public void ManekinTest() throws Exception {
+        game.processCard(GwentCards.getCard("Balista")); //6 s p0
+        game.processCard(GwentCards.getCard("Pusta karta"));
+        game.processCard(GwentCards.getCard("Ves")); //5 cc p0
+        game.processCard(GwentCards.getCard("Pusta karta"));
+        game.processCard(GwentCards.getCard("Manekin do ćwiczeń")); //p0
+        game.processCard(GwentCards.getCard("Balista")); //p0
+        game.processCard(GwentCards.getCard("Geralt z Rivii")); //p1
+
+        assertEquals(5, game.getPoints(player[0]));
+        assertEquals(15, game.getPoints(player[1]));
+    }
     //endregion
 
     //region medyk tests

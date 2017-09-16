@@ -70,7 +70,6 @@ public class Game {
                     //next player if card other than brotherhood card threw
                     if(!waitForNextCard.getName().equals(card.getName())) {
                         nextPlayer();
-                        waitForNextCard = null;
                     }
                     break;
                 case Manekin:
@@ -84,6 +83,7 @@ public class Game {
                     return;
             }
         }
+        waitForNextCard = card;
 
         switch(card.getCardBehaviour())
         {
@@ -110,12 +110,11 @@ public class Game {
                 }
                 break;
             case Manekin:
-                waitForNextCard = card;
                 gameController.sendMessage("Wybierz kartę, którą chcesz podmienić.");
-                break;
+                return;
             case Braterstwo: //wyrzuca wszystkie karty takiego samego typu
+                gameController.sendMessage("Jeżeli masz jeszcze karty tego samego typu (ta sama nazwa), musisz je wyrzucić.");
                 gameFields.get(activePlayer).putCard(card);
-                waitForNextCard = card;
                 return;
             case Szpieg:
                 gameController.sendMessage("Dobierz dwie karty.");
