@@ -226,8 +226,27 @@ public class BehavioursTests {
 
     //region medyk tests
     @Test
-    public void MedykTest() throws Exception {
-        //TODO
+    public void MedykTest_OneCard() throws Exception {
+        game.processCard(GwentCards.getCard("Sweers")); //2 s p0
+        game.processCard(GwentCards.getCard("Pożoga")); //p1
+        game.processCard(GwentCards.getCard("Wsparcie Łuczników")); //6 s p0
+        game.processCard(GwentCards.getCard("Sweers")); //2 s p0
+
+        assertEquals(2, game.getPoints(player[0]));
+    }
+
+    @Test
+    public void MedykTest_BadCard() throws Exception {
+        game.processCard(GwentCards.getCard("Sweers")); //2 s p0
+        game.processCard(GwentCards.getCard("Pożoga")); //p1
+        game.processCard(GwentCards.getCard("Wsparcie Łuczników")); //6 s p0
+        game.processCard(GwentCards.getCard("Fringilla Vigo")); //2 s p0
+
+        assertEquals(0, game.getPoints(player[0]));
+
+        game.processCard(GwentCards.getCard("Sweers")); //2 s p0
+
+        assertEquals(2, game.getPoints(player[0]));
     }
     //endregion
 

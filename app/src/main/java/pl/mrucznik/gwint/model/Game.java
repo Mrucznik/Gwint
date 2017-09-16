@@ -81,6 +81,15 @@ public class Game {
                         gameController.sendMessage("Ta karta nie istnieje na polu rozgrywki.");
                     }
                     return;
+                case Medyk:
+                    if(gameFields.get(activePlayer).getGraveyard().contains(card)) {
+                        gameFields.get(activePlayer).removeGraveyardCard(card);
+                        gameController.sendMessage("Karta " + card.getName() + " uzdrowiona.");
+                    } else {
+                        gameController.sendMessage("Tej karty nie ma na cmentarzu.");
+                        return;
+                    }
+                    break;
             }
         }
         waitForNextCard = card;
@@ -110,7 +119,7 @@ public class Game {
                 }
                 break;
             case Manekin:
-                gameController.sendMessage("Wybierz kartę, którą chcesz podmienić.");
+                gameController.sendMessage("Przyłóż kartę, którą chcesz podmienić.");
                 return;
             case Braterstwo: //wyrzuca wszystkie karty takiego samego typu
                 gameController.sendMessage("Jeżeli masz jeszcze karty tego samego typu (ta sama nazwa), musisz je wyrzucić.");
@@ -123,10 +132,7 @@ public class Game {
                 return;
             case Medyk:
                 //Wybierz kartę ze stosu kart odrzuconych twojego przeciwnika.
-                gameController.chooseCard(gameFields.get(activePlayer).getGraveyard().stream().filter(c -> card.isFightingCard()).filter(c -> !card.isGolden()), (GwentCard resurectedCard) -> {
-                    gameFields.get(activePlayer).removeGraveyardCard(resurectedCard);
-                    processCard(resurectedCard);
-                });
+                gameController.sendMessage("Przyłóż kartę, którą chcesz uzdrowić.");
                 return;
             case PozogaSmoka: //jeśli przeciwnik ma w tym samym rzędzie, co rzucona karta, 10 punktów, usuń następną wybraną kartę przeciwnika
                 pozogaSmoka(card, card.getAttackRow());
