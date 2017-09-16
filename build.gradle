@@ -12,6 +12,14 @@ buildscript {
     }
 }
 
+plugins {
+    id "me.tatarka.retrolambda" version "3.7.0"
+}
+
+retrolambda {
+    javaVersion JavaVersion.VERSION_1_7
+}
+
 allprojects {
     repositories {
         jcenter()

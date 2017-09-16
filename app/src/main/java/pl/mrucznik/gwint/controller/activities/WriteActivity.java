@@ -10,8 +10,12 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +23,8 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import pl.mrucznik.gwint.R;
+import pl.mrucznik.gwint.model.cards.AttackRow;
+import pl.mrucznik.gwint.model.cards.CardBehaviour;
 import pl.mrucznik.gwint.model.cards.GwentCard;
 import pl.mrucznik.gwint.model.cards.GwentCards;
 
@@ -28,9 +34,6 @@ public class WriteActivity extends AppCompatActivity {
     private PendingIntent mPendingIntent;
     private IntentFilter[] mFilters;
     private String[][] mTechLists;
-    private GwentCard card;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +41,12 @@ public class WriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_write);
 
 
-
-
-        final SeekBar cardSeekBar = (SeekBar) findViewById(R.id.seekBar);
+        final SeekBar cardSeekBar = (SeekBar) findViewById(R.id.cardSeekBar);
         final TextView cardText = (TextView) findViewById(R.id.cardText);
         cardSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                card = GwentCards.getCard(i);
-                cardText.setText(card.toHumanString());
-
+                cardText.setText(GwentCards.getCard(i).toHumanString());
             }
 
             @Override
@@ -61,6 +60,9 @@ public class WriteActivity extends AppCompatActivity {
             }
         });
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         //inicjalizacja zmiennych prywatnych
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         mPendingIntent = PendingIntent.getActivity(this, 0,  new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -69,6 +71,18 @@ public class WriteActivity extends AppCompatActivity {
                 ndef,
         };
         mTechLists = new String[][] { new String[] { Ndef.class.getName() }, new String[] { NdefFormatable.class.getName() }};
+
+        //inicjalizacja buttonów
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO:
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -86,12 +100,11 @@ public class WriteActivity extends AppCompatActivity {
 
     @Override
     public void onNewIntent(Intent intent) {
-        if(card == null)
-            return;
-
+        //TODO:
         Log.i("Foreground dispatch", "Discovered tag with intent: " + intent);
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         String externalType = "application/vnd.mrucznik";
+        GwentCard card = new GwentCard(1, "Czyste Niebo", 0, AttackRow.All, false, CardBehaviour.CzysteNiebo);
         NdefRecord extRecord = new NdefRecord(NdefRecord.TNF_MIME_MEDIA, externalType.getBytes(), new byte[0], card.toString().getBytes());
         NdefMessage newMessage = new NdefMessage(new NdefRecord[] { extRecord });
         writeNdefMessageToTag(newMessage, tag);
@@ -126,7 +139,7 @@ public class WriteActivity extends AppCompatActivity {
                         ndefFormat.connect();
                         ndefFormat.format(message);
                         ndefFormat.close();
-                        Toast.makeText(this, "The data is written to the tag: " + message , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "The data is written to the tag ", Toast.LENGTH_SHORT).show();
                         return true;
                     } catch (IOException e) {
                         Toast.makeText(this, "Failed to format tag", Toast.LENGTH_SHORT).show();
