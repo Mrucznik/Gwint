@@ -156,6 +156,10 @@ public class GameActivity extends AppCompatActivity implements IGameController {
             downPlayerHeart2.setImageResource(R.drawable.heart_off);
             winnerTextView.setText(playerTwo.toString());
         }
+        if(playerTwo.getWins() == 2 && playerOne.getWins() == 2 )
+        {
+            winnerTextView.setText("Remis");
+        }
 
 
         final CounterClass timer = new CounterClass(this, 5000, 1000);
