@@ -20,9 +20,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -44,24 +46,50 @@ public class GameActivity extends AppCompatActivity implements IGameController {
     Game game;
     Player playerOne, playerTwo;
 
+    @Override
     public void startGame()
     {
         playerOne = new Player("Gracz dolny");
         playerTwo = new Player("Gracz górny");
         game = new Game(this, playerOne, playerTwo);
-        game.start();
     }
 
+    @Override
     public void showRowMenu(Consumer<AttackRow> callback)
     {
+        ArrayList<LinearLayout> closeCombatLayouts = new ArrayList<>();
+        ArrayList<LinearLayout> longRangeLayouts = new ArrayList<>();
+        ArrayList<LinearLayout> siegeLayouts = new ArrayList<>();
+        closeCombatLayouts.add((LinearLayout)findViewById(R.id.upPlayerTowerContainer));
+        longRangeLayouts.add((LinearLayout)findViewById(R.id.upPlayerBowContainer));
+        siegeLayouts.add((LinearLayout)findViewById(R.id.upPlayerSwordContainer));
+        closeCombatLayouts.add((LinearLayout)findViewById(R.id.downPlayerTowerContainer));
+        longRangeLayouts.add((LinearLayout)findViewById(R.id.downPlayerBowContainer));
+        siegeLayouts.add((LinearLayout)findViewById(R.id.downPlayerSwordContainer));
 
-        callback.accept(AttackRow.CloseCombat);
-    }
-    public void sendButtonMessage(String message, String buttonMeesage)
-    {
-        //nie robić
+        for (LinearLayout layout : closeCombatLayouts) {
+            layout.setOnClickListener(v -> {
+                callback.accept(AttackRow.CloseCombat);
+                v.setOnClickListener(null);
+            });
+        }
+
+        for (LinearLayout layout : longRangeLayouts) {
+            layout.setOnClickListener(v -> {
+                callback.accept(AttackRow.LongRange);
+                v.setOnClickListener(null);
+            });
+        }
+
+        for (LinearLayout layout : siegeLayouts) {
+            layout.setOnClickListener(v -> {
+                callback.accept(AttackRow.Siege);
+                v.setOnClickListener(null);
+            });
+        }
     }
 
+    @Override
     public void updatePoints(Map<Player, Map<AttackRow, Integer>> points)
     {
         downPlayerSwordPoint.setText(points.get(playerOne).get(AttackRow.CloseCombat).toString());
@@ -71,18 +99,14 @@ public class GameActivity extends AppCompatActivity implements IGameController {
         upPlayerBowPoint.setText(points.get(playerTwo).get(AttackRow.LongRange).toString());
         upPlayerTowerPoint.setText(points.get(playerTwo).get(AttackRow.Siege).toString());
     }
-    public void chooseCard(Stream<GwentCard> cards, Consumer<GwentCard> callback)
-    {
-        sendMessage("Wybierz kartę");
-        callback.accept(cards.findAny().get()); //wybrana karta
-    }
 
-
+    @Override
     public void sendMessage(String message)
     {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
+    @Override
     public void updatePlayer(Player player)
     {
         if(game.getActivePlayer() == playerOne)

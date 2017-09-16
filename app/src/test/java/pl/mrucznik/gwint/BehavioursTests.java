@@ -38,17 +38,7 @@ public class BehavioursTests {
             }
 
             @Override
-            public void sendButtonMessage(String message, String buttonMeesage) {
-
-            }
-
-            @Override
             public void updatePoints(Map<Player, Map<AttackRow, Integer>> points) {
-
-            }
-
-            @Override
-            public void chooseCard(Stream<GwentCard> cards, Consumer<GwentCard> callback) {
 
             }
 

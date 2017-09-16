@@ -18,9 +18,7 @@ import pl.mrucznik.gwint.model.cards.GwentCard;
 public interface IGameController {
     void startGame();
     void showRowMenu(Consumer<AttackRow> callback);
-    void sendButtonMessage(String message, String buttonMeesage);
     void updatePoints(Map<Player, Map<AttackRow, Integer>> points);
-    void chooseCard(Stream<GwentCard> cards, Consumer<GwentCard> callback);
     void sendMessage(String message);
     void updatePlayer(Player player);
     void onNextRound();

@@ -90,6 +90,15 @@ public class Game {
                         return;
                     }
                     break;
+                case EmhyrPan:
+                    if(gameFields.get(getNextPlayer()).getGraveyard().contains(card)) {
+                        gameFields.get(getNextPlayer()).removeGraveyardCard(card);
+                        gameController.sendMessage("Karta " + card.getName() + " usunięta z cmentarza przeciwnika.");
+                        nextPlayer();
+                    } else {
+                        gameController.sendMessage("Tej karty nie ma na cmentarzu przeciwnika.");
+                    }
+                    return;
             }
         }
         waitForNextCard = card;
@@ -145,18 +154,18 @@ public class Game {
                 break;
             case EmhyrNajezdzca: //CardControl
                 //TODO: Gdy gracz przywraca jednostkę na pole bitwy, przywrócona zostaje losowa jednostka. Dotyczy obu graczy.
+                gameController.sendMessage("Niestety, ta umiejętność nie jest jeszcze obsługiwana w tej wersji.");
                 break;
             case EmhyrPlomien: //CardControl
+                //TODO: testy
                 //Blokuje umiejętność dowódcy twojego przeciwnika.
                 gameController.sendMessage("Umiejętność wrogiego dowódcy zablokowana.");
                 gameFields.get(getNextPlayer()).blockKing();
                 break;
             case EmhyrPan: //CardControl
+                //TODO: testy
                 //Wybierz kartę ze stosu kart odrzuconych twojego przeciwnika.
-                gameController.chooseCard(gameFields.get(getNextPlayer()).getGraveyard().stream().filter(c -> card.isFightingCard()).filter(c -> !card.isGolden()), (GwentCard resurectedCard) -> {
-                    gameFields.get(getNextPlayer()).removeGraveyardCard(resurectedCard);
-                    processCard(resurectedCard);
-                });
+                gameController.sendMessage("Wybierz kartę ze stosu kart odrzuconych twojego przeciwnika.");
                 return;
             case EmhyrCesarz: //CardControl
                 //Obejrzyj trzy losowe karty z ręki przeciwnika
@@ -164,6 +173,7 @@ public class Game {
                 break;
             case Krowa:
                 //TODO: po usunięciu stwórz jednostkę siły bydlęce - pytanie jak to obsłużyć
+                gameController.sendMessage("Niestety, ta karta nie jest jeszcze obsługiwana w tej wersji.");
                 break;
             case Pass:
                 activePlayer.jamOut();
