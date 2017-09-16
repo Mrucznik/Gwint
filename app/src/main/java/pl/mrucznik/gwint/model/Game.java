@@ -215,7 +215,9 @@ public class Game {
     private void nextRound()
     {
         //process winners
-        getWinners().forEach(player -> player.addWin());
+        for (Player player : getWinners()) {
+            player.addWin();
+        }
 
         if(playerOne.getWins() >= 2 || playerTwo.getWins() >= 2) {
             endGame();
@@ -223,9 +225,8 @@ public class Game {
             playerOne.setActive();
             playerTwo.setActive();
 
-            gameFields.forEach(
-                    (k, v) -> v.clearCardArea()
-            );
+            gameFields.get(playerOne).clearCardArea();
+            gameFields.get(playerTwo).clearCardArea();
 
             //TODO: set appropriate active player
         }
