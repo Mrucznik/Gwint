@@ -120,7 +120,8 @@ public class Game {
             case Szpieg:
                 gameController.sendMessage("Dobierz dwie karty.");
                 gameFields.get(getNextPlayer()).putCard(card);
-                break;
+                nextPlayer();
+                return;
             case Medyk:
                 //Wybierz kartę ze stosu kart odrzuconych twojego przeciwnika.
                 gameController.chooseCard(gameFields.get(activePlayer).getGraveyard().stream().filter(c -> card.isFightingCard()).filter(c -> !card.isGolden()), (GwentCard resurectedCard) -> {

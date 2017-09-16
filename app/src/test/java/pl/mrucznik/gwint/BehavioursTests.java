@@ -212,7 +212,17 @@ public class BehavioursTests {
     //endregion
 
     //region szpieg tests
-    //TODO: Szpieg tests
+    @Test
+    public void SpyTest() throws Exception {
+        //siege dragon effect
+        game.processCard(GwentCards.getCard("Stefan Skellen")); //9 p0
+        game.processCard(GwentCards.getCard("Talar")); //1 p1
+        game.processCard(GwentCards.getCard("Avallac'h")); //0 p0
+
+        assertEquals(1, game.getPoints(player[0]));
+        assertEquals(9, game.getPoints(player[1]));
+    }
+
     //endregion
 
     //region rog dowodcy tests
