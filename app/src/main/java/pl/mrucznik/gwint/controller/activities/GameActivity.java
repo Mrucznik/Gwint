@@ -167,20 +167,21 @@ public class GameActivity extends AppCompatActivity implements IGameController {
     public void onGameEnds() {
 
         centerShadow.setVisibility(View.VISIBLE);
-        if(playerOne.getWins() == 2)
+        if(playerTwo.getWins() == 2 && playerOne.getWins() == 2 )
         {
             upPlayerHeart2.setImageResource(R.drawable.heart_off);
-            winnerTextView.setText(playerOne.toString());
-
+            downPlayerHeart2.setImageResource(R.drawable.heart_off);
+            winnerTextView.setText("Remis");
         }
-        if(playerTwo.getWins() == 2)
+        else if(playerTwo.getWins() == 2)
         {
             downPlayerHeart2.setImageResource(R.drawable.heart_off);
             winnerTextView.setText(playerTwo.toString());
         }
-        if(playerTwo.getWins() == 2 && playerOne.getWins() == 2 )
+        else if(playerOne.getWins() == 2 )
         {
-            winnerTextView.setText("Remis");
+            upPlayerHeart2.setImageResource(R.drawable.heart_off);
+            winnerTextView.setText(playerOne.toString());
         }
 
 
