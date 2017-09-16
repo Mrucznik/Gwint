@@ -152,4 +152,113 @@ public class BehavioursTests {
         assertEquals(5, game.getPoints(player[1]));
     }
     //endregion
+
+    //region dragon effect tests
+    @Test
+    public void DragonTest_DragonsOnly() throws Exception {
+        game.processCard(GwentCards.getCard("Villentretenmerth")); //7 p0
+        game.processCard(GwentCards.getCard("Villentretenmerth")); //7 p1
+        game.processCard(GwentCards.getCard("Villentretenmerth")); //7 p0
+        game.processCard(GwentCards.getCard("Villentretenmerth")); //7 p1
+
+        assertEquals(0, game.getPoints(player[0]));
+        assertEquals(14, game.getPoints(player[1]));
+
+        assertTrue(game.getGraveyardCards(player[0]).contains(GwentCards.getCard("Villentretenmerth")));
+    }
+
+
+    @Test
+    public void DragonTest_NotEnoughPoints() throws Exception {
+        game.processCard(GwentCards.getCard("Ves")); //5 p0
+        game.processCard(GwentCards.getCard("Pusta karta")); //p1
+        game.processCard(GwentCards.getCard("Sabrina Glevissig")); //4 p0
+        game.processCard(GwentCards.getCard("Pusta karta")); //p1
+        game.processCard(GwentCards.getCard("Trebusz")); //6 p0
+        game.processCard(GwentCards.getCard("Villentretenmerth")); //7 p1
+
+        assertEquals(15, game.getPoints(player[0]));
+        assertEquals(7, game.getPoints(player[1]));
+    }
+
+    @Test
+    public void DragonTest_ManyRows() throws Exception {
+        game.processCard(GwentCards.getCard("Ves")); //5 p0
+        game.processCard(GwentCards.getCard("Pusta karta")); //p1
+        game.processCard(GwentCards.getCard("Sabrina Glevissig")); //4 p0
+        game.processCard(GwentCards.getCard("Pusta karta")); //p1
+        game.processCard(GwentCards.getCard("Trebusz")); //6 p0
+        game.processCard(GwentCards.getCard("Pusta karta")); //p1
+        game.processCard(GwentCards.getCard("Ves")); //5 p0
+        game.processCard(GwentCards.getCard("Villentretenmerth")); //7 p1
+
+        assertEquals(10, game.getPoints(player[0]));
+        assertEquals(7, game.getPoints(player[1]));
+
+        assertTrue(game.getGraveyardCards(player[0]).contains(GwentCards.getCard("Ves")));
+    }
+    //endregion
+
+    //region braterstwo tests
+    //TODO: Braterstwo tests
+    //endregion
+
+    //region manekin tests
+    //TODO: Manekin tests
+    //endregion
+
+    //region medyk tests
+    //TODO: Medyk tests
+    //endregion
+
+    //region szpieg tests
+    //TODO: Szpieg tests
+    //endregion
+
+    //region rog dowodcy tests
+    //TODO: Róg dowódcy tests
+    //endregion
+
+    //region zrecznosc tests
+    //TODO: Zrecznosc tests
+    //endregion
+
+    //region kings testing
+    //TODO: Kings testing
+
+    @Test
+    public void FoltestWladcaTest() throws Exception {
+        //siege dragon effect
+        game.processCard(GwentCards.getCard("Balista")); //6 p0
+        game.processCard(GwentCards.getCard("Pusta karta")); //p1
+        game.processCard(GwentCards.getCard("Trebusz")); //6 p0
+        game.processCard(GwentCards.getCard("Foltest - Żelazny Władca")); //king p1
+
+        assertEquals(0, game.getPoints(player[0]));
+        assertEquals(0, game.getPoints(player[1]));
+
+        assertTrue(game.getGraveyardCards(player[0]).contains(GwentCards.getCard("Balista")));
+        assertTrue(game.getGraveyardCards(player[0]).contains(GwentCards.getCard("Trebusz")));
+    }
+
+    @Test
+    public void FlotestSynTest() throws Exception {
+        //long range effect
+        game.processCard(GwentCards.getCard("Assier var Anahid")); //6 p0
+        game.processCard(GwentCards.getCard("Pusta karta")); //p1
+        game.processCard(GwentCards.getCard("Filippa Eilhart")); //10 p0
+        game.processCard(GwentCards.getCard("Foltest - Syn Medella")); //7 p1
+
+        assertEquals(10, game.getPoints(player[0]));
+        assertEquals(0, game.getPoints(player[1]));
+
+        assertTrue(game.getGraveyardCards(player[0]).contains(GwentCards.getCard("Assier var Anahid")));
+    }
+
+
+    //endregion
+
+    //region pass tests
+    //TODO: Pass tests
+    //endregion
 }

@@ -113,6 +113,25 @@ public class GameField {
         return strongestCards;
     }
 
+    public ArrayList<GwentCard> getStrongestNonGoldCards(AttackRow attackRow)
+    {
+        ArrayList<GwentCard> strongestCards = new ArrayList<>();
+        int max = 0;
+        for (GwentCard card : cards) {
+            if(card.isFightingCard() && !card.isGolden() && card.getAttackRow() == attackRow) {
+                int cardStrength = effectControler.getCardStrengthAfterEffectsAffected(card);
+                if (cardStrength > max) {
+                    strongestCards.clear();
+                    max = cardStrength;
+                    strongestCards.add(card);
+                } else if (cardStrength == max) {
+                    strongestCards.add(card);
+                }
+            }
+        }
+        return strongestCards;
+    }
+
     public boolean cardExists(GwentCard card)
     {
         return cards.contains(card);

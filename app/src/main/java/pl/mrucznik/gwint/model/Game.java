@@ -29,6 +29,7 @@ public class Game {
         gameFields.put(playerTwo, new GameField());
         activePlayer = playerOne;
     }
+
     /** @deprecated */
     @Deprecated
     public void start()
@@ -81,16 +82,6 @@ public class Game {
                         gameController.sendMessage("Ta karta nie istnieje na polu rozgrywki.");
                     }
                     return;
-                case PozogaSmoka:
-                case FoltestWladca:
-                case FlotestSyn: //CardControl
-                    if(gameFields.get(getNextPlayer()).cardExists(card) && waitForNextCard.getAttackRow() == card.getAttackRow()) {
-                        gameFields.get(getNextPlayer()).removeCard(card);
-                        waitForNextCard = null;
-                    } else {
-                        gameController.sendMessage("Ta karta nie istnieje na polu rozgrywki/nie jest w tym samym rzędzie.");
-                    }
-                    return;
             }
         }
 
@@ -138,14 +129,14 @@ public class Game {
                 });
                 return;
             case PozogaSmoka: //jeśli przeciwnik ma w tym samym rzędzie, co rzucona karta, 10 punktów, usuń następną wybraną kartę przeciwnika
+                pozogaSmoka(card, card.getAttackRow());
+                break;
             case FoltestWladca: //Niszczy najsilniejszą/e jednostkę/ki oblężnicze twojego przeciwnika, jeśli suma siły jego jednostek oblężniczych wynosi 10 lub więcej.
+                pozogaSmoka(card, AttackRow.Siege);
+                break;
             case FlotestSyn: //Niszczy najsilniejszą/e jednostkę/i dalekiego zasięgu twojego przeciwnika, jeśli suma siły jego jednostek dalekiego zasięgu wynosi 10 lub więcej.
-                if(gameFields.get(getNextPlayer()).getRowsPoints().getOrDefault(card.getAttackRow(), 0) >= 10) {
-                    waitForNextCard = card;
-                    gameController.sendMessage("Wybierz kartę do zniszczenia.");
-                }
-                gameFields.get(activePlayer).putCard(card);
-                return;
+                pozogaSmoka(card, AttackRow.LongRange);
+                break;
             case EmhyrNajezdzca: //CardControl
                 //TODO: Gdy gracz przywraca jednostkę na pole bitwy, przywrócona zostaje losowa jednostka. Dotyczy obu graczy.
                 break;
@@ -181,6 +172,15 @@ public class Game {
 
         gameFields.get(activePlayer).putCard(card);
         nextPlayer();
+    }
+
+    private void pozogaSmoka(GwentCard card, AttackRow attackRow)
+    {
+        if(gameFields.get(getNextPlayer()).getRowsPoints().getOrDefault(attackRow, 0) >= 10) {
+            for (GwentCard c : gameFields.get(getNextPlayer()).getStrongestNonGoldCards(attackRow)) {
+                gameFields.get(getNextPlayer()).moveToGraveyard(c);
+            }
+        }
     }
 
     private void nextPlayer()
