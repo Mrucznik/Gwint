@@ -40,13 +40,6 @@ public class WriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
 
-        if (mNfcAdapter == null) {
-            // Stop here, we definitely need NFC
-            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
         final SeekBar cardSeekBar = (SeekBar) findViewById(R.id.seekBar);
         final TextView cardText = (TextView) findViewById(R.id.cardText);
         cardSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -66,8 +59,14 @@ public class WriteActivity extends AppCompatActivity {
             }
         });
 
-        //inicjalizacja zmiennych prywatnych
+        //inicjalizacja NFC
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (mNfcAdapter == null) {
+            // Stop here, we definitely need NFC
+            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
         mPendingIntent = PendingIntent.getActivity(this, 0,  new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         mFilters = new IntentFilter[] {
