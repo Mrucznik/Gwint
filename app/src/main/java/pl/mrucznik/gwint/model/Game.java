@@ -43,12 +43,12 @@ public class Game {
             gameController.showRowMenu((AttackRow attackRow) -> {
                 card.setAttackRow(attackRow);
                 processCardBehaviour(card);
+                updatePoints();
             });
         } else {
             processCardBehaviour(card);
+            updatePoints();
         }
-
-        updatePoints();
     }
 
     private void updatePoints()
@@ -73,6 +73,12 @@ public class Game {
                     }
                     break;
                 case Manekin:
+                    if(card.isGolden() || !card.isFightingCard())
+                    {
+                        gameController.sendMessage("Tej karty nie można podmienić.");
+                        return;
+                    }
+
                     if(gameFields.get(activePlayer).cardExists(card)) {
                         gameFields.get(activePlayer).removeCard(card);
                         waitForNextCard = null;
@@ -82,7 +88,13 @@ public class Game {
                     }
                     return;
                 case Medyk:
-                    if(gameFields.get(activePlayer).getGraveyard().contains(card)) {
+                    if(card.isGolden() || !card.isFightingCard())
+                    {
+                        gameController.sendMessage("Tej karty nie można uzdrowić.");
+                        return;
+                    }
+
+                    if(gameFields.get(activePlayer).graveyardCardExists(card)) {
                         gameFields.get(activePlayer).removeGraveyardCard(card);
                         gameController.sendMessage("Karta " + card.getName() + " uzdrowiona.");
                     } else {
@@ -91,7 +103,13 @@ public class Game {
                     }
                     break;
                 case EmhyrPan:
-                    if(gameFields.get(getNextPlayer()).getGraveyard().contains(card)) {
+                    if(card.isGolden() || !card.isFightingCard())
+                    {
+                        gameController.sendMessage("Tej karty nie można przenieść.");
+                        return;
+                    }
+
+                    if(gameFields.get(getNextPlayer()).graveyardCardExists(card)) {
                         gameFields.get(getNextPlayer()).removeGraveyardCard(card);
                         gameController.sendMessage("Karta " + card.getName() + " usunięta z cmentarza przeciwnika.");
                         nextPlayer();
@@ -142,6 +160,7 @@ public class Game {
             case Medyk:
                 //Wybierz kartę ze stosu kart odrzuconych twojego przeciwnika.
                 gameController.sendMessage("Przyłóż kartę, którą chcesz uzdrowić.");
+                gameFields.get(activePlayer).putCard(card);
                 return;
             case PozogaSmoka: //jeśli przeciwnik ma w tym samym rzędzie, co rzucona karta, 10 punktów, usuń następną wybraną kartę przeciwnika
                 pozogaSmoka(card, card.getAttackRow());

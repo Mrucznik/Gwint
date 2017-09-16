@@ -9,6 +9,7 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.os.Parcelable;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -57,9 +59,6 @@ public class GameActivity extends AppCompatActivity implements IGameController {
     @Override
     public void showRowMenu(Consumer<AttackRow> callback)
     {
-        ArrayList<LinearLayout> closeCombatLayouts = new ArrayList<>();
-        ArrayList<LinearLayout> longRangeLayouts = new ArrayList<>();
-        ArrayList<LinearLayout> siegeLayouts = new ArrayList<>();
         closeCombatLayouts.add((LinearLayout)findViewById(R.id.upPlayerTowerContainer));
         longRangeLayouts.add((LinearLayout)findViewById(R.id.upPlayerBowContainer));
         siegeLayouts.add((LinearLayout)findViewById(R.id.upPlayerSwordContainer));
@@ -70,22 +69,44 @@ public class GameActivity extends AppCompatActivity implements IGameController {
         for (LinearLayout layout : closeCombatLayouts) {
             layout.setOnClickListener(v -> {
                 callback.accept(AttackRow.CloseCombat);
-                v.setOnClickListener(null);
+                setClickableRows(false);
             });
         }
 
         for (LinearLayout layout : longRangeLayouts) {
             layout.setOnClickListener(v -> {
                 callback.accept(AttackRow.LongRange);
-                v.setOnClickListener(null);
+                setClickableRows(false);
             });
         }
 
         for (LinearLayout layout : siegeLayouts) {
             layout.setOnClickListener(v -> {
                 callback.accept(AttackRow.Siege);
-                v.setOnClickListener(null);
+                setClickableRows(false);
             });
+        }
+
+        setClickableRows(true);
+    }
+
+    private void setClickableRows(boolean clickable)
+    {
+        ArrayList<LinearLayout> layouts = new ArrayList<LinearLayout>();
+        layouts.addAll(closeCombatLayouts);
+        layouts.addAll(longRangeLayouts);
+        layouts.addAll(siegeLayouts);
+
+        for (LinearLayout layout : layouts) {
+            if(clickable)
+            {
+                layout.setClickable(true);
+            }
+            else
+            {
+                layout.setOnClickListener(null);
+                layout.setClickable(false);
+            }
         }
     }
 
@@ -104,6 +125,7 @@ public class GameActivity extends AppCompatActivity implements IGameController {
     public void sendMessage(String message)
     {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override
@@ -286,6 +308,11 @@ public class GameActivity extends AppCompatActivity implements IGameController {
         return msgs;
     }
     //endregion
+    ArrayList<LinearLayout> closeCombatLayouts = new ArrayList<>();
+    ArrayList<LinearLayout> longRangeLayouts = new ArrayList<>();
+    ArrayList<LinearLayout> siegeLayouts = new ArrayList<>();
+
+    TextToSpeech textToSpeech;
 
     TextView downPlayerCountFD;
     TextView downPlayerCountFU;
@@ -333,6 +360,7 @@ public class GameActivity extends AppCompatActivity implements IGameController {
 
         setContentView(R.layout.activity_game);
 
+
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
@@ -346,6 +374,15 @@ public class GameActivity extends AppCompatActivity implements IGameController {
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
         //*******************************************************************************************************
+
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    textToSpeech.setLanguage(new Locale("pl_PL"));
+                }
+            }
+        });
 
         coinImg = (ImageView)findViewById(R.id.coin);
 

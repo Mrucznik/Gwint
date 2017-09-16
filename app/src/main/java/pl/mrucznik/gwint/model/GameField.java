@@ -1,7 +1,5 @@
 package pl.mrucznik.gwint.model;
 
-import android.util.ArraySet;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,7 +10,6 @@ import pl.mrucznik.gwint.model.cards.CardBehaviour;
 import pl.mrucznik.gwint.model.cards.GwentCard;
 import pl.mrucznik.gwint.model.effects.EffectControler;
 import pl.mrucznik.gwint.model.effects.StrengthEffect;
-import pl.mrucznik.gwint.model.effects.WeatherEffect;
 
 public class GameField {
     private GwentCard king;
@@ -42,7 +39,17 @@ public class GameField {
 
     public void removeCard(GwentCard card)
     {
-        cards.remove(card);
+        if(cards.contains(card))
+            cards.remove(card);
+        else {
+            GwentCard removingCard = null;
+            for (GwentCard c : cards) {
+                if(c.equalsCard(card)) {
+                    removingCard = c;
+                }
+            }
+            cards.remove(removingCard);
+        }
     }
 
     public boolean kingPlaced()
@@ -64,7 +71,7 @@ public class GameField {
 
     public void moveToGraveyard(GwentCard card)
     {
-        cards.remove(card);
+        removeCard(card);
         graveyard.add(card);
     }
 
@@ -134,7 +141,26 @@ public class GameField {
 
     public boolean cardExists(GwentCard card)
     {
-        return cards.contains(card);
+        if(cards.contains(card))
+            return true;
+
+        for (GwentCard c : cards) {
+            if(c.equalsCard(card))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean graveyardCardExists(GwentCard card)
+    {
+        if(graveyard.contains(card))
+            return true;
+
+        for (GwentCard c : graveyard) {
+            if(c.equalsCard(card))
+                return true;
+        }
+        return false;
     }
 
     public ArrayList<GwentCard> getGraveyard() {
@@ -155,6 +181,17 @@ public class GameField {
     }
 
     public void removeGraveyardCard(GwentCard card) {
-        cards.remove(card);
+
+        if(graveyard.contains(card)) {
+            graveyard.remove(card);
+        } else {
+            GwentCard removingCard = null;
+            for (GwentCard c : graveyard) {
+                if(c.equalsCard(card)) {
+                    removingCard = c;
+                }
+            }
+            graveyard.remove(removingCard);
+        }
     }
 }

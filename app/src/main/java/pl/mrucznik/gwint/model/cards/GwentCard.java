@@ -66,6 +66,11 @@ public class GwentCard {
         return baseStrength > 0;
     }
 
+    public boolean equalsCard(GwentCard card)
+    {
+        return card.id == id;
+    }
+
     // ---- Setters -----
     public void setStrength(int strength)
     {

@@ -11,6 +11,7 @@ import pl.mrucznik.gwint.controller.activities.IGameController;
 import pl.mrucznik.gwint.model.Game;
 import pl.mrucznik.gwint.model.Player;
 import pl.mrucznik.gwint.model.cards.AttackRow;
+import pl.mrucznik.gwint.model.cards.CardBehaviour;
 import pl.mrucznik.gwint.model.cards.GwentCard;
 import pl.mrucznik.gwint.model.cards.GwentCards;
 
@@ -206,7 +207,7 @@ public class BehavioursTests {
         game.processCard(GwentCards.getCard("Ves")); //5 cc p0
         game.processCard(GwentCards.getCard("Pusta karta"));
         game.processCard(GwentCards.getCard("Manekin do ćwiczeń")); //p0
-        game.processCard(GwentCards.getCard("Balista")); //p0
+        game.processCard(new GwentCard(45, "Balista", 6, AttackRow.Siege, false, CardBehaviour.None)); //p0
         game.processCard(GwentCards.getCard("Geralt z Rivii")); //p1
 
         assertEquals(5, game.getPoints(player[0]));
@@ -219,24 +220,24 @@ public class BehavioursTests {
     public void MedykTest_OneCard() throws Exception {
         game.processCard(GwentCards.getCard("Sweers")); //2 s p0
         game.processCard(GwentCards.getCard("Pożoga")); //p1
-        game.processCard(GwentCards.getCard("Wsparcie Łuczników")); //6 s p0
+        game.processCard(GwentCards.getCard("Wsparcie Łuczników")); //1 s p0
         game.processCard(GwentCards.getCard("Sweers")); //2 s p0
 
-        assertEquals(2, game.getPoints(player[0]));
+        assertEquals(3, game.getPoints(player[0]));
     }
 
     @Test
     public void MedykTest_BadCard() throws Exception {
         game.processCard(GwentCards.getCard("Sweers")); //2 s p0
         game.processCard(GwentCards.getCard("Pożoga")); //p1
-        game.processCard(GwentCards.getCard("Wsparcie Łuczników")); //6 s p0
+        game.processCard(GwentCards.getCard("Wsparcie Łuczników")); //1 s p0
         game.processCard(GwentCards.getCard("Fringilla Vigo")); //2 s p0
 
-        assertEquals(0, game.getPoints(player[0]));
+        assertEquals(1, game.getPoints(player[0]));
 
         game.processCard(GwentCards.getCard("Sweers")); //2 s p0
 
-        assertEquals(2, game.getPoints(player[0]));
+        assertEquals(3, game.getPoints(player[0]));
     }
     //endregion
 
