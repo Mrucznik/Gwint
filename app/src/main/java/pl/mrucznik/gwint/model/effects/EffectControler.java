@@ -41,14 +41,36 @@ public class EffectControler {
                 effects.add(new JaskierHornEffect(effectCard.getAttackRow(), effectCard));
                 break;
             case FoltestZdobywca:
-                effects.add(new WeatherEffect(AttackRow.Siege));
+                effects.add(new HornEffect(AttackRow.Siege));
                 break;
         }
     }
 
-    public void removeEffect(StrengthEffect effect)
+    public void removeEffect(GwentCard effectCard)
     {
-        effects.remove(effect);
+        switch (effectCard.getCardBehaviour())
+        {
+            case RogDowodcy:
+                effects.remove(new HornEffect(effectCard.getAttackRow()));
+                break;
+            case Mroz:
+            case Mgla:
+            case Deszcz:
+                effects.remove(new WeatherEffect(effectCard.getAttackRow()));
+                break;
+            case Wiez:
+                effects.remove(new TightBondEffect(effectCard));
+                break;
+            case WysokieMorale:
+                effects.remove(new MoraleEffect(effectCard));
+                break;
+            case RogJaskra:
+                effects.remove(new JaskierHornEffect(effectCard.getAttackRow(), effectCard));
+                break;
+            case FoltestZdobywca:
+                effects.remove(new WeatherEffect(AttackRow.Siege));
+                break;
+        }
     }
 
     public boolean areEffectsAffectedOnCard(GwentCard card)

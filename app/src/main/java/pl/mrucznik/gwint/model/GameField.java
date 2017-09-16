@@ -37,21 +37,6 @@ public class GameField {
         return true;
     }
 
-    public void removeCard(GwentCard card)
-    {
-        if(cards.contains(card))
-            cards.remove(card);
-        else {
-            GwentCard removingCard = null;
-            for (GwentCard c : cards) {
-                if(c.equalsCard(card)) {
-                    removingCard = c;
-                }
-            }
-            cards.remove(removingCard);
-        }
-    }
-
     public boolean kingPlaced()
     {
         return king == null;
@@ -73,6 +58,22 @@ public class GameField {
     {
         removeCard(card);
         graveyard.add(card);
+    }
+
+    public void removeCard(GwentCard card)
+    {
+        effectControler.removeEffect(card);
+        if(cards.contains(card))
+            cards.remove(card);
+        else {
+            GwentCard removingCard = null;
+            for (GwentCard c : cards) {
+                if(c.equalsCard(card)) {
+                    removingCard = c;
+                }
+            }
+            cards.remove(removingCard);
+        }
     }
 
     public int getPoints()
@@ -167,10 +168,6 @@ public class GameField {
         return graveyard;
     }
 
-    public ArrayList<GwentCard> getCards() {
-        return cards;
-    }
-
     public Collection<StrengthEffect> getEffects()
     {
         return effectControler.getAllEffects();
@@ -189,6 +186,7 @@ public class GameField {
             for (GwentCard c : graveyard) {
                 if(c.equalsCard(card)) {
                     removingCard = c;
+                    break;
                 }
             }
             graveyard.remove(removingCard);

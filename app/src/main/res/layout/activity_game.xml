@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context="pl.mrucznik.gwint.controller.activities.GameActivity">
+    tools:context="pl.mrucznik.gwint.controller.activities.GameActivity"
+    android:keepScreenOn="true"
+    android:screenOrientation="portrait">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,

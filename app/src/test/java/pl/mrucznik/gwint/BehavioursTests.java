@@ -239,6 +239,23 @@ public class BehavioursTests {
 
         assertEquals(3, game.getPoints(player[0]));
     }
+
+
+
+    @Test
+    public void MedykTest_TwoGraveyardCards() throws Exception {
+        game.processCard(new GwentCard(0, "Komandos Niebieskich Pasów", 4, AttackRow.CloseCombat, false, CardBehaviour.Wiez)); //p0
+        game.processCard(GwentCards.getCard("Pusta karta")); //p1
+        game.processCard(new GwentCard(0, "Komandos Niebieskich Pasów", 4, AttackRow.CloseCombat, false, CardBehaviour.Wiez)); //p0
+        assertEquals(16, game.getPoints(player[0]));
+        game.processCard(new GwentCard(1, "Villentretenmerth", 7, AttackRow.CloseCombat, false, CardBehaviour.PozogaSmoka)); //p1
+        game.processCard(new GwentCard(2, "Medyczka Burej Chorągwi", 5, AttackRow.Siege, false, CardBehaviour.Medyk)); //p0
+        game.processCard(new GwentCard(0, "Komandos Niebieskich Pasów", 4, AttackRow.CloseCombat, false, CardBehaviour.Wiez)); //p0
+        game.processCard(GwentCards.getCard("Pusta karta")); //p1
+
+        assertEquals(9, game.getPoints(player[0]));
+        assertEquals(7, game.getPoints(player[1]));
+    }
     //endregion
 
     //region szpieg tests
