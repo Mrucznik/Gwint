@@ -49,4 +49,14 @@ public class TestGameActivity implements IGameController{
     public void updatePlayer(Player player) {
 
     }
+
+    @Override
+    public void onNextRound() {
+
+    }
+
+    @Override
+    public void onGameEnds() {
+
+    }
 }

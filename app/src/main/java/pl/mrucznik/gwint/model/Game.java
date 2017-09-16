@@ -27,8 +27,10 @@ public class Game {
         gameFields = new HashMap<>();
         gameFields.put(playerOne, new GameField());
         gameFields.put(playerTwo, new GameField());
+        activePlayer = playerOne;
     }
-
+    /** @deprecated */
+    @Deprecated
     public void start()
     {
         activePlayer = playerOne;
@@ -112,7 +114,9 @@ public class Game {
                 //domyślne zachowanie lub efekty zmieniające siłę kart
                 break;
             case Pozoga: //niszczy najsilniejsze karty
-                gameFields.get(getNextPlayer()).getCards().removeAll(gameFields.get(getNextPlayer()).getStrongestCards());
+                for (GwentCard c : gameFields.get(getNextPlayer()).getStrongestNonGoldCards()) {
+                    gameFields.get(getNextPlayer()).moveToGraveyard(c);
+                }
                 break;
             case Manekin:
                 waitForNextCard = card;
@@ -240,11 +244,21 @@ public class Game {
         return pointsArray;
     }
 
+    public int getPoints(Player player)
+    {
+        return gameFields.get(player).getPoints();
+    }
+
     public Player getActivePlayer() {
         return activePlayer;
     }
 
     public Collection<StrengthEffect> getActiveEffects(Player player) {
         return gameFields.get(player).getEffects();
+    }
+
+    public ArrayList<GwentCard> getGraveyardCards(Player player)
+    {
+        return gameFields.get(player).getGraveyard();
     }
 }

@@ -154,6 +154,19 @@ public class EffectControlerTests {
 
         effectControler.clear();
     }
+
+    @Test
+    public void WeatherEffectTest_NonFightingCard() throws Exception
+    {
+        effectControler.addEffectIfExists(coldCard);
+        effectControler.addEffectIfExists(fogCard);
+        effectControler.addEffectIfExists(rainCard);
+        assertEquals(0, effectControler.getCardStrengthAfterEffectsAffected(coldCard));
+        assertEquals(0, effectControler.getCardStrengthAfterEffectsAffected(fogCard));
+        assertEquals(0, effectControler.getCardStrengthAfterEffectsAffected(rainCard));
+
+        effectControler.clear();
+    }
     //endregion
 
     //region HornEffectTests

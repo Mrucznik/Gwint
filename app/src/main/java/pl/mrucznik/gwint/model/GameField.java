@@ -64,8 +64,8 @@ public class GameField {
 
     public void moveToGraveyard(GwentCard card)
     {
-        graveyard.remove(card);
-        cards.add(card);
+        cards.remove(card);
+        graveyard.add(card);
     }
 
     public int getPoints()
@@ -94,9 +94,23 @@ public class GameField {
         return points;
     }
 
-    public ArrayList<GwentCard> getStrongestCards()
+    public ArrayList<GwentCard> getStrongestNonGoldCards()
     {
-        return null;//TODO: Implement
+        ArrayList<GwentCard> strongestCards = new ArrayList<>();
+        int max = 0;
+        for (GwentCard card : cards) {
+            if(card.isFightingCard() && !card.isGolden()) {
+                int cardStrength = effectControler.getCardStrengthAfterEffectsAffected(card);
+                if (cardStrength > max) {
+                    strongestCards.clear();
+                    max = cardStrength;
+                    strongestCards.add(card);
+                } else if (cardStrength == max) {
+                    strongestCards.add(card);
+                }
+            }
+        }
+        return strongestCards;
     }
 
     public boolean cardExists(GwentCard card)

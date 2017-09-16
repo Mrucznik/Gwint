@@ -41,7 +41,7 @@ public class WriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_write);
 
 
-        final SeekBar cardSeekBar = (SeekBar) findViewById(R.id.cardSeekBar);
+        final SeekBar cardSeekBar = (SeekBar) findViewById(R.id.seekBar);
         final TextView cardText = (TextView) findViewById(R.id.cardText);
         cardSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

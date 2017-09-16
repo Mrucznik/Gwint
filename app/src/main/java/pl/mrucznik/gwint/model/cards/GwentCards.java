@@ -119,7 +119,20 @@ public final class GwentCards {
     public static GwentCard getCard(int id)
     {
         checkInstance();
+
         return cards[id];
+    }
+
+    public static GwentCard getCard(String name)
+    {
+        checkInstance();
+
+        for (GwentCard card : cards) {
+            if(name.equals(card.getName())) {
+                return card;
+            }
+        }
+        return null;
     }
 
     public static Stack<GwentCard> generateCards(int number)

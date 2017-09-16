@@ -16,7 +16,7 @@ public class WeatherEffect extends StrengthEffect {
 
     @Override
     public boolean areEffectsAffectedOnCard(GwentCard card) {
-        return !card.isGolden() && card.getAttackRow() == attackRow;
+        return !card.isGolden() && card.getAttackRow() == attackRow && card.isFightingCard();
     }
 
     @Override
