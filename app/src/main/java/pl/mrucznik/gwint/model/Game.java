@@ -138,8 +138,8 @@ public class Game {
                 break;
             case Wiez: //TightBond effect
             case WysokieMorale://HighMorale effect
-            case RogDowodcy: //TODO: Wybieranie nie działa, naprawić
-            case FoltestZdobywca: //TODO: sprawdzić czy działa //Podwaja siłę wszystkich twoich jednostek oblężniczych (o ile w ich rzędzie nie ma już Rogu Dowódcy). - zwykły róg dowódcy
+            case RogDowodcy: //TODO: Testy
+            case FoltestZdobywca: //TODO: Testy
             case RogJaskra:
             case Zrecznosc: //rząd wybiera się w GUI aplikacji, zaimplementowane dla AttackRow.All
                 //domyślne zachowanie lub efekty zmieniające siłę kart
