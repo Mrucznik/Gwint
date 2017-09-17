@@ -28,6 +28,8 @@ public class Game {
         gameFields.put(playerOne, new GameField());
         gameFields.put(playerTwo, new GameField());
         activePlayer = playerOne;
+
+        gameController.sendMessage("Gra rozpoczęta: " + playerOne + " kontra " + playerTwo + ". Zaczyna " + activePlayer);
     }
 
     /** @deprecated */
@@ -82,6 +84,7 @@ public class Game {
                     if(gameFields.get(activePlayer).cardExists(card)) {
                         gameFields.get(activePlayer).removeCard(card);
                         waitForNextCard = null;
+                        gameController.sendMessage("Karta " + card.getName() + " podmieniona.");
                         nextPlayer();
                     } else {
                         gameController.sendMessage("Ta karta nie istnieje na polu rozgrywki.");
@@ -112,6 +115,7 @@ public class Game {
                     if(gameFields.get(getNextPlayer()).graveyardCardExists(card)) {
                         gameFields.get(getNextPlayer()).removeGraveyardCard(card);
                         gameController.sendMessage("Karta " + card.getName() + " usunięta z cmentarza przeciwnika.");
+                        waitForNextCard = null;
                         nextPlayer();
                     } else {
                         gameController.sendMessage("Tej karty nie ma na cmentarzu przeciwnika.");
@@ -149,18 +153,18 @@ public class Game {
                 gameController.sendMessage("Przyłóż kartę, którą chcesz podmienić.");
                 return;
             case Braterstwo: //wyrzuca wszystkie karty takiego samego typu
-                gameController.sendMessage("Jeżeli masz jeszcze karty tego samego typu (ta sama nazwa), musisz je wyrzucić.");
-                gameFields.get(activePlayer).putCard(card);
+                gameController.sendMessage("Jeżeli masz jeszcze karty tego samego typu, musisz je wyrzucić.");
+                putCard(activePlayer, card);
                 return;
             case Szpieg:
                 gameController.sendMessage("Dobierz dwie karty.");
-                gameFields.get(getNextPlayer()).putCard(card);
+                putCard(getNextPlayer(), card);
                 nextPlayer();
                 return;
             case Medyk:
                 //Wybierz kartę ze stosu kart odrzuconych twojego przeciwnika.
                 gameController.sendMessage("Przyłóż kartę, którą chcesz uzdrowić.");
-                gameFields.get(activePlayer).putCard(card);
+                putCard(activePlayer, card);
                 return;
             case PozogaSmoka: //jeśli przeciwnik ma w tym samym rzędzie, co rzucona karta, 10 punktów, usuń następną wybraną kartę przeciwnika
                 pozogaSmoka(card, card.getAttackRow());
@@ -199,13 +203,14 @@ public class Game {
                 if(!playerOne.isActive() && !playerTwo.isActive())
                 {
                     nextRound();
-                    gameController.sendMessage("Następna runda!.");
+                    gameController.sendMessage("Następna runda! Zaczyna " + activePlayer + ".");
+                } else {
+                    nextPlayer();
                 }
-                nextPlayer();
                 return;
         }
 
-        gameFields.get(activePlayer).putCard(card);
+        putCard(activePlayer, card);
         nextPlayer();
     }
 
@@ -218,10 +223,16 @@ public class Game {
         }
     }
 
+    private void putCard(Player player, GwentCard card)
+    {
+        gameFields.get(player).putCard(card);
+    }
+
     private void nextPlayer()
     {
         activePlayer = getNextPlayer();
         gameController.updatePlayer(activePlayer);
+        gameController.sendMessage("Następny gracz.");
     }
 
     private Player getNextPlayer()

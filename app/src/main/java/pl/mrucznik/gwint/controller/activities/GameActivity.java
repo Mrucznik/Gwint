@@ -51,20 +51,20 @@ public class GameActivity extends AppCompatActivity implements IGameController {
     @Override
     public void startGame()
     {
-        playerOne = new Player("Gracz dolny");
-        playerTwo = new Player("Gracz górny");
+        playerOne = new Player("Szymon");
+        playerTwo = new Player("Weronika");
         game = new Game(this, playerOne, playerTwo);
     }
 
     @Override
     public void showRowMenu(Consumer<AttackRow> callback)
     {
-        closeCombatLayouts.add((LinearLayout)findViewById(R.id.upPlayerTowerContainer));
+        closeCombatLayouts.add((LinearLayout)findViewById(R.id.upPlayerSwordContainer));
         longRangeLayouts.add((LinearLayout)findViewById(R.id.upPlayerBowContainer));
-        siegeLayouts.add((LinearLayout)findViewById(R.id.upPlayerSwordContainer));
-        closeCombatLayouts.add((LinearLayout)findViewById(R.id.downPlayerTowerContainer));
+        siegeLayouts.add((LinearLayout)findViewById(R.id.upPlayerTowerContainer));
+        closeCombatLayouts.add((LinearLayout)findViewById(R.id.downPlayerSwordContainer));
         longRangeLayouts.add((LinearLayout)findViewById(R.id.downPlayerBowContainer));
-        siegeLayouts.add((LinearLayout)findViewById(R.id.downPlayerSwordContainer));
+        siegeLayouts.add((LinearLayout)findViewById(R.id.downPlayerTowerContainer));
 
         for (LinearLayout layout : closeCombatLayouts) {
             layout.setOnClickListener(v -> {
@@ -92,7 +92,7 @@ public class GameActivity extends AppCompatActivity implements IGameController {
 
     private void setClickableRows(boolean clickable)
     {
-        ArrayList<LinearLayout> layouts = new ArrayList<LinearLayout>();
+        ArrayList<LinearLayout> layouts = new ArrayList<>();
         layouts.addAll(closeCombatLayouts);
         layouts.addAll(longRangeLayouts);
         layouts.addAll(siegeLayouts);
@@ -125,7 +125,7 @@ public class GameActivity extends AppCompatActivity implements IGameController {
     public void sendMessage(String message)
     {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null);
+        textToSpeech.speak(message, TextToSpeech.QUEUE_ADD, null);
     }
 
     @Override

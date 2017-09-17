@@ -76,8 +76,6 @@ public class ReadActivity extends Activity {
     }
 
     private void handleIntent(Intent intent) {
-        // TODO: handle Intent
-
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
 
             NdefMessage[] messages = getNdefMessages(intent);

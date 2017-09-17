@@ -39,7 +39,7 @@ public class GameField {
 
     public boolean kingPlaced()
     {
-        return king == null;
+        return king != null;
     }
 
     public void blockKing()
