@@ -28,18 +28,19 @@ public class Game {
         gameFields.put(playerOne, new GameField());
         gameFields.put(playerTwo, new GameField());
         activePlayer = playerOne;
-
-        gameController.sendMessage("Gra rozpoczęta: " + playerOne + " kontra " + playerTwo + ". Zaczyna " + activePlayer);
     }
 
-    /** @deprecated */
-    @Deprecated
     public void start()
     {
         activePlayer = playerOne;
+        gameController.sendMessage("Gra rozpoczęta: " + playerOne + " kontra " + playerTwo + ". Zaczyna " + activePlayer);
     }
 
     public void processCard(GwentCard card) {
+        if(card.getAttackRow() == AttackRow.King && gameFields.get(activePlayer).kingPlaced()) {
+            gameController.sendMessage("Król został już położony!");
+            return;
+        }
 
         if(card.getAttackRow() == AttackRow.All) {
             gameController.showRowMenu((AttackRow attackRow) -> {
@@ -112,8 +113,8 @@ public class Game {
                         return;
                     }
 
-                    if(gameFields.get(getNextPlayer()).graveyardCardExists(card)) {
-                        gameFields.get(getNextPlayer()).removeGraveyardCard(card);
+                    if(gameFields.get(getOtherPlayer(activePlayer)).graveyardCardExists(card)) {
+                        gameFields.get(getOtherPlayer(activePlayer)).removeGraveyardCard(card);
                         gameController.sendMessage("Karta " + card.getName() + " usunięta z cmentarza przeciwnika.");
                         waitForNextCard = null;
                         nextPlayer();
@@ -131,22 +132,56 @@ public class Game {
             case None:
                 break;
             case Mroz:
+                gameFields.get(getOtherPlayer(activePlayer)).addEffect(card);
+                gameController.sendMessage("Wszystkie karty w rzędzie blistego starcia osłabione do jednego punktu.");
+                break;
             case Mgla:
+                gameFields.get(getOtherPlayer(activePlayer)).addEffect(card);
+                gameController.sendMessage("Wszystkie karty w rzędzie dalekiego zasięgu osłabione do jednego punktu.");
+                break;
             case Deszcz:
+                gameFields.get(getOtherPlayer(activePlayer)).addEffect(card);
+                gameController.sendMessage("Wszystkie karty w rzędzie machin oblężniczych osłabione do jednego punktu.");
+                break;
             case CzysteNiebo:
-                gameFields.get(getNextPlayer()).addEffect(card);
+                gameFields.get(getOtherPlayer(activePlayer)).addEffect(card);
+                gameController.sendMessage("Efekty pogodowe usunięte.");
                 break;
             case Wiez: //TightBond effect
+                //TODO: Wymyślić wiadomość
+                break;
             case WysokieMorale://HighMorale effect
-            case RogDowodcy: //TODO: Testy
+                gameController.sendMessage("Plus jeden punkt do wszystkich kart w tym samym rzędzie.");
+                break;
             case FoltestZdobywca: //TODO: Testy
+                gameController.sendMessage("Rząd machin oblężniczych wzmocniony.");
+                break;
             case RogJaskra:
+                gameController.sendMessage("Rząd bliskiego zasięgu wzmocniony.");
+                break;
             case Zrecznosc: //rząd wybiera się w GUI aplikacji, zaimplementowane dla AttackRow.All
-                //domyślne zachowanie lub efekty zmieniające siłę kart
+                gameController.sendMessage("Naciśnij na rząd, na który ma zostać rzucona karta.");
+                break;
+            case RogDowodcy: //TODO: Testy
+                gameController.sendMessage("Naciśnij na rząd, który ma zostać wzmocniony.");
                 break;
             case Pozoga: //niszczy najsilniejsze karty
-                for (GwentCard c : gameFields.get(getNextPlayer()).getStrongestNonGoldCards()) {
-                    gameFields.get(getNextPlayer()).moveToGraveyard(c);
+                //TODO: move to method(s)
+                int playerOneStrongestCardPoints = gameFields.get(playerOne).getStrongestNonGoldCardPoints();
+                int playerTwoStrongestCardPoints = gameFields.get(playerTwo).getStrongestNonGoldCardPoints();
+                if(playerOneStrongestCardPoints >= playerTwoStrongestCardPoints)
+                {
+                    for (GwentCard c : gameFields.get(playerOne).getStrongestNonGoldCards()) {
+                        gameFields.get(playerOne).moveToGraveyard(c);
+                        gameController.sendMessage("Zniszczono kartę" + c.getName() + ".");
+                    }
+                }
+                if(playerOneStrongestCardPoints <= playerTwoStrongestCardPoints)
+                {
+                    for (GwentCard c : gameFields.get(playerTwo).getStrongestNonGoldCards()) {
+                        gameFields.get(playerTwo).moveToGraveyard(c);
+                        gameController.sendMessage("Zniszczono kartę" + c.getName() + ".");
+                    }
                 }
                 break;
             case Manekin:
@@ -157,8 +192,8 @@ public class Game {
                 putCard(activePlayer, card);
                 return;
             case Szpieg:
+                putCard(getOtherPlayer(activePlayer), card);
                 gameController.sendMessage("Dobierz dwie karty.");
-                putCard(getNextPlayer(), card);
                 nextPlayer();
                 return;
             case Medyk:
@@ -183,7 +218,7 @@ public class Game {
                 //TODO: testy
                 //Blokuje umiejętność dowódcy twojego przeciwnika.
                 gameController.sendMessage("Umiejętność wrogiego dowódcy zablokowana.");
-                gameFields.get(getNextPlayer()).blockKing();
+                gameFields.get(getOtherPlayer(activePlayer)).blockKing();
                 break;
             case EmhyrPan: //CardControl
                 //TODO: testy
@@ -216,16 +251,34 @@ public class Game {
 
     private void pozogaSmoka(GwentCard card, AttackRow attackRow)
     {
-        if(gameFields.get(getNextPlayer()).getRowsPoints().get(attackRow) >= 10) {
-            for (GwentCard c : gameFields.get(getNextPlayer()).getStrongestNonGoldCards(attackRow)) {
-                gameFields.get(getNextPlayer()).moveToGraveyard(c);
+        GameField gameField = gameFields.get(getOtherPlayer(activePlayer));
+        if(gameField.getRowsPoints().get(attackRow) >= 10) {
+            for (GwentCard c : gameField.getStrongestNonGoldCards(attackRow)) {
+                gameField.moveToGraveyard(c);
+                gameController.sendMessage("Zniszczono kartę" + c.getName() + ".");
             }
         }
     }
 
     private void putCard(Player player, GwentCard card)
     {
+        int op1p = getPoints(activePlayer);
+        int op2p = getPoints(getNextPlayer());
+
         gameFields.get(player).putCard(card);
+
+        int np1p = getPoints(activePlayer);
+        int np2p = getPoints(getNextPlayer());
+
+        int rp1p = np1p - op1p;
+        int rp2p = np2p - op2p;
+
+        if(rp1p != 0)
+            gameController.sendMessage(activePlayer.toString() + " " + rp1p + " punktów.");
+
+        if(rp2p != 0)
+            gameController.sendMessage(getNextPlayer().toString() + " " + rp2p + " punktów.");
+
     }
 
     private void nextPlayer()
@@ -240,6 +293,15 @@ public class Game {
         if(!playerOne.isActive()) return playerTwo;
         if(!playerTwo.isActive()) return playerOne;
         return (activePlayer == playerTwo) ? playerOne : playerTwo;
+    }
+
+    private Player getOtherPlayer(Player player)
+    {
+        if(player == playerOne)
+            return playerTwo;
+        else if(player == playerTwo)
+            return playerOne;
+        return null;
     }
 
     private void nextRound()

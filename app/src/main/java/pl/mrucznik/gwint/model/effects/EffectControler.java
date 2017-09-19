@@ -22,9 +22,13 @@ public class EffectControler {
                 effects.add(new HornEffect(effectCard.getAttackRow()));
                 break;
             case Mroz:
+                effects.add(new WeatherEffect(AttackRow.CloseCombat));
+                break;
             case Mgla:
+                effects.add(new WeatherEffect(AttackRow.LongRange));
+                break;
             case Deszcz:
-                effects.add(new WeatherEffect(effectCard.getAttackRow()));
+                effects.add(new WeatherEffect(AttackRow.Siege));
                 break;
             case CzysteNiebo:
                 effects.remove(new WeatherEffect(AttackRow.CloseCombat));

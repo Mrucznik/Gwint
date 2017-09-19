@@ -52,7 +52,7 @@ public class GameActivity extends AppCompatActivity implements IGameController {
     public void startGame()
     {
         playerOne = new Player("Szymon");
-        playerTwo = new Player("Weronika");
+        playerTwo = new Player("Michał");
         game = new Game(this, playerOne, playerTwo);
     }
 
@@ -378,6 +378,7 @@ public class GameActivity extends AppCompatActivity implements IGameController {
                 if(status != TextToSpeech.ERROR) {
                     textToSpeech.setLanguage(new Locale("pl_PL"));
                 }
+                game.start();
             }
         });
 

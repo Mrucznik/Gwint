@@ -26,9 +26,6 @@ public class GameField {
 
     public boolean putCard(GwentCard card)  {
         if(card.getAttackRow() == AttackRow.King) {
-            if(kingPlaced()) {
-                return false;
-            }
             king = card;
         } else {
             cards.add(card);
@@ -121,6 +118,19 @@ public class GameField {
         return strongestCards;
     }
 
+    public int getStrongestNonGoldCardPoints()
+    {
+        int max = 0;
+        for (GwentCard card : cards) {
+            if(card.isFightingCard() && !card.isGolden()) {
+                int cardStrength = effectControler.getCardStrengthAfterEffectsAffected(card);
+                if(cardStrength > max)
+                    max = cardStrength;
+            }
+        }
+        return max;
+    }
+
     public ArrayList<GwentCard> getStrongestNonGoldCards(AttackRow attackRow)
     {
         ArrayList<GwentCard> strongestCards = new ArrayList<>();
@@ -166,6 +176,9 @@ public class GameField {
 
     public ArrayList<GwentCard> getGraveyard() {
         return graveyard;
+    }
+    public ArrayList<GwentCard> getCards() {
+        return cards;
     }
 
     public Collection<StrengthEffect> getEffects()
