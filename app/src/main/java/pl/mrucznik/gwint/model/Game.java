@@ -33,7 +33,7 @@ public class Game {
     public void start()
     {
         activePlayer = playerOne;
-        gameController.sendMessage("Gra rozpoczęta: " + playerOne + " kontra " + playerTwo + ". Zaczyna " + activePlayer);
+        gameController.sendMessage("Gra rozpoczęta! " + playerOne + " kontra " + playerTwo + ". Zaczyna " + activePlayer);
     }
 
     public void processCard(GwentCard card) {
@@ -235,10 +235,10 @@ public class Game {
                 break;
             case Pass:
                 activePlayer.jamOut();
+                gameController.sendMessage(activePlayer.toString() + " spasował.");
                 if(!playerOne.isActive() && !playerTwo.isActive())
                 {
                     nextRound();
-                    gameController.sendMessage("Następna runda! Zaczyna " + activePlayer + ".");
                 } else {
                     nextPlayer();
                 }
@@ -263,12 +263,12 @@ public class Game {
     private void putCard(Player player, GwentCard card)
     {
         int op1p = getPoints(activePlayer);
-        int op2p = getPoints(getNextPlayer());
+        int op2p = getPoints(getOtherPlayer(activePlayer));
 
         gameFields.get(player).putCard(card);
 
         int np1p = getPoints(activePlayer);
-        int np2p = getPoints(getNextPlayer());
+        int np2p = getPoints(getOtherPlayer(activePlayer));
 
         int rp1p = np1p - op1p;
         int rp2p = np2p - op2p;
@@ -277,7 +277,7 @@ public class Game {
             gameController.sendMessage(activePlayer.toString() + " " + rp1p + " punktów.");
 
         if(rp2p != 0)
-            gameController.sendMessage(getNextPlayer().toString() + " " + rp2p + " punktów.");
+            gameController.sendMessage(getOtherPlayer(activePlayer).toString() + " " + rp2p + " punktów.");
 
     }
 
@@ -292,7 +292,7 @@ public class Game {
     {
         if(!playerOne.isActive()) return playerTwo;
         if(!playerTwo.isActive()) return playerOne;
-        return (activePlayer == playerTwo) ? playerOne : playerTwo;
+        return getOtherPlayer(activePlayer);
     }
 
     private Player getOtherPlayer(Player player)
@@ -320,6 +320,7 @@ public class Game {
             gameFields.get(playerOne).clearCardArea();
             gameFields.get(playerTwo).clearCardArea();
 
+            gameController.sendMessage("Następna runda! Zaczyna " + activePlayer + ".");
             //TODO: set appropriate active player
         }
         gameController.onNextRound();
@@ -331,11 +332,18 @@ public class Game {
         int playerOnePoints = gameFields.get(playerOne).getPoints();
         int playerTwoPoints = gameFields.get(playerTwo).getPoints();
 
-        if(playerOnePoints >= playerTwoPoints) {
+        if(playerOnePoints > playerTwoPoints) {
             winners.add(playerOne);
+            gameController.sendMessage("Wygrał " + playerOne.toString());
         }
-        if(playerOnePoints <= playerTwoPoints) {
+        else if(playerOnePoints < playerTwoPoints) {
             winners.add(playerTwo);
+            gameController.sendMessage("Wygrał " + playerTwo.toString());
+        } else {
+
+            winners.add(playerOne);
+            winners.add(playerTwo);
+            gameController.sendMessage("Remis!");
         }
         return winners;
     }

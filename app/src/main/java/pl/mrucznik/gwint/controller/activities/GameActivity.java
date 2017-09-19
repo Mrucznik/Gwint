@@ -172,16 +172,19 @@ public class GameActivity extends AppCompatActivity implements IGameController {
             upPlayerHeart2.setImageResource(R.drawable.heart_off);
             downPlayerHeart2.setImageResource(R.drawable.heart_off);
             winnerTextView.setText("Remis");
+            sendMessage("Tym razem nikomu nie udało się wygrać!");
         }
         else if(playerTwo.getWins() == 2)
         {
             downPlayerHeart2.setImageResource(R.drawable.heart_off);
             winnerTextView.setText(playerTwo.toString());
+            sendMessage("Zwycięzcą partii zostaje: " + playerTwo.toString());
         }
         else if(playerOne.getWins() == 2 )
         {
             upPlayerHeart2.setImageResource(R.drawable.heart_off);
             winnerTextView.setText(playerOne.toString());
+            sendMessage("Zwycięzcą partii zostaje: " + playerOne.toString());
         }
 
 
