@@ -173,14 +173,14 @@ public class Game {
                 {
                     for (GwentCard c : gameFields.get(playerOne).getStrongestNonGoldCards()) {
                         gameFields.get(playerOne).moveToGraveyard(c);
-                        gameController.sendMessage("Zniszczono kartę" + c.getName() + ".");
+                        gameController.sendMessage("Zniszczono kartę " + c.getName() + ".");
                     }
                 }
                 if(playerOneStrongestCardPoints <= playerTwoStrongestCardPoints)
                 {
                     for (GwentCard c : gameFields.get(playerTwo).getStrongestNonGoldCards()) {
                         gameFields.get(playerTwo).moveToGraveyard(c);
-                        gameController.sendMessage("Zniszczono kartę" + c.getName() + ".");
+                        gameController.sendMessage("Zniszczono kartę " + c.getName() + ".");
                     }
                 }
                 break;
