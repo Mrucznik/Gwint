@@ -1,7 +1,6 @@
 package pl.mrucznik.gwint;
 
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 
 import org.junit.Test;
 
@@ -17,14 +16,13 @@ import static org.junit.Assert.*;
 
 public class ExampleGameTests {
     @Test
-    public void addition_isCorrect() throws Exception {
+    public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Test
-    public void gameTest() throws Exception
+    public void gameTest()
     {
         Player playerOne = new Player("Szymon");
         Player playerTwo = new Player("Seba");
@@ -33,8 +31,7 @@ public class ExampleGameTests {
         game.start();
 
         int turn = 1;
-        while(true)
-        {
+        do {
             System.out.println("\nKolejka numer " + turn);
             System.out.println("Aktywne efekty: ");
             System.out.print(playerOne + ": ");
@@ -48,15 +45,13 @@ public class ExampleGameTests {
             System.out.println("\n" + game.getActivePlayer().toString() + " rzuca kartę " + gwentCard.getName() + " siła: " + gwentCard.getStrength());
             try {
                 game.processCard(gwentCard);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
             int[] points = game.getPoints();
             System.out.println("Punkty " + playerOne.toString() + ": " + points[0] + " (" + (points[0] - oldPoints[0]) + ")");
             System.out.println("Punkty " + playerTwo.toString() + ": " + points[1] + " (" + (points[1] - oldPoints[1]) + ")");
-            if(turn++ == 150)
-                break;
-        }
+        } while (turn++ != 150);
 
         System.out.println("Wynik końcowy ");
         int[] points = game.getPoints();
@@ -64,7 +59,7 @@ public class ExampleGameTests {
     }
 
     @Test
-    public void lambdaTest() throws Exception
+    public void lambdaTest()
     {
         Player playerOne = new Player("Szymon");
         Player playerTwo = new Player("Seba");

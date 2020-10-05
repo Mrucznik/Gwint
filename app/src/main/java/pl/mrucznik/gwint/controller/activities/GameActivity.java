@@ -1,6 +1,7 @@
 package pl.mrucznik.gwint.controller.activities;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -8,10 +9,9 @@ import android.content.IntentFilter;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.Parcelable;
 import android.speech.tts.TextToSpeech;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -25,11 +25,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 import pl.mrucznik.gwint.R;
 import pl.mrucznik.gwint.model.Game;
@@ -43,7 +44,7 @@ import pl.mrucznik.gwint.model.cards.GwentCard;
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class GameActivity extends AppCompatActivity implements IGameController {
+public class GameActivity extends Activity implements IGameController {
     /*Game Controller*/
     Game game;
     Player playerOne, playerTwo;
@@ -56,15 +57,16 @@ public class GameActivity extends AppCompatActivity implements IGameController {
         game = new Game(this, playerOne, playerTwo);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void showRowMenu(Consumer<AttackRow> callback)
     {
-        closeCombatLayouts.add((LinearLayout)findViewById(R.id.upPlayerSwordContainer));
-        longRangeLayouts.add((LinearLayout)findViewById(R.id.upPlayerBowContainer));
-        siegeLayouts.add((LinearLayout)findViewById(R.id.upPlayerTowerContainer));
-        closeCombatLayouts.add((LinearLayout)findViewById(R.id.downPlayerSwordContainer));
-        longRangeLayouts.add((LinearLayout)findViewById(R.id.downPlayerBowContainer));
-        siegeLayouts.add((LinearLayout)findViewById(R.id.downPlayerTowerContainer));
+        closeCombatLayouts.add(findViewById(R.id.upPlayerSwordContainer));
+        longRangeLayouts.add(findViewById(R.id.upPlayerBowContainer));
+        siegeLayouts.add(findViewById(R.id.upPlayerTowerContainer));
+        closeCombatLayouts.add(findViewById(R.id.downPlayerSwordContainer));
+        longRangeLayouts.add(findViewById(R.id.downPlayerBowContainer));
+        siegeLayouts.add(findViewById(R.id.downPlayerTowerContainer));
 
         for (LinearLayout layout : closeCombatLayouts) {
             layout.setOnClickListener(v -> {
@@ -375,56 +377,53 @@ public class GameActivity extends AppCompatActivity implements IGameController {
 
         //*******************************************************************************************************
 
-        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
-                    textToSpeech.setLanguage(new Locale("pl_PL"));
-                }
-                game.start();
+        textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
+            if(status != TextToSpeech.ERROR) {
+                textToSpeech.setLanguage(new Locale("pl_PL"));
             }
+            game.start();
         });
 
-        coinImg = (ImageView)findViewById(R.id.coin);
+        coinImg = findViewById(R.id.coin);
 
-        downPlayerFrameL = (FrameLayout)findViewById(R.id.downPlayerFrame);
-        upPlayerFrameL = (FrameLayout)findViewById(R.id.upPlayerFrame);
+        downPlayerFrameL = findViewById(R.id.downPlayerFrame);
+        upPlayerFrameL = findViewById(R.id.upPlayerFrame);
 
-        downPlayerCountFD = (TextView)findViewById(R.id.downPlayerCenterCountForDown);
-        downPlayerCountFU = (TextView)findViewById(R.id.downPlayerCenterCountForUp);
-        upPlayerCountFU = (TextView)findViewById(R.id.upPlayerCenterCountForUp);
-        upPlayerCountFD = (TextView)findViewById(R.id.upPlayerCenterCountForDown);
-
-
-        downPlayerSwordPoint = (TextView)findViewById(R.id.downPlayerSwordScoreForDown);
-        downPlayerBowPoint = (TextView)findViewById(R.id.downPlayerBowScoreForDown);
-        downPlayerTowerPoint = (TextView)findViewById(R.id.downPlayerTowerScoreForDown);
+        downPlayerCountFD = findViewById(R.id.downPlayerCenterCountForDown);
+        downPlayerCountFU = findViewById(R.id.downPlayerCenterCountForUp);
+        upPlayerCountFU = findViewById(R.id.upPlayerCenterCountForUp);
+        upPlayerCountFD = findViewById(R.id.upPlayerCenterCountForDown);
 
 
-        upPlayerSwordPoint = (TextView)findViewById(R.id.upPlayerSwordScoreForUp);
-        upPlayerBowPoint = (TextView)findViewById(R.id.upPlayerBowScoreForUp);
-        upPlayerTowerPoint = (TextView)findViewById(R.id.upPlayerTowerScoreForUp);
-
-        downPlayerSwordClone = (TextView)findViewById(R.id.downPlayerSwordScoreForUp);
-        downPlayerBowClone = (TextView)findViewById(R.id.downPlayerBowScoreForUp);
-        downPlayerTowerClone = (TextView)findViewById(R.id.downPlayerTowerScoreForUp);
+        downPlayerSwordPoint = findViewById(R.id.downPlayerSwordScoreForDown);
+        downPlayerBowPoint = findViewById(R.id.downPlayerBowScoreForDown);
+        downPlayerTowerPoint = findViewById(R.id.downPlayerTowerScoreForDown);
 
 
-        upPlayerSwordClone = (TextView)findViewById(R.id.upPlayerSwordScoreForDown);
-        upPlayerBowClone = (TextView)findViewById(R.id.upPlayerBowScoreForDown);
-        upPlayerTowerClone = (TextView)findViewById(R.id.upPlayerTowerScoreForDown);
+        upPlayerSwordPoint = findViewById(R.id.upPlayerSwordScoreForUp);
+        upPlayerBowPoint = findViewById(R.id.upPlayerBowScoreForUp);
+        upPlayerTowerPoint = findViewById(R.id.upPlayerTowerScoreForUp);
 
-        downPlayerShadowPass = (FrameLayout)findViewById(R.id.downPlayerShadowPass);
-        upPlayerShadowPass = (FrameLayout)findViewById(R.id.upPlayerShadowPass);
-        centerShadow = (FrameLayout)findViewById(R.id.centerShadow);
+        downPlayerSwordClone = findViewById(R.id.downPlayerSwordScoreForUp);
+        downPlayerBowClone = findViewById(R.id.downPlayerBowScoreForUp);
+        downPlayerTowerClone = findViewById(R.id.downPlayerTowerScoreForUp);
 
-        downPlayerHeart1 = (ImageView)findViewById(R.id.downPlayer1Heart);
-        downPlayerHeart2 = (ImageView)findViewById(R.id.downPlayer2Heart);
-        upPlayerHeart1 = (ImageView)findViewById(R.id.upPlayer1Heart);
-        upPlayerHeart2 = (ImageView)findViewById(R.id.upPlayer2Heart);
 
-        winnerTextView = (TextView)findViewById(R.id.winnerTextView);
-        countDown = (TextView)findViewById(R.id.countDown);
+        upPlayerSwordClone = findViewById(R.id.upPlayerSwordScoreForDown);
+        upPlayerBowClone = findViewById(R.id.upPlayerBowScoreForDown);
+        upPlayerTowerClone = findViewById(R.id.upPlayerTowerScoreForDown);
+
+        downPlayerShadowPass = findViewById(R.id.downPlayerShadowPass);
+        upPlayerShadowPass = findViewById(R.id.upPlayerShadowPass);
+        centerShadow = findViewById(R.id.centerShadow);
+
+        downPlayerHeart1 = findViewById(R.id.downPlayer1Heart);
+        downPlayerHeart2 = findViewById(R.id.downPlayer2Heart);
+        upPlayerHeart1 = findViewById(R.id.upPlayer1Heart);
+        upPlayerHeart2 = findViewById(R.id.upPlayer2Heart);
+
+        winnerTextView = findViewById(R.id.winnerTextView);
+        countDown = findViewById(R.id.countDown);
 
         refreshCount(downPlayerSwordPoint, downPlayerSwordClone);
         refreshCount(downPlayerBowPoint, downPlayerBowClone);
@@ -435,14 +434,9 @@ public class GameActivity extends AppCompatActivity implements IGameController {
         refreshCount(upPlayerTowerPoint, upPlayerTowerClone);
 
 
-        coinImg.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                onPass();
-
-                return true;
-            }
+        coinImg.setOnLongClickListener(v -> {
+            onPass();
+            return true;
         });
 
         startGame();
@@ -558,32 +552,24 @@ int i = 0; // chwilowo
         @Override
         public void run() {
             // Delayed display of UI elements
-            ActionBar actionBar = getSupportActionBar();
+            ActionBar actionBar = getActionBar();
             if (actionBar != null) {
                 actionBar.show();
             }
             mControlsView.setVisibility(View.VISIBLE);
         }
     };
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };
+    private final Runnable mHideRunnable = this::hide;
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
      * system UI. This is to prevent the jarring behavior of controls going away
      * while interacting with activity UI.
      */
-    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
+    private final View.OnTouchListener mDelayHideTouchListener = (view, motionEvent) -> {
+        if (AUTO_HIDE) {
+            delayedHide(AUTO_HIDE_DELAY_MILLIS);
         }
+        return false;
     };
 
     @Override
@@ -598,7 +584,7 @@ int i = 0; // chwilowo
 
     private void hide() {
         // Hide UI first
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }

@@ -1,6 +1,6 @@
 package pl.mrucznik.gwint.model.effects;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import pl.mrucznik.gwint.model.cards.GwentCard;
 

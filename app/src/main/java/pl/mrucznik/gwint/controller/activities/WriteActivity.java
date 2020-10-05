@@ -1,5 +1,6 @@
 package pl.mrucznik.gwint.controller.activities;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -10,7 +11,6 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -22,7 +22,7 @@ import pl.mrucznik.gwint.R;
 import pl.mrucznik.gwint.model.cards.GwentCard;
 import pl.mrucznik.gwint.model.cards.GwentCards;
 
-public class WriteActivity extends AppCompatActivity {
+public class WriteActivity extends Activity {
 
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
@@ -40,8 +40,8 @@ public class WriteActivity extends AppCompatActivity {
 
 
 
-        final SeekBar cardSeekBar = (SeekBar) findViewById(R.id.seekBar);
-        final TextView cardText = (TextView) findViewById(R.id.cardText);
+        final SeekBar cardSeekBar = findViewById(R.id.seekBar);
+        final TextView cardText = findViewById(R.id.cardText);
         cardSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {

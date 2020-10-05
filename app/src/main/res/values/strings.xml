@@ -7,11 +7,16 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="loading">Loading</string>
-    <string name="loading2">Loading...</string>
+    <string name="loading2">Loading…</string>
     <string name="pass">Pass</string>
     <string name="_0">0</string>
     <string name="coin">coin</string>
     <string name="heart">Heart</string>
     <string name="_5">5</string>
     <string name="wygra">Wygrał!!!</string>
+    <string name="choose_card">Wybierz kartę</string>
+    <string name="place_nfc_tag">Przyłóż tag aby odczytać wartość karty</string>
+    <string name="read">odczyt</string>
+    <string name="save">zapis</string>
+    <string name="play">Graj</string>
 </resources>

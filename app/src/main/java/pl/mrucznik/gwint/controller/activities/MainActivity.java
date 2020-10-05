@@ -1,17 +1,14 @@
 package pl.mrucznik.gwint.controller.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 import pl.mrucznik.gwint.R;
-import pl.mrucznik.gwint.model.cards.GwentCards;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     public void openGameActivity(View view)
     {
@@ -26,18 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         //inicjalizacja przycisków
-        final Button writeButton = (Button) findViewById(R.id.writeButton);
-        writeButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                startActivityForResult(new Intent( view.getContext(), WriteActivity.class), 0);
-            }
-        });
+        final Button writeButton = findViewById(R.id.writeButton);
+        writeButton.setOnClickListener(view -> startActivityForResult(new Intent( view.getContext(), WriteActivity.class), 0));
 
-        final Button readButton = (Button) findViewById(R.id.readButton);
-        readButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                startActivityForResult(new Intent( view.getContext(), ReadActivity.class), 0);
-            }
-        });
+        final Button readButton = findViewById(R.id.readButton);
+        readButton.setOnClickListener(view -> startActivityForResult(new Intent( view.getContext(), ReadActivity.class), 0));
     }
 }
