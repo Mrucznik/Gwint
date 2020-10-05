@@ -95,7 +95,7 @@ public class BehavioursTests {
         game.processCard(GwentCards.getCard("Pożoga")); //p0
         game.processCard(GwentCards.getCard("Pożoga")); //p1
 
-        assertEquals(8, game.getPoints(player[0]));
+        assertEquals(0, game.getPoints(player[0]));
         assertEquals(2, game.getPoints(player[1]));
 
 
@@ -117,22 +117,22 @@ public class BehavioursTests {
 
     @Test
     public void PozogaTest_GoldCards() throws Exception {
-        game.processCard(GwentCards.getCard("Cynthia")); //4 lr
-        game.processCard(GwentCards.getCard("Ves")); //5 cc
-        game.processCard(GwentCards.getCard("Geralt z Rivii")); //15
-        game.processCard(GwentCards.getCard("Pożoga"));
+        game.processCard(GwentCards.getCard("Ves")); //5 cc p0
+        game.processCard(GwentCards.getCard("Cynthia")); //4 lr p1
+        game.processCard(GwentCards.getCard("Geralt z Rivii")); //15 p0
+        game.processCard(GwentCards.getCard("Pożoga")); // p1
 
         assertEquals(15, game.getPoints(player[0]));
-        assertEquals(5, game.getPoints(player[1]));
+        assertEquals(4, game.getPoints(player[1]));
     }
 
     @Test
     public void PozogaTest_CardsWithEffects() throws Exception {
-        game.processCard(GwentCards.getCard("Cynthia")); //4 lr
-        game.processCard(GwentCards.getCard("Ves")); //5 cc
-        game.processCard(GwentCards.getCard("Trebusz")); //6 s
-        game.processCard(GwentCards.getCard("Ulewny deszcz")); //0
-        game.processCard(GwentCards.getCard("Ves")); //5 cc
+        game.processCard(GwentCards.getCard("Cynthia")); //4 lr p0
+        game.processCard(GwentCards.getCard("Ves")); //5 cc p1
+        game.processCard(GwentCards.getCard("Trebusz")); //6 s p0
+        game.processCard(GwentCards.getCard("Ulewny deszcz")); //0 p1
+        game.processCard(GwentCards.getCard("Ves")); //5 cc p0
 
         assertEquals(10, game.getPoints(player[0]));
         assertEquals(5, game.getPoints(player[1]));
@@ -140,7 +140,7 @@ public class BehavioursTests {
         game.processCard(GwentCards.getCard("Pożoga"));
 
         assertEquals(5, game.getPoints(player[0]));
-        assertEquals(5, game.getPoints(player[1]));
+        assertEquals(0, game.getPoints(player[1]));
     }
     //endregion
 
